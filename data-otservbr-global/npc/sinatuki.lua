@@ -56,6 +56,10 @@ local fishsID = { 7158, 7159 }
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
+
 	if MsgContains(message, "Nupi") then
 		if player:getStorageValue(Storage.Quest.U8_0.BarbarianTest.Questline) >= 3 and player:getStorageValue(Storage.Quest.U8_0.TheIceIslands.Questline) >= 5 then
 			for i = 1, #fishsID do

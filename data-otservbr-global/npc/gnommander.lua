@@ -60,6 +60,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if MsgContains(message, "commander") then
 		return npcHandler:say("I'm responsible for the security and reward heroes to our cause. If you are looking for missions, talk to Gnomilly, Gnombold and Gnomagery.", npc, creature)
 	end

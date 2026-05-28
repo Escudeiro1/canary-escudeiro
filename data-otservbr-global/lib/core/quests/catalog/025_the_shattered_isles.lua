@@ -223,7 +223,7 @@ local quest = {
 			states = {
 				[1] = "You told Eleonore to run a small errand. Deliver the 200 gold pieces she \z
 				gave to the herbalist Charlotta in the south-western part of Liberty Bay.",
-				[2] = "You delivered the gold to Charlotta. Return to Eleonore and tell her the secret password: peg leg",
+				[2] = "You delivered the gold to Charlotta. Return to Eleonore, say 'errand' to collect your reward, then tell her the secret password: peg leg",
 			},
 		},
 		[17] = {

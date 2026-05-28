@@ -54,6 +54,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if MsgContains(message, "slime") or MsgContains(message, "mould") or MsgContains(message, "fungus") or MsgContains(message, "sample") then
 		if getPlayerStorageValue(creature, Storage.Quest.U9_1.ElementalistOutfits.Outfit) < 1 then
 			npcHandler:say("If. You. Bring. Slime. Fungus. Samples. Fro-Fro-Fro-Frrrr*chhhhchrk*From. Other. Tower. You. Must. Be. The. Master. Are. You. There. Master?", npc, creature)

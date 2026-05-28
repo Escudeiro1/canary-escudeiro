@@ -51,6 +51,9 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 local function creatureSayCallback(npc, creature, type, message)
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	ParseTerebanSay(npc, creature, message, npcHandler)
 end
 

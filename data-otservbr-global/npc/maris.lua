@@ -54,6 +54,10 @@ local BloodBrothers = Storage.Quest.U8_4.BloodBrothers
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if message == "cookie" then
 		if player:getStorageValue(Storage.Quest.U8_4.BloodBrothers.Mission02) == 1 and player:getItemCount(8199) > 0 and player:getStorageValue(Storage.Quest.U8_4.BloodBrothers.Cookies.Maris) < 0 then
 			npcHandler:say("The good thing about cookies is that they last for a long time. So they are well suited for a boat trip. I'll take some of those, okay?", npc, creature)

@@ -66,6 +66,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if table.contains({ "mission", "note", "vampire" }, message:lower()) then
 		if player:getStorageValue(Storage.Quest.U8_4.BloodBrothers.QuestLine) < 0 then
 			npcHandler:say("Our nightly blood-sucking visitors put the inhabitants of Yalahar in constant danger. The worst thing is that anyone in this city could be a vampire. Maybe an outsider like you could help us. Would you try?", npc, creature)

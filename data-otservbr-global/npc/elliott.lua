@@ -54,6 +54,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if MsgContains(message, "abandoned sewers") then
 		if player:getStorageValue(Storage.Quest.U10_50.DarkTrails.Mission05) == 1 then
 			npcHandler:say("I'm glad to see you back alive and healthy. Did you find anything interesting that you want to {report}?", npc, creature)

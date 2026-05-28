@@ -100,6 +100,10 @@ end
 local function creatureSayCallback(npc, creature, type, message)
 	local talkUser = NPCHANDLER_CONVBEHAVIOR == CONVERSATION_DEFAULT and 0 or creature
 
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
+
 	if MsgContains(message, "present") then
 		local player = Player(creature)
 		if player:getStorageValue(840293) == 1 then

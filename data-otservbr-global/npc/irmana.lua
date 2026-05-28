@@ -204,6 +204,10 @@ local ThreatenedDreams = Storage.Quest.U11_40.ThreatenedDreams
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	local playerSex = player:getSex()
 
 	if MsgContains(message, "fur") then

@@ -60,6 +60,10 @@ end
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if message == "podium" then
 		npcHandler:say("Do you want to appropriately show off your boss trophies and buy an additional podium of vigour for 1000000 Gold?", npc, creature)
 		npcHandler:setTopic(playerId, 1)

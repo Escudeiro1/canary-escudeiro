@@ -55,6 +55,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if sleightInfo[message] ~= nil then
 		if getPlayerStorageValue(creature, sleightInfo[message].storageID) ~= -1 then
 			npcHandler:say("You already have this sleigh!", npc, creature)

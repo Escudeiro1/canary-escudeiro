@@ -54,6 +54,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if MsgContains(message, "friend") then
 		if player:getStorageValue(Storage.Quest.U10_50.DarkTrails.Mission12) == 1 and player:getStorageValue(Storage.Quest.U10_50.DarkTrails.Mission13) < 1 and player:getStorageValue(Storage.Quest.U10_50.OramondQuest.VotingPoints) >= 50 then
 			npcHandler:say({

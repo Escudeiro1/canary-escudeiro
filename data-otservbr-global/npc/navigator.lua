@@ -50,6 +50,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if MsgContains(message, "flou") then
 		if getPlayerStorageValue(creature, Storage.Navigator) < 1 then
 			npcHandler:say("Lhnjei gouthn naumpi! I know why you are here. I can {explain} everything.", npc, creature)

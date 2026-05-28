@@ -54,6 +54,10 @@ local BloodBrothers = Storage.Quest.U8_4.BloodBrothers
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if message then
 		npcHandler:say("What the heck, stop bothering me with your questions.", npc, creature)
 	end

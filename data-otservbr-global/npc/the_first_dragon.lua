@@ -54,6 +54,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)
 	local playerId = player:getId()
 
+
+	if not npcHandler:checkInteraction(npc, creature) then
+		return false
+	end
 	if MsgContains(message, "reward") and player:getStorageValue(Storage.Quest.U11_02.TheFirstDragon.Feathers) == 1 then
 		npcHandler:say({
 			"Have a look at the chests over there. Feel free to take the things you find within. You know, gold, gems and the like. There's also a garment I'm storing here for a while. As it doesn't fit me I have no need for it. ...",
