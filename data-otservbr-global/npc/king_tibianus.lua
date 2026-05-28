@@ -208,6 +208,8 @@ node1:addChildKeyword({ "no" }, StdModule.say, {
 	reset = true,
 })
 -- Basic
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Honor the gods and pay your taxes." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Go and hunt them! For king and country!" })
 keywordHandler:addKeyword({ "eremo" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "It is said that he lives on a small island near Edron. Maybe the people there know more about him.",

@@ -50,6 +50,9 @@ local promoteKeyword = keywordHandler:addKeyword({ "promot" }, StdModule.say, { 
 promoteKeyword:addChildKeyword({ "yes" }, StdModule.promotePlayer, { npcHandler = npcHandler, monk = true, level = 20, cost = 20000 })
 promoteKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Ok, whatever.", reset = true })
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "This world just awaits the wisdom of our pharaoh. It needs that wisdom and will soon learn to appreciate it." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time does not matter to the undead." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Ishebad the chosen." })
 npcHandler:setMessage(MESSAGE_GREET, "Be mourned, pilgrim in flesh. Are you looking for a promotion?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye, |PLAYERNAME|!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye, |PLAYERNAME|!")

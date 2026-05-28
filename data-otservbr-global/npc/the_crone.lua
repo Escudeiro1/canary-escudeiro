@@ -51,6 +51,8 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I don't remember my name, neither my days as a mortal." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or mortal Once I was Vashresamun 's favourite handmaid. But I have fallen from {grace} and now I'm exiled from her tomb." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, |PLAYERNAME|... mortal.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

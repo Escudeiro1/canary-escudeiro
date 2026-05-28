@@ -116,6 +116,10 @@ npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)
 
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "The gods are powerful but it's ultimately up to us to work on our souls' ascension." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Once a djinn claimed to have seen it in a dream. I guess it's just that, some dream of a supernatural creature. Kazzan" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or Thais Tibianus is the shepherd of the lost souls of the so called Thaian empire." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Kazzan Ibn Gadral, caliph of Darama." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

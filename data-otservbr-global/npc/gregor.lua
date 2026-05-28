@@ -242,6 +242,7 @@ keywordHandler:addSpellKeyword({ "great", "light" }, {
 	vocation = VOCATION.BASE_ID.KNIGHT,
 })
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Many brave warriors died on the quest to find that fabled weapon." })
 keywordHandler:addKeyword({ "healing", "spells" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "In this category I have '{Wound Cleansing}' and '{Cure Poison}'.",

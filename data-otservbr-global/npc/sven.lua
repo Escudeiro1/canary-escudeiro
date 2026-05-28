@@ -164,6 +164,15 @@ end
 
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "We know of father Chyll and his freezing breath. We care little for other gods. It is foolish to meddle with beings that are so powerful ... We leave it to the druids and shamans to handle such affairs." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "There are many dangerous creatures that roam our isles. But having seen what men can do to each other, I wouldn't call any of them a monster." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "There is something evil going on. I have it in my bones." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "On the campfire, there are numerous tales about this weapon. It's told that it has been missing since ages ... In my opinion, the power and fame of a weapon shouldn't exceed the power and fame of it's wielder. And I have not heard of any hero whose fame would surpass that of excalibug." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Even here we heard about this powerful man. Travellers from the south only dare to whisper his name." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "We are friends of the Carliners. Still we don't allow their politics to influence our way to handle things here." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "We understand that our friends from Carlin are wary with the realm ruled by Thais but this is not of our concern." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or queen We don't need any kings and queens here. Being the jarl of my people, I see that the laws are followed." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Sven the Younger. My father, Sven the Elder has been missing in the ice waste since I was young. But unless one of our people is buried properly, we assume that he is still in the realm of the living ... Therefore, I am still known as 'the Younger', even though I have grown old." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

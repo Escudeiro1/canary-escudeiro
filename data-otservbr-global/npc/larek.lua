@@ -49,6 +49,9 @@ end
 npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Unfortunately I lost my watch some weeks ago when exploring the steppe and cataloguing the plant life." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Larek. Some call me Larek the Wayfarer, because of my voyages to many faraway lands." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I like to think of myself as a discoverer and explorer of unknown regions and cultures. At the moment I'm acting as a kind of merchant. It is a convenient way to get {Vuzrog's} permission to live here for a time without getting eaten." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

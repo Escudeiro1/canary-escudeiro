@@ -71,6 +71,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	end
 end
 --Basic
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Serafin, pleased to meet you." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, I'm selling fruits and veggies as you can see. If you want to have a closer look, ask me for a trade." })
 keywordHandler:addKeyword({ "alori mort" }, StdModule.say, { npcHandler = npcHandler, text = "There's something about these words which makes me feel awkward. Or maybe it's you who causes that feeling. You better get lost." }, function(player)
 	return player:getStorageValue(Storage.Quest.U8_4.BloodBrothers.Mission03) == 1
 end)

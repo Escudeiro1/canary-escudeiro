@@ -156,6 +156,10 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 -- Sniper Gloves
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "A weapon of myth. I don't believe that this weapon exists." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Someday I will slay that bastard!" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Oops. I have forgotten my watch." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Elane. I am the famous leader of the Paladins." })
 keywordHandler:addKeyword({ "sniper gloves" }, StdModule.say, { npcHandler = npcHandler, text = "We are always looking for sniper gloves. They are supposed to raise accuracy. If you find a pair, bring them here. Maybe I can offer you a nice trade." }, function(player)
 	return player:getItemCount(5875) == 0
 end)

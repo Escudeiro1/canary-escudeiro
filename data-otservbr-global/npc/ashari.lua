@@ -49,6 +49,8 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ashari. Mh... everything all right? You look as if it has some meaning to you? Oh sorry, I hope I did not offend you." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the first voice amongst this community." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello, stranger! These caves must seem strange to you. I wonder what brings you here... maybe you are interested in some work? There are several tasks I could need a hand with.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Bye!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Bye!")

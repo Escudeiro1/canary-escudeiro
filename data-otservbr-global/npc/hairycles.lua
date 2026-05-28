@@ -484,6 +484,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Me know Tibia is all we see." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "You look to suns or moon and time you know." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me is Hairycles." })
 keywordHandler:addKeyword({ "busy" }, StdModule.say, { npcHandler = npcHandler, text = "Me great {wizard}. Me great doctor of {ape people}. Me know many plants. Me old and me have seen many things." })
 keywordHandler:addKeyword({ "wizard" }, StdModule.say, { npcHandler = npcHandler, text = "We see many things and learning quick. Merlkin magic learn quick, quick. We just watch and learn. Sometimes we try and learn." })
 keywordHandler:addKeyword({ "things" }, StdModule.say, { npcHandler = npcHandler, text = "Things not good now. Need helper to do {mission} for me people." })

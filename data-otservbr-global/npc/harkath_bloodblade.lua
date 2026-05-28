@@ -50,6 +50,13 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "or guard The army protects our city. I divided it into three battlegroups." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "They seldom dare to attack the city itself." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "No news are good news." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "In the legends it is told, that this weapon made its wielder able to fight the mightiest demons hand to hand." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He is allied with evil itself! Each time we kill him he returns to take revenge." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "HAIL TO KING TIBIANUS, OUR WISE LEADER!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the general of the king's army." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

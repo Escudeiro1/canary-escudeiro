@@ -55,6 +55,12 @@ end
 npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Once you leave your mortal shell, you'll become one with the gods." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "It seems less rotten than most other cities, but still purification would do no harm." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais needs to be cleansed by fire just like Venore!" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Kings, queens ... I've seen them come and go. Everything fades, even the glory and wealth of the richest." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's time How much time is left?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "What's a name worth in your eyes? And more important: Does the choice of your name decide your fate? Perhaps we will never know." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

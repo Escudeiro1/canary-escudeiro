@@ -50,6 +50,12 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "A weapon of legend. We rarely hear stories about it around here, however." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Carlin is a city far, far away from here. They say it is run by women and druids." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is the capital of a kingdom on a far-off continent." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "The time is 7:48 am, pilgrim." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Jakahr." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a member of the Postmasters Guild. If you have questions about the Royal Tibia Mail System or the depots, ask me." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello, mourned pilgrim. How may I help you |PLAYERNAME|?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "It was an honour to serve you, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "It was an honour to serve you.")

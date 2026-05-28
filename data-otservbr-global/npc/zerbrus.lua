@@ -94,6 +94,7 @@ local function addMonsterKeyword(level, text, marks)
 end
 
 -- Monster
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Hmm, player. I really don't know if you should go into the wilderness without a shield. You should earn some money by hunting rats under the village first until you can afford at least a wooden shield. You've already grown some, player. You can either stay with rats or leave town to hunt spiders or snakes. I'll mark some spawns on your map." })
 keywordHandler:addKeyword({ "monster" }, StdModule.say, { npcHandler = npcHandler, text = "Hmm, |PLAYERNAME|. I really don't know if you should go into the wilderness without a shield. You should earn some money by hunting rats under the village first until you can afford at least a wooden shield." }, function(player)
 	return not player:hasRookgaardShield()
 end)

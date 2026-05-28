@@ -122,6 +122,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "We. Are. Sen-Sen-Sen-try! Stand. Sentry. We. Will-ill-ill-ill*chhhhrrrk*. I. Am. Sorry. It. Seems. I. Am-Am-AAAAA*chhhrk*Am. Broken." })
 npcHandler:setMessage(MESSAGE_GREET, "The Master is-is-is-is de-ad. Plea*chrrrrchk*se. Be. In. Mourning.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

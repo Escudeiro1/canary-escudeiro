@@ -50,6 +50,13 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "In the long run, it would pay off to focus all resources on a magicians corps, but the king is not convinced of that. Not yet." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I don't care about mundane gossip. Trimegis Thais NPCs" })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "The only weapon I need is my magic." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He failed in his quest for power since he ultimately forfeited greater powers for a quick but limited powerboost by enslaving himself to some dark entities." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time does not matter in the end." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am commonly known as Trimegis." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the {kings} new {courtmage} and advisor in arcane matters." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

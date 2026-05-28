@@ -173,6 +173,13 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Gods - if we didn't have them, we would have invented them." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "If you want to find out about excalibug you should ask the more sinister characters in Thais not a respectable woman like myself!" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I went there on holiday once. Just goes to show that women are much better at running a place than men. King Tibianus could learn a thing or two from Queen Eloise." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "<mutters> Here we go again  ... Hail to King Tibianus! ... Don't make me do that again!" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time waits for no one! Not even you, sweetheart, so please do hurry up." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Topsy." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell runes as well as spirit, health and mana potions - your best friends in any dungeon!" })
 npcHandler:setMessage(
 	MESSAGE_GREET,
 	"Hello, dear |PLAYERNAME|. How can I help you? \z

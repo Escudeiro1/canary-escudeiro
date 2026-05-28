@@ -72,6 +72,13 @@ stakeKeyword:addChildKeyword({ "yes" }, StdModule.say, { npcHandler = npcHandler
 stakeKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Phew. No chair-killing.", reset = true })
 
 -- Others
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "News? Of course there's news! There's a new furniture man in town, and he's here to stay!" })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Tibia is a wonderful place full of business opportunities." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is obsessed with its past. Everybody here is so proud of their history. Bah! Thais might have a long history, but it has no idea when it comes to interior decoration." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "His Royal Highness will start to appreciate the superior quality of our stock soon enough!" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Any time's a good time to buy some furniture." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My friends call me Gamon. My fans call me the incredible Gammy!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am Thais's foremost furniture salesman." })
 npcHandler:setMessage(MESSAGE_GREET, "Nice to meet you, Mister |PLAYERNAME|! Looking for furniture? You've come to the right place!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "You'll come back. They all do.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye.")

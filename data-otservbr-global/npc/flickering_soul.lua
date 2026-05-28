@@ -195,6 +195,7 @@ end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, playerSayCallback)
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Even in the lands of the dead this one caused a stir. The dead were whispering his name. It made me feel jealous and angry at first, but at some point, after much self reflection, I could recognize my own faults in the stories about him. ... It was almost like looking into a mirror for the first time. However he lived way later than me and I never met his soul here so I can't tell more about him." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, living soul!")
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

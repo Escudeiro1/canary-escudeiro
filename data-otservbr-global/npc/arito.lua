@@ -114,6 +114,14 @@ npcConfig.voices = {
 	{ text = "Come in, have a drink and something to eat." },
 }
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Our Pharaoh does not have any use for such a weapon. As powerful as it may be, it is nothing compared to his divine power." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "This servant of evil won't even dare to enter our city and to call the wrath of our Pharaoh upon him." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Why? This is our world of course." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Carlin is the twin sister of Thais. Another city that hasn't found the true path yet." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is the capital of an insolent realm. Its people embrace life without understanding the alternative." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is exactly 11:05 pm." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Arito." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the owner of this tavern." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Do visit us again.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Do visit us again.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Sure, browse through my offers.")

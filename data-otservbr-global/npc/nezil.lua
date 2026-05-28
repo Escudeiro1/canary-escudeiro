@@ -49,6 +49,9 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "I think it's about 8:57 pm. If you bought a watch, you'd know for sure." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Nezil Whetstone, son of Fire of the Savage Axes. I and my sis' Bezil are selling stuff, ye' know?" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "We sell equipment of all kinds. If there's anything you need, ask me for a trade." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

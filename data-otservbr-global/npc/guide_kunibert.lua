@@ -89,6 +89,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's time right now. Which other {information} do you require?" })
 keywordHandler:addKeyword({ "information" }, StdModule.say, { npcHandler = npcHandler, text = "Currently, I can tell you all about the town, its temple, the bank, shops, spell trainers and the depot, as well as about the world status." })
 keywordHandler:addKeyword({ "temple" }, StdModule.say, { npcHandler = npcHandler, text = "The temple can be found in one of the uptown districts. Look for stairs up from the lower city, you'll find the temple in the northwest of the upper city." })
 keywordHandler:addKeyword({ "bank" }, StdModule.say, { npcHandler = npcHandler, text = "The First Oramond Bank is an important part of Rathleton, and is situated in the centre of the upper city. I can mark it on your map if you want." })

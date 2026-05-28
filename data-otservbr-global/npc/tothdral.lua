@@ -45,6 +45,11 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "This world is only a shadow of the worlds that have been. That was long ago, before the true gods fought each other in the godwars and the false gods rose to claim their heritage." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "or Venore or Thais or Edron Those cities that bow to the false gods will fall prey to their treacherous greed sooner or later." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is your problem. It is no longer mine." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tothdral. They call me 'The Seeker Beyond the Grave'." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the foremost astrologer and supreme magus of this city." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

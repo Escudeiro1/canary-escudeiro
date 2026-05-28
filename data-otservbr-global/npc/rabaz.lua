@@ -192,6 +192,8 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Adventurers constantly come up with some stories and half-truths about this weapon. For instance, some claim the weapon has been found and was taken away by the gods. ... This, however, is based on a completely unrelated story of Tibia's history. After all these years it's quite hard to figure out what is fact and what is myth." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I was sent by the Edron academy to help the kingdom's dwarven allies with magical supplies. You have no idea what an enormous logistic problem this poses. ... Actually, I had no idea either. Supplies are short and dwarfs are stubborn. This combination works not too well, you know? The dwarfs are not too supportive towards my efforts and my main customers are adventurers like you. ... I'm not sure if this is what the academy leaders had in mind with their help, so I wouldn't be too surprised if they would pull off the support and abandon this shop. ... Only time will tell how things develop. For now, they are content with this status quo." })
 npcHandler:setMessage(MESSAGE_GREET, "Ah, a customer! Please feel free to browse my wares, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye.")

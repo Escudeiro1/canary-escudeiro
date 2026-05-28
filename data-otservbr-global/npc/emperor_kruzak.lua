@@ -181,6 +181,15 @@ node1:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, onlyFo
 keywordHandler:addGreetKeyword({ "hail emperor" }, { npcHandler = npcHandler, text = "Hiho, may fire and earth bless you, my child. Are you looking for a promotion?" })
 keywordHandler:addGreetKeyword({ "salutations emperor" }, { npcHandler = npcHandler, text = "Hiho, may fire and earth bless you, my child. Are you looking for a promotion?" })
 
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Well, it's up to the younger ones to slay the beasts that roam the lands and the tunnels." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Well, well, well, the godblade. A myth? Perhaps. Even in my youth, it was only a legend." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Well, we are prepared even for him." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "or lands Well, the gods handed the lands over to the younger races, but my people will leave this word in dignity." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Well we are at peace with Carlin and Thais." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Well we are at peace with Carlin and Thais." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Well, after some centuries I stopped to worry about time anymore." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Well, I am Emperor Kruzak Dustbeard, son of Fire and Earth, second only to the gods, jawoll." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Well, I'm the emperor of the dwarfs. It's my duty to protect my folk and to see that justice is done." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Farewell, |PLAYERNAME|, my child!")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

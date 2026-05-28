@@ -57,6 +57,7 @@ end
 npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a preserver of nature. It's a sad thing, but as so many so-called intelligent beings tamper with nature's balance, it has become necessary to adjust things to maintain the {balance}." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

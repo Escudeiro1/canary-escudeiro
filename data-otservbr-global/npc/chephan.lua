@@ -50,6 +50,13 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "My recipes are family secrets, sorry." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Just an oversized kitchen knife. Better buy a real one." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "See this fork? Now imagine what a hero like you could do with that fork to an evil sorcerer! Care to buy one?" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "So many women and so little interest in cooking, horrible." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thaian cooking utensils are of low quality. Make sure to buy our quality wares here as soon as possible." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Watches are sold in the south-eastern part of this warehouse." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Chephan, at your service." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

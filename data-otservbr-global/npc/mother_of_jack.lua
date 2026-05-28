@@ -97,6 +97,13 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "I would never allow Jack to go away from here, he stays with us." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I'm afraid I don't understand." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I'm happy right here as long as Jack and Jane are with me." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I don't even know where that is." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's exactly 4:26 pm." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the mother of Jack and Jane." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I do the cooking and some other housework. Jack's sister Jane is helping me a lot, though." })
 npcHandler:setMessage(MESSAGE_GREET, "I demand an explanation of you entering our house without any invitation.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

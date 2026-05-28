@@ -89,6 +89,15 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "They should remember old dwarfish rotworm tactics. Think like a worm and the battle is almost won." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Unwormish creatures they are." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Who needs news if the old things are still good enough? Humgolf Drilling licence" })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Silly fairy tale." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "A true enemy of the worms." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "More nice beneath this noisy green surface." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time does not matter to a dwarf who understands the ways of the worm." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Humgolf Molesight, Son of Earth, from the Molten Rock." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am chief rotwormtamer of Kazordoon. I sell rotworms and buy meat and tasty, fresh rats for my worms." })
 npcHandler:setMessage(MESSAGE_GREET, "|PLAYERNAME|, good day .. or night, whatever.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

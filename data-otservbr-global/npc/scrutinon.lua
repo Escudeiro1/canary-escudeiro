@@ -89,6 +89,7 @@ addTravelKeyword("venore", Position(32954, 32022, 6))
 addTravelKeyword("darashia", Position(33289, 32480, 6))
 
 -- Basic
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am waiting. Beyond time and ever watchful. And I expected you, traveller." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = {

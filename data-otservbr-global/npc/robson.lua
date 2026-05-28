@@ -98,6 +98,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Robson Stonespitter, Son of Earth of the Dragoneater fellowship." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I was once a trader but after some years stranded on this remote isle, I felt that I liked that kind of life better and just stayed here even after steamships found that isle." })
 npcHandler:setMessage(MESSAGE_GREET, "Hrmpf, I'd say welcome if I felt like lying.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "See you next time!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "No patience at all!")

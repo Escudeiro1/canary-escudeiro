@@ -150,6 +150,15 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "We know of father Chyll and his freezing breath. We care little for other gods. It is foolish to meddle with beings that are so powerful ... We leave it to the druids and shamans to handle such affairs." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "At this remote spot, news are old news. Did you hear that quara attacked Liberty Bay?" })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "On the campfire, there are numerous tales about this weapon. It's told that it has been missing since ages ... In my opinion, the power and fame of a weapon shouldn't exceed the power and fame of it's wielder. And I have not heard of any hero whose fame would surpass that of excalibug." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Even here we heard about this powerful man. Travellers from the south only dare to whisper his name." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "We are friends of the Carliners. Still we don't allow their politics to influence our way to handle things here." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "We understand that our friends from Carlin are wary with the realm ruled by Thais but this is not of our concern." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or queen No kings or queens rule these remote lands." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Lurik. Odd enough you ask though. People hardly do that nowadays. I feel as if my name was  painted above my head or something." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the local contact of the explorer's society. I just love it to be at the frontier of all known lands." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to the {explorer society} headquarter of Svargrond, |PLAYERNAME|!")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

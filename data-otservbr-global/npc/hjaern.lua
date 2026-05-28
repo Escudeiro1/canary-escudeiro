@@ -231,6 +231,15 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "or Uman or Zathroth or Banor Your foreign gods are concepts we don't really understand." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Even the so-called monsters have their place in the world." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "The news I receive are from the spiritual world. They would be of little importance for you." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "That's something I only heard about in curious questions of people like you." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He is of no importance here." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "or Carlin or Venore The far away cities of men, as famous as they might be, are nothing than distant echoes over here." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or queen There should be no such thing like a human that is ruling over the lives of other humans." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "The spirits call me by the name of Hjaern and that is how I shall be known." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I would not consider this as a job. But one of my responsibilities is the training of young shamans. Even druids can learn a few new tricks from me." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, |PLAYERNAME|. The {spiritual} world looks upon you and your deeds.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

@@ -63,6 +63,15 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "The royal army is here to protect us." })
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "They are the creators of Tibia and all life on it." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Even they have their part in the bigger scheme. Even if it eludes us mere mortals." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "This blasphemous weapon has to be destroyed." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "The gods only know what this spawn of darkness might be up to." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "It's the world of Tibia." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king resides in the far away city of Thais." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now, it is 8:01 pm. Ask Shiantis for a watch, if you need one." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Brother Yberius." })
 keywordHandler:addKeyword({ "adventurer stone" }, StdModule.say, { npcHandler = npcHandler, text = "Keep your adventurer's stone well." }, function(player)
 	return player:getItemById(16277, true)
 end)

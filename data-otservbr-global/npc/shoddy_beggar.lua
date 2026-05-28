@@ -169,6 +169,12 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Every day is the same in the streets." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I heard about the legend, but I don't know how much of it is actually true." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "It is but one world in an endless sea of light." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Must be about 4:54 pm. the time given seems to be arbitrary but not random, if you ask every second he increments the minute accordingly" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is... not of your concern." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Are you kidding me? Do I look like a... well, we'd better change the topic." })
 npcHandler:setMessage(MESSAGE_GREET, "What do you want? Listen to the old madman? If you have nothing to spare, leave me alone.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Yes, whatever.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Yes, whatever.")

@@ -55,6 +55,9 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I will not discuss this issue now and here. If you have any questions about him, the academy in Edron is the place to ask ... Considering that this is a rather delicate issue, you should have a good reason to ask though." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Well, Thais is not the city it used to be. Too many people, too noisy, too dirty." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king's support of the academy is dwindling. I hope results in my researches will change this significantly." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings. I have only little time to {spare}, so the conversation will be short. I teach sorcerer {spells} and buy a few magical {ingredients}.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

@@ -58,6 +58,7 @@ local function onReleaseFocus(npc, creature)
 	ClearTerebanMessages(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tereban." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings, friend. Good you are showing up.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)

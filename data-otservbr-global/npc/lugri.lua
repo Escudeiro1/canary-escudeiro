@@ -200,6 +200,13 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "They are a challenge to sift the chaff from the wheat." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "It's existence is just a lie to inspire hope and bravery in the hearts of the followers of good." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The world of Tibia is to be taken by the strongest." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "This puny king is no threat for our master's plans." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Who cares?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Lugri." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a priest of Zathroth, the bringer of dark secrets." })
 npcHandler:setMessage(MESSAGE_GREET, "What is it that you {want}, |PLAYERNAME|?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Bye.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Bye.")

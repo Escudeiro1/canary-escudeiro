@@ -91,6 +91,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "/ Carlin / Venore / Darashia / Edron It's a place full of stone buildings and mortal beings. I guess you call it a town. But I'm still not sure which purpose it serves." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is a human concept, traveler." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ikassis. It means ,the long-sighted'." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Job? I have no idea what this peculiar word could mean." })
 npcHandler:setMessage(MESSAGE_GREET, "Nature's blessing, traveler!")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

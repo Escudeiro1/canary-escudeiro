@@ -253,6 +253,12 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "You should ask about that in one of the temples." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "UH! What a terrifying topic. Please let us speak about something more pleasant, I'm a weak and small woman after all. Aruda" })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "You should ask Oswald about news. He loves them." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I'd like to visit the beach more often, but I guess it's too dangerous." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king that lives in this fascinating castle? I think he does look kind of cute in his luxurious robes, doesn't he?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a little sad that you seem to have forgotten me, handsome. I'm Aruda." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "I hope to see you soon.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye, |PLAYERNAME|. I really hope we'll talk again soon.")
 

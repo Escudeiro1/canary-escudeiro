@@ -90,6 +90,13 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "It is rumoured to be hidden somewhere beneath Edron." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He will discover where his path will lead him to. But no matter how ruthless he is, even he stays away from the ruins of the cathedral." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "We have no relations with that town." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is far and we have little contact with the kingdom's capital." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is a worldly ruler, and we don't burden ourselves with worldly concerns anymore." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "I own no watch and only a small number of other worldly possessions." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am just a humble monk and responsible to maintain this little outpost that is leftover from our grand order." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, dear traveller.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

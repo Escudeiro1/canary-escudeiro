@@ -106,6 +106,8 @@ end, function(player)
 end)
 boxKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "HEY! You don't have one! Stop playing tricks on me or I'll give you some extra work!", reset = true })
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "You can learn much about Tibia's gods in our library." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Good monsters to start hunting are rats. They live in the sewers below the village." })
 keywordHandler:addKeyword({ "mission" }, StdModule.say, { npcHandler = npcHandler, text = "Well, I would like to send our king a little present but I do not have a suitable box. If you find a nice box, please bring it to me." }, function(player)
 	return player:getLevel() >= 4
 end)

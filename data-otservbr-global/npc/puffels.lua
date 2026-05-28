@@ -193,6 +193,16 @@ keywordHandler:addSpellKeyword({ "annihilation" }, {
 	vocation = VOCATION.BASE_ID.KNIGHT,
 })
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Fine army that is. Half of them have already deserted." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I heard in Thais the new brand of cheese was... uhm..." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I have no use for such stuff." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "The day will come even he makes a fatal casting mistake... I know what I am talking about." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Bah, the whole Tibia can &#&$*# my #$&*!" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I don't care about some remote cities." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I was there once, almost died. The fools there mistook me for an ordinary rat, can you believe that!?" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or tibianus I give nothing for kings, queens... or other people at all." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Magister Puffels, any problem with that?" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or disturbing I have to teach the {spells} of least importance to some fools. Well, let's face it - to knights." })
 keywordHandler:addKeyword({ "healing", "spells" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "In this category I have '{Bruise Bane}', '{Cure Bleeding}', '{Wound Cleansing}', \z

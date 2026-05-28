@@ -65,6 +65,7 @@ addHealKeyword("You are burning. Let me quench those flames.", CONDITION_FIRE, C
 addHealKeyword("You are poisoned. Let me soothe your pain.", CONDITION_POISON, CONST_ME_MAGIC_RED)
 addHealKeyword("You are electrified, my child. Let me help you to stop trembling.", CONDITION_ENERGY, CONST_ME_MAGIC_GREEN)
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Kais, Kais the Bound. Eternally {fixed} to the wretched place, unless... unless I prove my worth in aiding all those who seek my {help}." })
 keywordHandler:addKeyword({ "heal" }, StdModule.say, { npcHandler = npcHandler, text = "You are hurt, my child. I will heal your wounds." }, function(player)
 	return player:getHealth() < 40
 end, function(player)

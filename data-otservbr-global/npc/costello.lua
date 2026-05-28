@@ -110,6 +110,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The deceased leaders of the Thaian empire rest beneath this monastery in tombs and {crypts}." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Costello." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the abbot of the White Raven Monastery on the {Isle} of the Kings." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome, |PLAYERNAME|! Feel free to tell me what has brought you here.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. Come back soon.")
 

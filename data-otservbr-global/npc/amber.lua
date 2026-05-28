@@ -129,6 +129,7 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 -- Basic keywords
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, I fought orcs, cyclopses, minotaurs, and even green dragons." })
 keywordHandler:addKeyword({ "hint" }, StdModule.rookgaardHints, { npcHandler = npcHandler })
 keywordHandler:addKeyword({ "how", "are", "you" }, StdModule.say, {
 	npcHandler = npcHandler,

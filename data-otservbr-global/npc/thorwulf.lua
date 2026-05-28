@@ -198,6 +198,16 @@ keywordHandler:addSpellKeyword({ "annihilation" }, {
 	vocation = VOCATION.BASE_ID.KNIGHT,
 })
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "I couldn't care less for gods. Every true warrior creates his own fortune." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Monsters are a challenge for the heart and the body of a fighter. Those who are worthy will grow on it, the unworthy will perish." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "There are no news ... yet. But I can smell blood and steel in the air. I can feel it, there is going to be a battle soon." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "A true warrior will kill his opponents with a rusty knife. There is no need for a mighty weapon. Where is the honour if the weapon is more powerful than its wielder?" })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Bah, to know that he is a sorcerer means to know that he is a coward." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I care little for the people from Carlin. All of them are so weak and timid. I could not care less for their concerns. If they want something to be done, they will have to do it on their own." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is not better than Carlin." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "How can someone who never proved himself as a warrior lead people into a battle?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Thorwulf, slayer of dragons, giants and yetis." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am an expert fighter and I can teach a true warrior in the arts of war." })
 keywordHandler:addKeyword({ "healing", "spells" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "In this category I have '{Bruise Bane}', '{Cure Bleeding}', '{Wound Cleansing}', \z

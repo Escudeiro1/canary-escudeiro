@@ -166,6 +166,10 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I know only Ankrahmun. What else could there be?" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Buy a watch on the bazar." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am the mourned Fenech." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell runes, wands, rods and spellbooks." })
 npcHandler:setMessage(MESSAGE_GREET, "Be mourned pilgrim in flesh and welcome to the magic store.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "May enlightenment be your path.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "May enlightenment be your path.")

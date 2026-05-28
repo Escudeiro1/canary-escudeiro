@@ -102,6 +102,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Meeep! Meeep!" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Wooooof! <wiggle> <wiggle> <wiggle>" })
 npcHandler:setMessage(MESSAGE_GREET, "<sniff> Woof! <sniff>")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Woof! <wiggle>")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Woof! <wiggle>")

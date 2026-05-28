@@ -91,6 +91,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	end
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Emael." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "My job is to showcase the trophies of slain monsters as aesthetical as possible. You can admire my work here in the Adventurers' Guild." })
 npcHandler:setMessage(MESSAGE_GREET, { "Hello! Ever asked yourself who killed all the monsters for the wall trophies? Yeah, that was me, Emael the Beasthunter! I am an expert in displaying trophies. ...", "So if you have at least some dangerous monster to show off I strongly advise you to aquire a {podium} of vigour." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "I wish you a good hunt. Goodbye!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good hunting!")

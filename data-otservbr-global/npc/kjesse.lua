@@ -64,6 +64,14 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Our believes are different from those of the outsiders. Ask on Nibelor to learn more about our believes." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I am not overly interested in the affairs of men." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "It's only an outsider's tale." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He must be driven by the darkest spirits." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "or Carlin or Venore Speak to the outsiders who live here to learn about them and their cities." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Our jarl is more of a spokesperson. We don't know any kings or queens here." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Kjesse." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a shaman." })
 keywordHandler:addKeyword({ "adventurer stone" }, StdModule.say, { npcHandler = npcHandler, text = "Keep your adventurer's stone well." }, function(player)
 	return player:getItemById(16277, true)
 end)

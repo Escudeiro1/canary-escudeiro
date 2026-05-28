@@ -50,6 +50,15 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "I daily pray to the gods to protect me from harm. I still believe in a wonder to come which will get me back to Carlin." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "The good news are: I got not killed by some drunken barbarian or unskilled axe thrower. The bad news are: I am still stranded here." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I think we are out of stock." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Shush! Don't speak that name aloud. It might call him here." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Oh sweet Carlin, when will I see you again?" })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Even Thais could not be worse than this frozen hell hole here." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I heard they have a king in Thais." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Robert." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am responsible for the trade with weapons and armor here in the arena. I constantly beg my superior Bertha to give me some other job or, even better, to send me back to Carlin but the cold seems to have frozen her heart." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

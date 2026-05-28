@@ -64,6 +64,8 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Kasmir Ibn Darasir." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a chosen of Daraman." })
 keywordHandler:addKeyword({ "adventurer stone" }, StdModule.say, { npcHandler = npcHandler, text = "Keep your adventurer's stone well." }, function(player)
 	return player:getItemById(16277, true)
 end)

@@ -124,6 +124,13 @@ end, function(player)
 	return player:removeItem(3097, 1)
 end)
 -- Kick
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Breezelda brought rum from Port *HICKS* er Hope." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Teeheehee, I don't know but you two are funny!" })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Hey, who of you knows a story about that??? You or you? ... You are twins, aren't you?" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "or Thais or Edron or Venore Hey, who of you knows a story about that??? You or you? ... You are twins, aren't you?" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I'M THE KING OF THIS SHIP AND ALL RUM FLASKS IN IT!!" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "There was a time I was called Bejorn. But everyone calls me Buddel. ..... and you are?" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a fisher aaaaaaand maybe I can show you the other islands. Depends on how good I know you two. Just ask me for a passage!" })
 keywordHandler:addKeyword({ "kick" }, StdModule.kick, { npcHandler = npcHandler, text = "Get out o' here!*HICKS*", destination = { Position(32255, 31193, 7), Position(32256, 31193, 7), Position(32257, 31193, 7) } })
 
 keywordHandler:addKeyword({ "passage" }, StdModule.say, { npcHandler = npcHandler, text = "Where are we at the moment? Is this Svargrond? Ahh yes!*HICKS* Where do you want to go?" })

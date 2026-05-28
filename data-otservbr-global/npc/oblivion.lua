@@ -99,6 +99,9 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The eye of the gods." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "All gone, all but Oblivion remains." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "A guest at the doors." })
 npcHandler:setMessage(MESSAGE_GREET, "A shadow preceded you. You wish?")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

@@ -177,6 +177,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "It hurts me to even think about my mortal past. Its long lost and forgotten. So don't ask me about it!" })
 keywordHandler:addKeyword({ "stay" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "It's my curse to be the eternal {guardian} of this ancient {place}.",

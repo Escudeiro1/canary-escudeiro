@@ -51,6 +51,9 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "The ... {enemy} knows no time. ... He knows no haste.  ... Our only chance." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "There ... was a name once. ... So long ago." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "There ... is a {mission}. I have a mission to fulfil. ... My memory is coming back. ... Some of it." })
 npcHandler:setMessage(MESSAGE_GREET, "Where .. am I?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good .. bye.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good .. bye.")

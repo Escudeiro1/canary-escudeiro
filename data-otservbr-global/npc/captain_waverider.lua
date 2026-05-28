@@ -94,6 +94,12 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Rumour has it that old Captain Blackbeard found it in a dead sea serpent once and hid it on Treasure Island. Oh my, why can't I keep my mouth shut about Treasure Island." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "As legend has it, he has hidden some of his magical treasures on Treasure Island. Oh my, I should not mention Treasure Island in front of strangers." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "This city is too far away to care about." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "A rough place with rough people as far as I have heard." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is enormously rich. His wealth is only dwarfed by the treasures of Treasure Island ... Oops, I guess I should not have mentioned that." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Oh I do nothing of importance. I mind my own business, catch a fish now and then, and try to find some riches on Treasure Island ... oops, I guess I should not have mentioned that." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings, daring adventurer. If you need a {passage}, let me know.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Oh well.")

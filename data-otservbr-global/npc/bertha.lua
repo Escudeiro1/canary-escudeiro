@@ -83,6 +83,16 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "The gods seem to be far away in this corner of the world." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "There are enough monsters around to make you think twice about leaving the city." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "News? Are you mocking me? Almost any news would be good news. As long as it concerns Carlin's affairs, nothing seems to change for the better." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I toyed with the idea to spread the rumour that Excalibug might be hidden in the mines. I think if enough adventurers were lured into the mines, they might drive out the ones that occupy them now ... So do me a favour, when somebody asks about Excalibug, tell them it's down there in those mines." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Well, HE would only be needed to make things worse over here." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Carlin expects wonders of me. However, as long as they don't send some considerable help, they can wait until moss is growing in their hair." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I guess whole Thais is laughing at the failure of our operations." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The pompous king of Thais might be involved in the take-over of our mines." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Bertha from Carlin." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a trader by profession but here you could also call me the ambassador of Carlin. However, there is little I can do about our problems, and support from Carlin is virtually non-existent." })
 keywordHandler:addKeyword({ "equipment" }, StdModule.say, { npcHandler = npcHandler, text = "I sell equipment for your adventure! Just ask me for a {trade} to see my wares." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Oh, please come in, |PLAYERNAME|. What can I do for you? If you need adventure equipment, ask me for a {trade}.")

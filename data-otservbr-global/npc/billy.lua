@@ -63,6 +63,7 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 -- Basic keywords
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Don't be scared, you should be safe as long as you stay in town. Dangerous monsters are roaming the dungeons." })
 keywordHandler:addKeyword({ "hint" }, StdModule.rookgaardHints, { npcHandler = npcHandler })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Billy." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a farmer and a {cook}. I'd love to make pancakes, but I'm lacking a good {pan}." })

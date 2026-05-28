@@ -81,6 +81,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "You meaning my specials, eh?" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is 7:10 am. You needing clock for your house?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me is Iwar Woodpecker, son of Earth from the Savage Axes. Me run this store." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "You moving to new home? Me specialist for equipping it." })
 npcHandler:setMessage(MESSAGE_GREET, "Hiho Storm Killer! Welcome to Kazordoon furniture store.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Well, bye then.")
 

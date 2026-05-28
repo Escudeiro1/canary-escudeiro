@@ -144,6 +144,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is exactly current time." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am selling equipment for adventurers. If you need anything, let me know." })
 keywordHandler:addKeyword({ "dog" }, StdModule.say, { npcHandler = npcHandler, text = "This is Ruffy my dog, please don't do him any harm." })
 keywordHandler:addKeyword({ "offer" }, StdModule.say, { npcHandler = npcHandler, text = "I sell torches, fishing rods, worms, ropes, water hoses, backpacks, apples, and maps." })

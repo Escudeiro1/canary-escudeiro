@@ -57,6 +57,10 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Our brave army, which protects our city, consists of three battle groups." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Gorn and I searched for this weapon in the darkest corners of each dungeon, but found nothing." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "King Tibianus III is our wise and just leader!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a proud member of the king's army. It is my duty to guard the castle. Sometimes I have to deal with less important work though." })
 npcHandler:setMessage(MESSAGE_GREET, "LONG LIVE KING TIBIANUS!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "LONG LIVE THE KING!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "LONG LIVE THE KING!")

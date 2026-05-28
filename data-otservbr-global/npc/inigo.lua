@@ -136,6 +136,7 @@ npcHandler:setMessage(
 	Though it must be different from where you came from, I'm sure you can help us. But first, I can {help} YOU."
 )
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now it is 7:17 am - a good time for a trade!" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "Ah, back in the old days, I was called Inigo Verasquiriz, but I doubt my family would acknowledge me. \z

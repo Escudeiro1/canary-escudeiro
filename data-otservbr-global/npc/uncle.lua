@@ -218,6 +218,9 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "These women would be amusing if their stupidity were not endangering so many of our important projects." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is somehow the great brother of our lovely Venore. Of course, we are under the legislation of the Thaian king but our wise traders were able to gain many concessions in the past and we are planning on keeping this process running." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Just call me Uncle, my dear friend. Sooner or later, we might become very familiar." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

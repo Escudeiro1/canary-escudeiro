@@ -301,6 +301,15 @@ node3:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, onlyFo
 local node4 = node3:addChildKeyword({ "yes" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Good, let's {begin} then!" }) --, confirmWedding, {})
 node4:addChildKeyword({ "begin" }, confirmWedding, {})
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "The gods of good guard us and guide us, the gods of evil want to destroy us and steal our souls!" })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "They are creatures of the gods of evil!" })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I have had no enlightening visions lately." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He is a favourite of the gods of evil and one of the champions of evil. Lynda" })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The world of Tibia is the creation of the gods." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "King Tibianus is our benevolent sovereign." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now, it is 12:42 am." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Lynda. And the spirits tell me that you are Player." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or pilgrim I am a priest of the great pantheon." })
 keywordHandler:addKeyword({ "remove" }, confirmRemoveEngage, {})
 
 keywordHandler:addKeyword({ "divorce" }, confirmDivorce, {})

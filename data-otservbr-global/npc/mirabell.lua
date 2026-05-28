@@ -114,6 +114,14 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Sadly most of them are too disciplined to visit my tavern." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I heard the Knights of the True Blood are looking for it on this isle." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I heard horrible things about him." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I think Edron is the best place in Tibia." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "They should return to the Thaian realm." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais will loose influence on Edron more and more." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is 11:00 pm right now." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Mirabell." })
 keywordHandler:addKeyword({ "drink" }, StdModule.say, { npcHandler = npcHandler, text = "I can offer you beer, wine, lemonade and water. If you'd like to see my offers, ask me for a {trade}." })
 keywordHandler:addKeyword({ "food" }, StdModule.say, { npcHandler = npcHandler, text = "Are you looking for food? I have bread, cheese, ham, and meat. If you'd like to see my offers, ask me for a {trade}." })
 

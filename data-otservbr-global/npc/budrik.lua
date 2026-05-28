@@ -127,6 +127,7 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 -- Basic
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "In the deeper mines we discover some nasty beasts now and then." })
 keywordHandler:addKeyword({ "disturb" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the foreman of this {mine}." })
 keywordHandler:addAliasKeyword({ "job" })
 keywordHandler:addAliasKeyword({ "shop" })

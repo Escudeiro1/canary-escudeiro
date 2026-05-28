@@ -143,6 +143,11 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Me make often hunt on big nasties. Me small, but very big muscles me have, jawoll." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "You want sell me excalibug for 1,000 platinum coins and an enchanted armor?" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is 9:48 pm now." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me is Uzgod Hammerslammer, son of Fire from the Savage Axes." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Me a blacksmith is, an' weapons me sell. You want buy weapons?" })
 npcHandler:setMessage(MESSAGE_GREET, "Hiho |PLAYERNAME|! Wanna weapon, eh?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Guut bye. Coming back soon.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Guut bye. Coming back soon.")

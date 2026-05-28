@@ -827,6 +827,7 @@ local function onTradeRequest(npc, creature, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me Yasir." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Si, jema ze harun. <waves>")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:setCallback(CALLBACK_ON_TRADE_REQUEST, onTradeRequest)

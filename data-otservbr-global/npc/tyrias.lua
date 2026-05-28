@@ -64,6 +64,9 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Of course he had sunken low before he became an incarnation of evil. On the other hand, he is an example that a mere human can leave the boundaries of his mortal shell with the help of the gods. ... Therefore, he should not only strike people with awe but also inspire the wish to strive for a better life-form." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais and Liberty Bay are quite different. We have our own problems, and we will have to find our own solutions." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "It is sad that the king is so far away. Without his guidance, things sometimes just don't work out as well as they could. Also people say that others might have too much influence on decisions. This is of course not the king's fault." })
 keywordHandler:addKeyword({ "adventurer stone" }, StdModule.say, { npcHandler = npcHandler, text = "Keep your adventurer's stone well." }, function(player)
 	return player:getItemById(16277, true)
 end)

@@ -81,6 +81,13 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "I'd love to discuss the teachings of the gods with you but this is neither the time nor the place." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "One day this weapon will be unearthed and then it will be wielded against the servants of the evil." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He is only one of the many servants of the evil. Eventually he will fall but there will be others to take his place." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "We all have to help to make this world a better place." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "The druids have their own way to interpret the gods' will and this has to be respected." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Many see Thais as a fallen city but it is only the loudness of an ugly minority that gives people this impression." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is a wise ruler but his realm is large and we all need to work hard to make the world a better place." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "May the gods bless you.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "May the gods bless you.")
 

@@ -110,6 +110,15 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Your question suggests you are interested in military? I'm sure you'll find something interesting in my warehouse." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I would love to have the time to chat and exchange gossip, but sadly business always comes first, you know?" })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "That's one of the few things even I can't acquire for you." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Ah, Ferumbras. I remember selling him torches for his first adventures as if it was yesterday." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I have seen most of it. And I like it. <chuckles>" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I was there some time ago. I exchanged ideas with some important people there and even could sell them something that furthered their cause." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Perhaps one day I'll settle in Thais again. I love the city's potential." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Do I hear envy in your voice? Is this really what you want? To be ... king? Well, one never knows ... perhaps you find something royal in my warehouse." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "So it is a watch you need? Make sure to buy one downstairs." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

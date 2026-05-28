@@ -70,6 +70,10 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "It is likely that our world is a part of one of the dead true gods or one of his manifestations that somehow escaped destruction. We must assume this is all that is left of the original universe." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "The cities that bow to the false gods will be afflicted with plague and fear until they embrace the wisdom of the pharaoh." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is a tool in the hands of the false gods, but it also serves to free us from our mortal prisons." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a humble preacher of the true revelation in the temple of the mourned flesh. I heal and teach magic spells to those who are spiritual enough." })
 keywordHandler:addKeyword({ "adventurer stone" }, StdModule.say, { npcHandler = npcHandler, text = "Keep your adventurer's stone well." }, function(player)
 	return player:getItemById(16277, true)
 end)

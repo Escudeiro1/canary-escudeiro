@@ -50,6 +50,7 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "or king or queen or gods or Ferumbras or Excalibug or news or druids or shamans or Carlin or Edron or Port Hope or Svargrond or Thais or Venore or dwarf or elf or dragon or yeti or chakoya or cult or bait or jarl or barbarian or raiders or mines or Chyll or Nibelor or Banor or years of serpents or how are you? I have no time to talk and you should FIGHT instead of wasting your time here!" })
 keywordHandler:addKeyword({ "rules" }, StdModule.say, { npcHandler = npcHandler, text = "What do you want to know? Something about the three different {difficulties}, the {general} rules or the {prices}? Maybe you also want to know what happens when you {die}?" })
 keywordHandler:addKeyword({ "difficulties" }, StdModule.say, { npcHandler = npcHandler, text = "There are three difficulties: Greenhorn, Scrapper and Warlord. On each challenge you will be confronted with ten monsters increasing in strength." })
 keywordHandler:addKeyword({ "levels" }, StdModule.say, { npcHandler = npcHandler, text = "There are three difficulties: Greenhorn, Scrapper and Warlord. On each challenge you will be confronted with ten monsters increasing in strength." })

@@ -141,6 +141,9 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 10:39 am right now." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Sigurd Fireworker, brother to Etzel Fireworker, son of Fire of the Molten Rocks." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I help my brother handling his little magic store so he can focus on studying spells." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to the magic store, |PLAYERNAME|! Ask me for a trade if you need something.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. Come back soon.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye. Come back soon.")

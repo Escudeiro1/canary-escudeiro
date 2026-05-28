@@ -90,6 +90,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Ze dragon kingz zend zeir championz to ze Izle of Ztrife. Ze combat rezultz determine ze pozitionz ze dragon kingz will hold in ze court for ze next cycle. ... Ze dragon kingz put great pride in zeir championz and often put great effort into zeir training." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetingz, competitor.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

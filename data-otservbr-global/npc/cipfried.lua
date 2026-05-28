@@ -76,6 +76,7 @@ local function greetCallback(npc, creature)
 end
 
 -- Basic keywords
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "They created Tibia and all life on it. Visit our academy and learn about them." })
 keywordHandler:addKeyword({ "hint" }, StdModule.rookgaardHints, { npcHandler = npcHandler })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Cipfried." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Me? Oh, I'm just a humble {monk}. Ask me if you need {help} or {healing}." })

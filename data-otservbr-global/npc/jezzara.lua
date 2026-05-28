@@ -56,6 +56,10 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The world can be a dangerous place for the whole of the Akh'rah Uthun." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "You can buy watches here in the markethall." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am the mourned Jezzara." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell food of various kinds." })
 npcHandler:setMessage(MESSAGE_GREET, "Be mourned pilgrim in flesh. Talking of flesh, maybe you'd enjoy some {food}?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "May enlightenment be your path.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "May enlightenment be your path.")

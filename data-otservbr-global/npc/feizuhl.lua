@@ -56,6 +56,9 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is 2:12 pm right now." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the mourned Feizuhl, pilgrim." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell furniture both to the mourned and the enlightened." })
 npcHandler:setMessage(MESSAGE_GREET, "Be mourned pilgrim in flesh and welcome to the furniture store.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Have a look. Most furniture comes in handy kits. Just use them in your house to assemble the furniture. Do you want to see only a certain type of furniture?")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

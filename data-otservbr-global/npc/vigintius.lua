@@ -50,6 +50,7 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "You've been around a while, sometimes even in {disguise} - not that you could fool me <wink> <wink>. But imagine, there are still places to be discovered! Do you remember that one place, you never figured out how to enter? ... Took you tons of time but no clue yet, eh? Know what? I've been there. Seen it all - but I won't tell!" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

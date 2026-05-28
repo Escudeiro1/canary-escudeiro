@@ -73,6 +73,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Beregar is our world. We don't want to be drawn in to any of your kind's conflicts." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = ", venore, ab'dendriel or darashia The only place I know is Beregar. My home." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "They call me Tehlim Madtreat. I can make a meal from almost anything." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the cook for the expedition party. The only one who didn't get cought by those.... those MONSTERS." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "See you my friend.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "See you my friend.")
 npcHandler:setMessage(MESSAGE_GREET, "Hello. I'm so glad someone has found me. Did you meet THEM?!")

@@ -134,6 +134,15 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "There is a great evil lurking beneath this isle ... and beneath the Plains of Havoc, and in the ancient necropolis, and beneath the Ghostlands... well basically everywhere." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I am sure it's hidden in a vault of the Nightmare Knights beneath the Plains of Havoc. I'm planning an expedition to go there and to rout out the Ruthless Seven, but I have to save the world first." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I fought him several times, sometimes he killed me, sometimes I killed him. I'd say we are even right now, but I'm getting better and more powerful each day." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I've seen it all and done it all ... at least twice." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I saved the women there once or twice." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "If I had time, I would restore peace in this once proud city, but there's too much to do before I can start that quest." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 9:45 am right now." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Avar Tar, slayer of monsters, saviour of princesses, and defender of the weak." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a professional hero." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings, traveller |PLAYERNAME|!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "See you later, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "See you later, |PLAYERNAME|.")

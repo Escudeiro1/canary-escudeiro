@@ -129,6 +129,16 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "I believe that nature itself is God. Goddess, yes, you may call me that, thank you." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "/ creatures Many creatures live in, around, and beneath the swamp. Be careful!" })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Haha, that's a stupid name. Who's that? Look, behind you!! WAHAHAHAHAHAHA." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Tibia is the name of our continent. You're a smart one, aren't you?" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Carlin is a beautiful town, but far from here. Do you live there? I've heard a band of male bards plays there sometimes. Maybe I should pay it a visit." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I've heard stories about that city. It's nowhere near here, that's all I can tell you about it. Not. Interested." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "There are too many royals on this continent if you ask me... I've heard of a new festival called 'Kingsday'. Why don't they make a 'Witchday'?" })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "I think it is the fourth year after Queen Eloise's crowning, but I cannot tell you date or time. It's about time SOMETHING HAPPENED HERE!" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Wyda, and what's yours? You should know me after all these years!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or profession I am a witch. Didn't you notice? I think witches these days are underpaid. Who needs a witch anyway?" })
 npcHandler:setMessage(MESSAGE_GREET, "What? A mundane talking to me? Amusing.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

@@ -49,6 +49,10 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I still need to visit that town one day. I guess it's not much fun to visit a city that forbids to drink alcohol, though ... Thinking about it, I never heard of a dwarf travelling there." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I wouldn't feel comfortable to live so exposed and in the open, but like an old dwarfish saying goes: Every beard grows different." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Bezil Coinbiter. Me and my bro' Nezil are selling stuff, ye' know?" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "We sell equipment of all kind. Is there anything you need?" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

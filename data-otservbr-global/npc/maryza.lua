@@ -105,6 +105,17 @@ end
 -- Greeting
 keywordHandler:addCustomGreetKeyword({ "hi maryza" }, greetCallback, { npcHandler = npcHandler })
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "We could better feed some dragons instead of these fools." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "The boys of the Savage Axe at the bridge are running wild these days." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Would slice a dragon or two for steaks if i'd get it." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Heard that's what the humans call one of their boggiemen." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "We don't care much about outsiders anymore." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Don't like it, has an elfish touch, ye know?" })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Puny town for puny guys." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Don't like these upper cave guys." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "To busy, ask my husband." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Maryza Firehand, daughter of Earth, from the Molten Rock." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or tavern I'm the cook of the Jolly Axeman." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

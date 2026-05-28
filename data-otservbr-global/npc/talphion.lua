@@ -82,6 +82,14 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "GODS, WHO NEEDS GODS, WHEN WE CAN BUILD THE CORRECT MACHINE FOR EVERY OCCASION?" })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "I COULDN'T CARE LESS ABOUT THEM." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "OLD FASHIONED BUTTERKNIFE! IF THEY LET ME, I WOULD CREATE WEAPONS THAT LEVEL ENTIRE CITIES!" })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I BET I COULD BUILD A MACHINE TO SHRED HIM INTO PIECES!" })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "CAN'T TELL MUCH ABOUT IT. SELDOM GET OUT HERE, I AM A BUSY DWARF." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "ONE DAY I WILL CREATE A CLOCK FOR THE COLOSSUS" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I HAVE NO TIME FOR A GAME!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "WHERE SHOULD I HOP?" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

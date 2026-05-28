@@ -103,6 +103,7 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I prefer to call it my calling. I am the Mistress of the Dark Chants in Drefia." })
 npcHandler:setMessage(MESSAGE_GREET, "A shadow preceded you. You wish a {scroll} or a {mission}?")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

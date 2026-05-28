@@ -82,6 +82,12 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I guess it would come in handy to open some casks. Har Har Har." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Dead magicians are only good for frightening little children. Har Har Har." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "A city that is run by women. And those wimps in Thais have still not been able to regain control. Har Har Har." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "The Thaian people see themselves as the rulers of the world. If they only knew ... Har Har Har." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "If I were the king, I'd fill my court with the most beautiful women of the realm. Har Har Har." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Klaus." })
 npcHandler:setMessage(MESSAGE_GREET, "Ho matey.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Whenever your throat is dry, you know where to find my tavern.")
 

@@ -56,6 +56,8 @@ travelKeyword:addChildKeyword({ "yes" }, StdModule.travel, { npcHandler = npcHan
 travelKeyword:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, text = "We would like to serve you some time.", reset = true })
 keywordHandler:addAliasKeyword({ "passage" })
 
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "They have a decent assortment of sweets there." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is rather dull and uninteresting when it comes to sweets. Besides our base in Liberty Bay, I can get you there, too, but it will cost you." })
 keywordHandler:addKeyword({ "sail" }, StdModule.say, { npcHandler = npcHandler, text = "I can take you to {Liberty Bay}." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the captain of this ship." })
 keywordHandler:addKeyword({ "captain" }, StdModule.say, { npcHandler = npcHandler, text = "I am the captain of this ship." })

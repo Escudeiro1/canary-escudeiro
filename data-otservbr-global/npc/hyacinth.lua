@@ -67,6 +67,7 @@ end
 -- The Rookie Guard Quest - Mission 04: Home-Brewed
 
 -- Mission 4: Confirm (Give herbs)
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "As far as I know there is a library in the village. Teach yourself about the gods." })
 keywordHandler:addKeyword({ "yes" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "Thank you so much! I'm just too old to walk into the village each day, and the herbs must be fresh. Say, would you like to have a sample of my potions as reward?",

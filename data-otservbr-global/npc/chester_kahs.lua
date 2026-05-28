@@ -301,6 +301,15 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Our army might be infested with spies already." })
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "We are just the pawns of the gods. The best we can expect is that our play amuses them enough to keep their interest in us, so we might live a day or two longer." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, almost news that are a little interesting are confidential." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "We are surrounded by myths, living and dead. How can someone doubt that there IS something like Excalibug somewhere?" })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Some say he's the avatar of Zathroth himself, but perhaps the truth about him is even darker then the worst rumours can imagine." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Who knows what power drove those women to break from the Thaian rule? There might be sinister powers at work." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is a proud and ancient city. This leads to envy which, in turn, leads to enemies." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "King Tibianus III is our leader and my direct superior." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the head of the TBI." })
 npcHandler:setMessage(MESSAGE_GREET, "Salutations, stranger.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Take care out there!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Take care out there!")

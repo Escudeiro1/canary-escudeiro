@@ -98,6 +98,7 @@ function WayfarerSecond(npc, creature, message, keywords, parameters, node)
 end
 
 -- WAYFARER END --
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Oh I'm a fisherwoman, fishing zinze ze firzt day I can remember. Ahehe. In fact, my whole family waz. But now I... I am alone. I'm ze only one left." })
 keywordHandler:addKeyword({ "addons" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "I can offer you first & second addons of the following outfit: {Wayfarer}." })
 
 keywordHandler:addKeyword({ "storage" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Ask about {first addon} or {second addon}." })

@@ -69,6 +69,8 @@ addTravelKeyword("edron", 100, Position(33304, 31719, 7))
 -- Kick
 
 -- Basic
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Cornell." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm offering a little ferry service between {Edron} and {Grimvale}." })
 keywordHandler:addKeyword({ "sail" }, StdModule.say, { npcHandler = npcHandler, text = "I can travel you to {Grimvale} or {Edron}." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome on board, |PLAYERNAME|. Where can I {sail} you today, to {Grimvale} or {Edron}?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. Recommend us if you were satisfied with our service.")

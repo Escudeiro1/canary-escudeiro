@@ -108,6 +108,9 @@ end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "This evil wizard once maintained a centre of power here on those isles. After his demise, the Edron academy sealed that place and is extremely secretive about it ... Although it is  understandable, it is still an unacceptable hindrance to free research." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is a great city, but not such a centre of learning and knowledge like Edron." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is a great supporter and a honourary member of our society." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

@@ -212,6 +212,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "<bows> Cledwyn O'Reilly, bespoke smith and token trader, at your service." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Well, I'm a smith by trade, but my passion is to collect rare {token}s made of metal or gemstones. It's something of a family trait. ... All of my family have a passion for some precious stone or metal, but as we're craftsmen, not warriors, we prefer to trade for what we want. ... At the moment, I'm rather interested in {silver token}s. ... If you should happen to have any with you, I'll forge you a first-class armour in return for 100 of 'em." })
 npcHandler:setMessage(MESSAGE_GREET, "Blessings, Player! How may I be of service? Do you wish to trade some {token}s, or would you like some {information} or {talk}? Should I {enchant} certain items for you?")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

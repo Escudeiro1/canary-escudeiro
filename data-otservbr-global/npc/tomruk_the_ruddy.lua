@@ -123,6 +123,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Breeds supplies for the blood god." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "You will address me with my full name: Tomruk The Ruddy." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Are you joking? Does the colour of my robes tell you anything? I'm a very important researcher!" })
 npcHandler:setMessage(MESSAGE_GREET, "Hello hello! Always good to see fresh blood! What brings you here?")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

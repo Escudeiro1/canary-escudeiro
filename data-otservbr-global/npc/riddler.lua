@@ -157,6 +157,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is the age of the talon." })
 keywordHandler:addKeyword({ "paradox" }, StdModule.say, { npcHandler = npcHandler, text = "This tower, of course, silly one. It holds my {master'}s {treasure}." })
 keywordHandler:addAliasKeyword({ "tower" })
 

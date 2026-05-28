@@ -190,6 +190,10 @@ end
 
 keywordHandler:addCustomGreetKeyword({ "djanni'hah" }, greetCallback, { npcHandler = npcHandler })
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Are not the creators reflected in their creations? Look around! What do you see? There is nothing but cowardice and treachery in the world of humans. ... How low the gods must be who made them. I have no respect for them." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The world of Tibia is ours by right. I will not rest until we have conquered it." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I may not have reached my goal yet, but neither has that accursed Gabel. As long as the Marid and Efreet are disunited neither of us can call himself the king of all djinn." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the true leader of all djinn - perhaps not by birth, but certainly by merit. One day all djinn will come to recognise that I alone deserve to be king." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Farewell, human. When I have taken my rightful place I shall remember those who served me well. Even if they are only humans.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Farewell, human.")
 

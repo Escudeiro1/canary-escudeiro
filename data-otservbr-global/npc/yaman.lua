@@ -164,6 +164,8 @@ end
 
 keywordHandler:addCustomGreetKeyword({ "djanni'hah" }, greetCallback, { npcHandler = npcHandler })
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "This world is our playground." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The djinns do not have kings these days. Gabel renounced his right to the title - a clever move. Malor would love to proclaim himself king, but he does not have the authority to do it. Perhaps one day he will." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Farewell, human.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Farewell, human.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "At your service, just browse through my wares.")

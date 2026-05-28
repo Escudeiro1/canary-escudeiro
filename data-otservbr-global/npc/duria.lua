@@ -51,6 +51,11 @@ keywordHandler:addSpellKeyword({ "cure", "poison" }, { npcHandler = npcHandler, 
 keywordHandler:addSpellKeyword({ "wound", "cleansing" }, { npcHandler = npcHandler, spellName = "Wound Cleansing", price = 0, level = 8, vocation = VOCATION.BASE_ID.KNIGHT })
 keywordHandler:addSpellKeyword({ "great", "light" }, { npcHandler = npcHandler, spellName = "Great Light", price = 500, level = 13, vocation = VOCATION.BASE_ID.KNIGHT })
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Bah, to much plantsandstuff, to few tunnels ifyoudaskme." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Was there once. Can't handle the crime overthere." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Dunno." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Duria Steelbender, daughter of Fire, of the Dragoneaters." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the highestknight of the dwarfs. I guess youwannabuy {spells}!" })
 keywordHandler:addKeyword({ "healing", "spells" }, StdModule.say, { npcHandler = npcHandler, text = "In this category I have '{Wound Cleansing}' and '{Cure Poison}'." })
 keywordHandler:addKeyword({ "support", "spells" }, StdModule.say, { npcHandler = npcHandler, text = "In this category I have '{Light}', '{Find Person}' and '{Great Light}'." })
 keywordHandler:addKeyword({ "spells" }, StdModule.say, { npcHandler = npcHandler, text = "I can teach you {healing spells} and {support spells}. What kind of spell do you wish to learn? You can also tell me for which level you would like to learn a spell, if you prefer that." })

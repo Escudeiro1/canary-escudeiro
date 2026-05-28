@@ -134,6 +134,9 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Ghorza not understanding question. If sun is in sky, time is day. If sky is dark, time is night." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me Ghorza." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Ghorza tribe's {shaman}." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello, scraggy human.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Take care of evil spirits.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Take care of evil spirits.")

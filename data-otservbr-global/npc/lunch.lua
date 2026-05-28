@@ -45,6 +45,8 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me new name is Lunch." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am many, many things. Me bodyguard for Robson. Watching over him when sleeping. Me good fisherman. Me fish soo many fish that sometime no fish is left. ... Aaaand me many, many other things. All so more much fun with Robson. At home at goblin camp me only was punching ball for bigger goblins." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

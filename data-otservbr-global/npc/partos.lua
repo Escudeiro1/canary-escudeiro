@@ -78,6 +78,11 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I love this world. I just wish I could see some other part of it now and then." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Yeah, a king is a man that can rob people by law, and not by night like me." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Geee, someone stole my watch. Bad company down here." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Partos, but you can call me Party." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Guess it! I give you a hint: I am not in this cell to clean it up! ... I wish I had never left Ankrahmun..." })
 keywordHandler:addKeyword({ "prison" }, StdModule.say, { npcHandler = npcHandler, text = "You mean that's a JAIL? They told me it's the finest hotel in town! THAT explains the lousy roomservice!" })
 keywordHandler:addKeyword({ "jail" }, StdModule.say, { npcHandler = npcHandler, text = "You mean that's a JAIL? They told me it's the finest hotel in town! THAT explains the lousy roomservice!" })
 keywordHandler:addKeyword({ "cell" }, StdModule.say, { npcHandler = npcHandler, text = "You mean that's a JAIL? They told me it's the finest hotel in town! THAT explains the lousy roomservice!" })

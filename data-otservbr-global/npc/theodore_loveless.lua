@@ -84,6 +84,9 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I heard he has some relation to these isles. To learn more about it, you probably talk to the mage from Edron that resides in a tower here in the city." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is such a lovely city. The bustling centre of civilisation. The world has to thank Thais for so many things." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king has again proven his great wisdom. The way how he allowed to settle the affairs in Liberty Bays was more than smart ... The trust he has put in the governor, the local military and the help from Venore begins slowly to pay off ... People have work and something to do. The number of fights decreased to the brawls between drunks that are usual for seaports ... As soon as we have the pirates eliminated, we can lower many of the restrictions we had to enforce for the safety of all." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

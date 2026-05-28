@@ -203,6 +203,8 @@ end
 
 keywordHandler:addCustomGreetKeyword({ "djanni'hah" }, greetCallback, { npcHandler = npcHandler })
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "One day we djinns will rid this world of evil." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is none of your business." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Finally.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Finally.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "At your service, just browse through my wares.")

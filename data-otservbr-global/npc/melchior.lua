@@ -83,6 +83,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Tibia is such a beautiful place. I would give it all if I could see it again." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My late father, may he rest in peace, chose to call me Melchior." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a poor beggar. I try to make a meagre living here since a cruel fate has left me a blind man." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Farewell, stranger. May Uman the Wise guide your steps in this treacherous land.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Farewell, stranger. May Uman the Wise guide your steps in this treacherous land.")
 

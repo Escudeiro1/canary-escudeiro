@@ -84,6 +84,7 @@ keywordHandler:addGreetKeyword({ "ashari" }, { npcHandler = npcHandler, text = "
 keywordHandler:addFarewellKeyword({ "asgha thrazi" }, { npcHandler = npcHandler, text = "Good bye!." })
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the overseer of the mines." })
 npcHandler:setMessage(MESSAGE_GREET, "Ashari |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")

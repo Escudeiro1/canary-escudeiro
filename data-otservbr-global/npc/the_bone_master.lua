@@ -135,6 +135,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Ferumbras is a traitor to our cause. His heritage granted him many of our secrets that no outsider was meant to know. He is the consort of demons and probably on the best way to become one of them ... He is our sworn enemy and we will make him pay for everything he has done." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to my little realm.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "We will meet again.")
 

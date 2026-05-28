@@ -79,6 +79,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "You not be afraid, here you be save." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 10:47 am now." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Kroox Shieldbearer, son of Earth, from the Molten Rock." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell best armor in land. My armor save you life. Better buy much." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to Kroox Quality Armor, |PLAYERNAME|! Wanna take a look, ask me for a trade.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

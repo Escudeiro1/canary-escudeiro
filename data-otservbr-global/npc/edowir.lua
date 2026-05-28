@@ -56,6 +56,14 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Man or monster, the difference is often just a matter of hides and scales." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "The ancient dwarven kings forged it using magic metal , which they took from cyclopses who found it in the heart of a fallen star." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "If Tibia is a fallen god, does that makes us the maggots crawling on it?" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "A city in the far north. It separated from the Thaian kingdom about 100 years ago. Now it is ruled by a dynasty of queens." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is the capital of an ancient human kingdom. Once its rule was more or less undisputed. In the years the stregth of the thaian kingdom eroded by different events." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Kings are children adorned with crowns." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is a pillar and our lives wind around it like vine." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Edowir, but don't worry about remembering my name. I will forget your name as well." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I gather wisdom and knowledge. I am also an astrologer." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Oh, hello |PLAYERNAME|! How nice of you to visit an old man like me.")

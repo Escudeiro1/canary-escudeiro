@@ -61,6 +61,7 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "They created Tibia and all life on it ... and unlife, too. Oldrak Pits of Inferno" })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I guard this humble temple as a monument for the order of the {nightmare knights}." })
 keywordHandler:addAliasKeyword({ "visitors" })
 

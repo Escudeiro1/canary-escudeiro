@@ -81,6 +81,14 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "or general or Ferumbras TO THE ARMS! MAN THE WALLS! FERUMBRAS IS NEAR!" })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I don't read the letters we deliver. Benjamin Thaian NPCs" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "You can send letters and parcels to Carlin." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "This is the town you are currently in." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king? Oops, I... can't remember his name..." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now it's 10:41 am. Maybe you want to buy a watch?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Benjamin." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm working here at the post office. If you have questions about the Royal Tibia Mail System or the depots, ask me." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello. How may I help you |PLAYERNAME|? Ask me for a {trade} if you want to buy something. I can also explain the {mail} system.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "It was a pleasure to help you.")
 

@@ -63,6 +63,16 @@ stakeKeyword:addChildKeyword({ "yes" }, StdModule.say, { npcHandler = npcHandler
 end)
 
 -- First prayer
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "I don't know much about the Tibian army. Ask general Harkath Bloodblade about that." })
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "They created Tibia and all life on it." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "There are really too many of them in Tibia. But who am I to challenge the wisdom of the gods?" })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I know nothing new. Please ask Frodo about that topic." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Hush! Do not mention the Evil One in these walls." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "That is where we are. The world of Tibia. Admire its beauty." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Our king resides in the castle to the west." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now, it is 5:52 pm. Ask Gorn for a watch, if you need one." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Quentin." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Job? I have no job. I just live for the gods of Tibia." })
 keywordHandler:addKeyword({ "stake" }, StdModule.say, { npcHandler = npcHandler, text = "I guess you couldn't convince Gamon to give you a stake, eh?" }, function(player)
 	return player:getStorageValue(Storage.Quest.U7_8.FriendsAndTraders.TheBlessedStake) == 1 and player:getItemCount(5941) == 0
 end)

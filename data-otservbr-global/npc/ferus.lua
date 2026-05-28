@@ -64,6 +64,14 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Although most dwarfs think that the Gods abandoned us, I believe they still watch over us and that everything happens for a reason." })
+keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "My child, there is no such thing! What you call monsters are just creatures who have as much right to live as you or I." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I'm too old for news. But if you know anything interesting, feel free to tell me." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Sometimes I wonder if Ferumbras was brought upon us by the Gods. Challenges and trials are meant to be mastered, after all." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I've seen much of it in the course of my life. I rarely go outside anymore nowadays, I prefer the company of my fellow dwarfs." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "I think it's the fourth age of the yellow flame, isn't it?" })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ferus Gemcutter, son of Fire and Earth, from the Molten Rock." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the keeper of this chapel and can bind loving souls in the holy ceremony of marriage." })
 keywordHandler:addKeyword({ "adventurer stone" }, StdModule.say, { npcHandler = npcHandler, text = "Keep your adventurer's stone well." }, function(player)
 	return player:getItemById(16277, true)
 end)

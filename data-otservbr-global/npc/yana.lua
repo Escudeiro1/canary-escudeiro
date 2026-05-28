@@ -243,6 +243,8 @@ npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)
 
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Yana O'Reilly, bespoke smith and a token trader. It's a pleasure to meet you." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm collecting rare tokens made of metal or gemstones. At the moment, I'm interested in gold tokens. If you should happen to have some with you, I could exchange them for special weapons of different types." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, false)
 
 -- npcType registering the npcConfig table

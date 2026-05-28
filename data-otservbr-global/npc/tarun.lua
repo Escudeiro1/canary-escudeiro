@@ -113,6 +113,9 @@ local function onTradeRequest(npc, creature)
 	return true
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's exactly time." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tarun." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a {merchant}. I trade in spices, silk, jewelry and ivory. I traveled along the trade routes between Port Hope and Darashia together with my {brother}. But these times are over, I fear." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Farewell.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Of course, just have a look.")

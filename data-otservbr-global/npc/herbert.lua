@@ -81,6 +81,11 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Why should you seek mere metal when the pen is mightier than the blade, and so is love? Fool! Be a lover, be a poet if you must, but never raise a blade unless your cause is just." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Is he real? Or is he a mere story, a tale told by weary parents by the fireside to put fear into their unruly children's hearts? ... But no! No! He is real, I tell you, he is real, for I can feel the icy clasp of his will of steel even while I am standing here. Who will be there to stop him if he stirs again, I ask of you?" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Carlin! Oh Carlin, my love! Noble jewel of the north, it is you that I crave, for only among your people can I stop being a slave! ... One day I will come to you, fair Carlin. Bid this humble traveller welcome, lift this humble star into the sky of greatness!" })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I mourn you, Thais, for you are no longer the shiny diamond that inspired a sense of purpose and pride in us all. ... Rather than building a temple for the muses your people chose to build an arena, where blood is shed and animals are slaughtered for sport. Oh Thais, how deep have you fallen!" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "If only his majesty's eyes would rest me on the stage, if only he saw me once! How could he not see the greatness of my art if he saw me act my part?" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

@@ -56,6 +56,8 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Milos. Milos of the Edron Academy. Nice to meet you." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or distracted I'm a magician and a theoretical scientist. That is, I am of course a real scientist, not a scientist in theory, but I concentrate more on theories than on practice. ... What I mean is, I do more reading and corresponding with other scientists - not exactly the fast lane to fame and fortune, granted, but it satisfies my humble desires." })
 npcHandler:setMessage(MESSAGE_GREET, "Oh hello. I hardly noticed you. I'm afraid I am a bit distracted at the moment.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
