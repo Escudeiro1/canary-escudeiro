@@ -68,6 +68,8 @@ stakeKeyword:addChildKeyword({ "yes" }, StdModule.say, { npcHandler = npcHandler
 end)
 
 -- First prayer
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a priestess of Bastesh and in charge of this temple, together with Iptar Sin, the high priest of Suon. Occasionally I look after wounded marine creatures like this poor shark here." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ninev." })
 keywordHandler:addKeyword({ "stake" }, StdModule.say, { npcHandler = npcHandler, text = "I guess you couldn't convince Gamon to give you a stake, eh?" }, function(player)
 	return player:getStorageValue(Storage.Quest.U7_8.FriendsAndTraders.TheBlessedStake) == 1 and player:getItemCount(5941) == 0
 end)

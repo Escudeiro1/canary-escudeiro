@@ -63,6 +63,7 @@ blessKeyword:addChildKeyword({ "yes" }, StdModule.bless, { npcHandler = npcHandl
 blessKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "Fine. You are free to decline my offer.", reset = true })
 
 -- Adventurer Stone
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "A bunch of kids playing war. May the elements help us." })
 keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Only another nuisance." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Ahhh! Whan I was a little dwarf I was on a quest to find it. I was almost literally digging up the ghostlands for it and now only one thing is sure: It must be elsewere, jawoll." })
 keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I have seen many of his type coming and going. He will fall and anotherone will take his place. Isimov Dwarves" })

@@ -60,6 +60,7 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 -- Basic keywords
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "It's really heart-warming to see how the Tibia economy is prospering." })
 keywordHandler:addKeyword({ "hint" }, StdModule.rookgaardHints, { npcHandler = npcHandler })
 keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "Well, how can I help you? Do you need some general {hints}? Or, if you're interested in a {trade}, just ask." })
 keywordHandler:addKeyword({ "information" }, StdModule.say, { npcHandler = npcHandler, text = "What kind of information do you need? I could tell you about different topics such as {equipment}, {monsters} or {Rookgaard} in general." })

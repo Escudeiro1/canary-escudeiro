@@ -55,6 +55,8 @@ local travelNode = keywordHandler:addKeyword({ "meluna" }, StdModule.say, { npcH
 travelNode:addChildKeyword({ "yes" }, StdModule.travel, { npcHandler = npcHandler, premium = false, level = 0, cost = 0, destination = Position(32088, 32470, 7) })
 travelNode:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, reset = true, text = "You shouldn't miss the experience." })
 
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a ferryman." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Kamil. Pleased to meet you." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

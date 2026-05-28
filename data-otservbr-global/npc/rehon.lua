@@ -64,6 +64,12 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's time to leave this filthy place." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The stone we walk on, the air we breathe... or in this case, the rubbish and the stench that surrounds us." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I have never visited one of your cities. Once you have seen Beregar, you don't need to go anywhere else." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I have never visited one of your cities. Once you have seen Beregar, you don't need to go anywhere else." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Rehon, son of Rehal. Don't be afraid, I don't bite." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Me and my expedition party were supposed to find new crystal veins here in the old mine tunnels." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "See you my friend.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "See you my friend.")
 npcHandler:setMessage(MESSAGE_GREET, "Hello, my friend.")

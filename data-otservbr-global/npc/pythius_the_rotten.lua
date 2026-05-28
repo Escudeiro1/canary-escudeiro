@@ -62,6 +62,12 @@ end)
 mugKeyword:addChildKeyword({ "golden mug" }, StdModule.say, { npcHandler = npcHandler, text = "THIS IS NOT WORTH BEING PART OF MY TREASURE! BRING ME SOMETHING ELSE.", reset = true })
 mugKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "THIS IS NOT WORTH BEING PART OF MY TREASURE! BRING ME SOMETHING ELSE", reset = true })
 offerKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, text = "TELL ME IF YOU CHANGE YOUR MIND. MY TREASURE THIRSTS FOR GOLD.", reset = true })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I'VE SEEN THIS WHOLE CONTINENT, EVEN THOSE PLACES YOU DON'T KNOW THEY EXIST. I FOUGHT WARS FOR DIFFERENT RACES AND I HAVE SEEN CIVILISATIONS RISE AND FALL." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I'VE SEEN MANY KINGS COME AND GO. THEY ALL THINK THEY RULE TIBIA BUT HAVE NO IDEA....HAHAHAHA!!" })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "THE HOME OF YOUR LITTLE KINGS. HOW PATHETIC." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "AHHHHH, THE BATTLE OF CARLIN. I CAN STILL SMELL THE BLOOD. ORK BLOOD, HUMAN BLOOD.....WHAT A FEAST. I GET HUNGRY WHEN I THINK OF THOSE DAYS." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "ONCE I WAS PYTHIUS THE IGNITER, BUT NOWADAYS PEOPLE CALL ME PYTHIUS THE ROTTEN." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "INTERESTING QUESTION. WHAT IS MY JOB? I'D SAY I'M AN AMBASSADOR OF GREED!" })
 keywordHandler:addKeyword({ "offer" }, StdModule.say, { npcHandler = npcHandler, text = "YOU LITTLE MAGGOT. COME BACK TO ME WHEN YOU CAN HANDLE A FIGHT AGAINST MY KIND." })
 
 -- Basic keywords

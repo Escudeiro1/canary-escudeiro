@@ -73,6 +73,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I am busy. Please ask the citizens for news." })
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Of course, we guards are members of the army." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = { "It's my duty to protect our fair city. ...", "===" } })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "It's Miss Bonecrusher to you!" })
 npcHandler:setMessage(MESSAGE_GREET, "LONG LIVE THE QUEEN!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "LONG LIVE THE QUEEN!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "LONG LIVE THE QUEEN!")

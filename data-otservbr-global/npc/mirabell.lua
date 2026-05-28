@@ -114,6 +114,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "King Tibianus III should visit our beautiful isle more often." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, there are so many. Just ask other travellers like you." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the owner of this tavern, which is known far beyond Edron." })
 keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Sadly most of them are too disciplined to visit my tavern." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I heard the Knights of the True Blood are looking for it on this isle." })
 keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I heard horrible things about him." })

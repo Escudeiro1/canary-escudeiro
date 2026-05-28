@@ -100,6 +100,12 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = { "I admit I have little use for the Gods in my own life. I like to think that I make my own decisions. ...", "I really can’t understand devout believers who follow the doctrines of a God, or rather, his priests and subordinate their life to the agenda of some heavenly power. ...", "If the stories of the God Wars are true, then I am not sure I feel comfortable with the idea of being some kind of a weapon and not an individual." } })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Although the city of Carlin has some rivalry with Thais it can be reached from most major harbours by ship." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = { "In my opinion, Thais is far too political. All that kingdom and empire stuff serves to entertain the upper classes. ...", "It doesn’t change anything for the common man and is all about accumulating power and wealth for the powerful and wealthy." } })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I think a king’s job should be to keep things running and not to pursue his own ambitions." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Telas." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "As you know I’m a scientist, specialising in the field of creating golems. That is my mission so to say." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello!")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

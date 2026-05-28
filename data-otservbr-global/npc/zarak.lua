@@ -193,6 +193,10 @@ keywordHandler:addSpellKeyword({ "annihilation" }, {
 	vocation = VOCATION.BASE_ID.KNIGHT,
 })
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The world is nothing but an egg of the great ssserpent." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "A wind of change isss blowing in Yalahar." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "The great ssserpent wouldn't allow that sssuch a weapon exisssted." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I teach the artsss of the warrior. I know ssseveral ssspellsss I might ssshare with a worthy knight." })
 keywordHandler:addKeyword({ "healing", "spells" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "In this category I have '{Bruise Bane}', '{Cure Bleeding}', '{Wound Cleansing}', \z

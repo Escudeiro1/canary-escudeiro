@@ -543,6 +543,7 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "The Tibian king's parthetic soldiers, do you mean? Or are you alluding to" })
 keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "These lands are ripe for the taking. Give me army of undead, and... <cackles>" })
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "That king above ground? He's been in charge for quite a while, I understand. No serious rivals, eh? Lucky him." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Did I not mention it? You have the exceptional honour of meeting the soul of Omrabas the Black. Presently residing inside this skull." })

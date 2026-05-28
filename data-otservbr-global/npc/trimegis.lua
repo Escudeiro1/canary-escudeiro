@@ -50,6 +50,7 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Our king frequently relies on my divinations and spells of protection." })
 keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "In the long run, it would pay off to focus all resources on a magicians corps, but the king is not convinced of that. Not yet." })
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I don't care about mundane gossip. Trimegis Thais NPCs" })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "The only weapon I need is my magic." })

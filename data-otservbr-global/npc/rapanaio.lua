@@ -45,6 +45,7 @@ npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)
 end
 
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am an inventor and sage. I have pledged my life to fighting evil wherever it raises it's ugly head. It's hard work and you have to get your hands dirty, but someone has to do it." })
 keywordHandler:addKeyword({ "mission" }, StdModule.say, { npcHandler = npcHandler, text = "Now that we have arrived you should waste no time and fight your way to the lair of evil and destroy its master before its too late!" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me humble name is Rapanaio. Good old goblin name meaning honest, generous and nice person, I swear!" })
 

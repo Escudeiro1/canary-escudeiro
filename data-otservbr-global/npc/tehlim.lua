@@ -73,6 +73,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "The only place I know is Beregar. My home." })
 keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Beregar is our world. We don't want to be drawn in to any of your kind's conflicts." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = ", venore, ab'dendriel or darashia The only place I know is Beregar. My home." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "They call me Tehlim Madtreat. I can make a meal from almost anything." })

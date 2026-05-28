@@ -336,6 +336,11 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 -- Kick
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Astonishing enough the royal satin seems to suit the exquisite taste of the Yalahari. Do you want a passage to Thais for 190 gold?" })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "The evergreen flower pots are an amusing item that might find some customers here. Do you want a passage to Carlin for 175 gold?" })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I'm too busy to bother about rumours." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I bet his power is nothing compared to the awesome might of the Yalahari." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I'm sure the Yalahari possess more powerful weapons than that." })
 keywordHandler:addKeyword({ "kick" }, StdModule.kick, { npcHandler = npcHandler, destination = { Position(32811, 31267, 6), Position(32811, 31270, 6), Position(32811, 31273, 6) } })
 
 -- Basic

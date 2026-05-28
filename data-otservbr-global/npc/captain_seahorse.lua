@@ -74,6 +74,8 @@ addTravelKeyword("cormaya", 20, Position(33288, 31956, 6))
 addTravelKeyword("oramond", 200, Position(33479, 31985, 7))
 
 -- Kick
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The Royal Tibia Line connects all seaside towns of Tibia." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the captain of this sailing ship." })
 keywordHandler:addKeyword({ "kick" }, StdModule.kick, { npcHandler = npcHandler, destination = { Position(33174, 31773, 6), Position(33175, 31771, 6), Position(33177, 31772, 6) } })
 
 -- Basic

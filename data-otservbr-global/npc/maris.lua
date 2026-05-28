@@ -80,6 +80,7 @@ addTravelKeyword("fenrock", 100, Position(32563, 31313, 7))
 addTravelKeyword("mistrock", 100, Position(32640, 31439, 7))
 
 -- Basic
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Maris Sharktooth. Arrr! - Well, I used to be." })
 keywordHandler:addKeyword({ "offer" }, StdModule.say, { npcHandler = npcHandler, text = "I can take you to {Fenrock} and {Mistrock}!" })
 keywordHandler:addAliasKeyword({ "passage" })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am Maris, Captain of this ship." })

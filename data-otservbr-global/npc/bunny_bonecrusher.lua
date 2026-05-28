@@ -89,6 +89,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "It's just a rotten hideout for drunks and men too lazy to do some serious work." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Our reports are only for internal use." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I'm sure only a woman has the courage and strength to wield this weapon of myth." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Believe it or not, I killed him two times with my own bow, but some unholy forces rise him again and again." })
 keywordHandler:addKeyword({ "hail general" }, StdModule.say, { npcHandler = npcHandler, text = "Salutations, commoner |PLAYERNAME|!" })
 keywordHandler:addKeyword({ "how", "are", "you" }, StdModule.say, { npcHandler = npcHandler, text = "We are in constant training and in perfect health." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the general of the queen's army. I don't have time to explain this concept to you." })

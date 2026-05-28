@@ -88,6 +88,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's horas right now. But I can give you more valuable information than that!" })
 keywordHandler:addKeyword({ "information" }, StdModule.say, { npcHandler = npcHandler, text = "Currently, I can tell you all about the town, its temple, the bank, shops, spell trainers and the depot, as well as about the world status." })
 keywordHandler:addKeyword({ "temple" }, StdModule.say, { npcHandler = npcHandler, text = "The temple is just south west of here. Actually, it's a temple raft and the priestess is somewhat... meow... you'll see what I mean." })
 keywordHandler:addKeyword({ "bank" }, StdModule.say, { npcHandler = npcHandler, text = "Our bank clerk Znozel is somewhat... special. You can find him north of this harbour and then to the right, past the tavern." })

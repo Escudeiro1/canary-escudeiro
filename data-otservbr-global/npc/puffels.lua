@@ -193,6 +193,7 @@ keywordHandler:addSpellKeyword({ "annihilation" }, {
 	vocation = VOCATION.BASE_ID.KNIGHT,
 })
 
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Where might I hide a watch, you fool?" })
 keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Fine army that is. Half of them have already deserted." })
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I heard in Thais the new brand of cheese was... uhm..." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I have no use for such stuff." })

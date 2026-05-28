@@ -45,6 +45,8 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I used to be Eclesius’ assistant! Argh! Then – ribbit – one of his crazy experimental spells backfired and hit me. That’s when I lost my job I guess. Ribbit." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Well… ribbit… my name is Turian. But that doesn’t really matter anymore." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

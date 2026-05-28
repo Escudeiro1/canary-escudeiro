@@ -181,6 +181,7 @@ node1:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, onlyFo
 keywordHandler:addGreetKeyword({ "hail emperor" }, { npcHandler = npcHandler, text = "Hiho, may fire and earth bless you, my child. Are you looking for a promotion?" })
 keywordHandler:addGreetKeyword({ "salutations emperor" }, { npcHandler = npcHandler, text = "Hiho, may fire and earth bless you, my child. Are you looking for a promotion?" })
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Well, you'd better ask the general." })
 keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "Well, it's up to the younger ones to slay the beasts that roam the lands and the tunnels." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Well, well, well, the godblade. A myth? Perhaps. Even in my youth, it was only a legend." })
 keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Well, we are prepared even for him." })

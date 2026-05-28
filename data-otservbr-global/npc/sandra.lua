@@ -134,6 +134,17 @@ local function creatureSayCallback(npc, creature, type, message)
 	end
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "The world is a place of barbarianism." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "I plan to visit this city one day." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "A city full of disgusting people with ill manners." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I am not interested in tales only kids belive in." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "A disgusting person indeed." })
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Do I look as if I'd fraternize with such people?" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I was guest at his castle on my visits to Thais." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Buy a watch." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Nothing I would talk to you about." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Lady Sandra Astralian." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell potions and fluids. If you'd like to see my offers, ask me for a trade." })
 keywordHandler:addKeyword({ "shop" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "I sell potions and fluids. If you'd like to see my offers, ask me for a {trade}.",

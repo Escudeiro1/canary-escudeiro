@@ -80,6 +80,10 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is far away and I doubt that he cares for the poor even in his own royal city. We here in Venore feel little of the king's benevolence, but still have to pay taxes." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "It is said that in Carlin, a female aristocracy suppresses men, and that to laugh on the open streets there is deemed a frivolous and punishable offense." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = { "Some Thaians came here, lured by rumours of becoming rich within a short time. ...", "Of course their dreams were shattered, and the few that could even earn a meagre living can consider themselves lucky." } })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I used my family's fortune to provide Venore with a poor house, where those without money, food and hope can find shelter." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

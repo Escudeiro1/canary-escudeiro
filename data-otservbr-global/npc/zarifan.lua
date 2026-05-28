@@ -84,6 +84,10 @@ local function creatureSayCallback(npc, creature, type, message)
 	end
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Undead... dark summoners...dark plans." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Too much... spilled... to much...greed." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "...Zarifan... long, long ago... now...memory, fading." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Guarding...secret...magic words...don't remember... forgotten, forgotten!" })
 keywordHandler:addKeyword({ "mission" }, StdModule.say, { npcHandler = npcHandler, text = "..what about {magic}.." })
 
 npcHandler:setMessage(MESSAGE_GREET, "... ... hello...magic... words?")

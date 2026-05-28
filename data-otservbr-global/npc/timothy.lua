@@ -79,6 +79,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Timothy of the explorer's society." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I work for the explorer's society as an information gatherer here in this newly discovered city." })
 npcHandler:setMessage(MESSAGE_GREET, "Oh, hello! It's a pleasure to see a visitor from the continent.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

@@ -93,6 +93,7 @@ addTravelKeyword("edron", "Do you want to get to Edron for |TRAVELCOST|?", 20, P
 addTravelKeyword("eremo", "Oh, you know the good old sage Eremo. I can bring you to his little island. Do you want me to do that?", 0, Position(33314, 31883, 7))
 
 -- Kick
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I love to sail on the seas of Tibia." })
 keywordHandler:addKeyword({ "kick" }, StdModule.kick, { npcHandler = npcHandler, destination = { Position(33293, 31957, 6), Position(33294, 31955, 6), Position(33294, 31958, 6) } })
 
 -- Basic

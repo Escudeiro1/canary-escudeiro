@@ -79,6 +79,16 @@ addMissionKeyword("Have you heard about the unholy graveyard north of Edron? Go 
 addMissionKeyword("I feel that the spirits have not come to a rest yet. There must still be some graves left to sanctify.", 3)
 addMissionKeyword("I appreciate your help. May Banor be always on your side. Here, your reward is this package which contains five mana and five health potions.", 4, 5, true)
 
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "We can expect little help from Thais in these troubled days. We need some heroes to help us with these sinister things going on here." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "That's our world." })
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Our army lives in accordance with the ideals of the god Banor." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Our king is a religious man - a shining example." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Only a being loyal to Banor will wield this blade." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He is a pawn of evil." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now, it is horas." })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I rarely have time to chat." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm sister Amanda." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a humble nun that came to Edron to help." })
 keywordHandler:addKeyword({ "mission" }, StdModule.say, { npcHandler = npcHandler, text = "Your mission here on Tibia is to be polite and friendly. The gods will reward you, I promise!" })
 
 -- Twist of Fate

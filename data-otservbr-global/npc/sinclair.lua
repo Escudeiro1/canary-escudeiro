@@ -154,6 +154,15 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Its people are what we are doing all this for. All our research, all magical devices we create - it's all for the purpose to do good in our world." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Aren't there several islands near Carlin? Hm, I wonder if one can find anything interesting there." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is a lively city, that's for sure. Well, I'm not much a people person actually, so... maybe you should ask someone else about that." })
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "Well, there are some phenomena even the army is at a loss with. And who are you going to call then? Oh well." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I erm - I'm not much of a politician I'm afraid." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "What? Well, let me see - it is horas. Satisfied?" })
+keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Well, we are indeed not far from a major breakthrough in the field of ecto-magical disturbances." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Sinclair. Pleased to meet you. Now where was I - oh yes." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm one of the few leading scientists in the field of ecto-magical research and development. There is a lot of work to do, time is very precious right now and we have practically no supporters." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings |PLAYERNAME|. I have - very - little time, please make it as short as possible. I may be able to help you if you are here to help us with any of our tasks or missions.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Goodbye and good luck |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Goodbye and good luck |PLAYERNAME|.")

@@ -88,6 +88,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "You haven't heard anything about me yet?! I aehhhhhhohoh........sorry....I AM GROMBUR GOLDTOOTH, GUARD OF THIS MINE HERE!...Impressive, huh?" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I AM GROMBUR GOLDTOOTH, GUARD OF THIS MINE HERE! No one is allowed to enter." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "See you my friend.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "See you my friend.")
 npcHandler:setMessage(MESSAGE_GREET, "STOP RIGHT THERE!..... Oh, just a human. What's up big guy?")

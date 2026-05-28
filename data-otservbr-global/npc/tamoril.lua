@@ -110,6 +110,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "Gods are of no use for us dragons. One day, a dragon will become old and powerful enough to destroy all gods. Fear that day mortal, from then on the age of the dragons will have begun." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My real name is not pronounceable for a human." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I share some of my eternal knowledge of spells with you humans ... for a price of course. You should be grateful." })
 npcHandler:setMessage(MESSAGE_GREET, "Another pesky mortal who believes his gold outweighs his nutrition value.")

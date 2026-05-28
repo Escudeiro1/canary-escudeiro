@@ -45,6 +45,11 @@ npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)
 end
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "He thinks that he's incredibly powerful, but he only owns the mindless power of destruction." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "The humans of Carlin at least try to live in harmony with nature." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I heard only terrible stories about that city." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I can't help you." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Brasith Seedsinger." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "You may buy all the things we grow or gather at this place." })
 keywordHandler:addKeyword({ "crunor" }, StdModule.say, { npcHandler = npcHandler, text = "We abandoned the gods a long time ago. A short time after they abandoned us." })
 keywordHandler:addKeyword({ "teshial" }, StdModule.say, { npcHandler = npcHandler, text = "They are lost, and if they still exist they are alone in the cold and the darkness." })

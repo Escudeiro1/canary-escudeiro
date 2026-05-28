@@ -93,6 +93,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "For sure you already know about the good gods. I am not a preacher but a man of action!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = { "For long years I served the inquisition as high judge and advisor. I compiled books about the sacred laws and rooting out of heretics. ...", "But our ranks are stretched thin in these times and I took it upon me to return to rather mundane field duties like this. ...", "It might not be the most glorious task at hand but it has to be done and I'm up to it." } })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "This expedition is here on an important mission for the inquisition." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings! This isn't the {time} to chitchat though.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Bye.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Bye, |PLAYERNAME|.")

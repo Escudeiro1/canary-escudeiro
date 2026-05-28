@@ -69,6 +69,8 @@ end
 
 addTravelKeyword("passage", "A passage to Oskayaat? Shall we cast off?", 0, Position(33070, 32916, 7))
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tonar." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm offering a little ferry service between Ankrahmun and the island nearby." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome, Sir.")
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

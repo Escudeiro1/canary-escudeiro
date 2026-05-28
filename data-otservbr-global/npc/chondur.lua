@@ -316,6 +316,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return false
 end
 
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I was chosen by the spirits of the ancestors to serve the people as healer and spiritual leader." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "The people see the Thaian occupation like a crippling disease that befalls our isles. Some try to live with it, others are looking for a cure." })
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is far away. Our myth are closer to us than any king in faraway Thais could ever be." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, child.")

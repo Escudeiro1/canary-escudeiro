@@ -72,6 +72,7 @@ end)
 travelNode:addChildKeyword({ "yes" }, StdModule.travel, { npcHandler = npcHandler, text = "Okay. Enjoy.", premium = false, cost = 100, destination = Position(32858, 31549, 7) })
 travelNode:addChildKeyword({ "no" }, StdModule.say, { npcHandler = npcHandler, reset = true, text = "Oh well." })
 --Basic
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Harlow." })
 keywordHandler:addKeyword({ "busy" }, StdModule.say, { npcHandler = npcHandler, text = "I have a {job}, you know?" })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Well, I'm kind of a delivery man I guess. I take on small {transportation} jobs with my boat." })
 

@@ -173,6 +173,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "We often eat bug. Excalibug sound much yummy!" })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Me no know what you mean." })
+keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "We know many gods. Pandor, god of war, Uzroth, god of spirits, Krunus, god of food and Fasuon, watcher with two burning eyes. You see, we know many gods, more than I can count." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me Lazaran." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Me chief of tribe." })
 npcHandler:setMessage(MESSAGE_GREET, "Me greet. You no enemy of tribe.")

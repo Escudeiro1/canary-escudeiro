@@ -45,6 +45,10 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "The defiler. I'm not going to talk about him." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Carlin needs our protection and resources. Of course they will turn on us as soon as they feel strong enough." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is too far away to pose a threat but it is also too far away to help us if problems should occur." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Anerui Mourningleaf." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the mistress of the hunt. At this place you may buy the food our hunts provide." })
 keywordHandler:addKeyword({ "hunt" }, StdModule.say, { npcHandler = npcHandler, text = "Hunting is an art, practiced too often by diletantes. Every fool with a bow or a spear considers himself a hunter." })
 keywordHandler:addKeyword({ "bow" }, StdModule.say, { npcHandler = npcHandler, text = "Bow, arrow, and spear are the hunters' best friends. In the northeast of the town one of us may sell such tools." })

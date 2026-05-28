@@ -164,6 +164,7 @@ end
 
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the jarl of my people. It's an honour and I am very proud of it." })
 keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "We know of father Chyll and his freezing breath. We care little for other gods. It is foolish to meddle with beings that are so powerful ... We leave it to the druids and shamans to handle such affairs." })
 keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "There are many dangerous creatures that roam our isles. But having seen what men can do to each other, I wouldn't call any of them a monster." })
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "There is something evil going on. I have it in my bones." })

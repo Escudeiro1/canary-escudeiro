@@ -83,6 +83,8 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 -- Basic
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Don’t you know that when you know a person’s name, you hold some power over that person?" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "That’s not a serious question, is it? I’m running a bar. Duh. Are you interested in my offers?" })
 npcHandler:setMessage(MESSAGE_GREET, "Ah, an adventurer. Be greeted and have a seat. How may I {serve} you?")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

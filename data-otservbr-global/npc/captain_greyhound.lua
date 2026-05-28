@@ -71,6 +71,7 @@ addTravelKeyword("yalahar", 185, Position(32816, 31272, 6), function(player)
 end)
 
 -- Kick
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Do you seek a passage to cidade for valor gold?" })
 keywordHandler:addKeyword({ "kick" }, StdModule.kick, { npcHandler = npcHandler, destination = { Position(32384, 31815, 6), Position(32387, 31815, 6), Position(32390, 31815, 6) } })
 
 -- Basic

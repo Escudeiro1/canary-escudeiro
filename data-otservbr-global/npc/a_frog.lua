@@ -45,6 +45,8 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Well… ribbit… my name is Turian. But that doesn’t really matter anymore. Frog will do." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "What do I need a job for? I’m a happy frog! Ribbit! Hehehehe!" })
 keywordHandler:addKeyword({ "prince" }, StdModule.say, { npcHandler = npcHandler, text = "If another prince comes to kiss me, I'll kick his ass so bad that he'll need a sedan chair to get away." })
 keywordHandler:addKeyword({ "princess" }, StdModule.say, { npcHandler = npcHandler, text = "If another prince comes to kiss me, I'll kick his ass so bad that he'll need a sedan chair to get away." })
 keywordHandler:addKeyword({ "kiss" }, StdModule.say, { npcHandler = npcHandler, text = "Don't even try to kiss me or I'll rondhouse kick you!" })

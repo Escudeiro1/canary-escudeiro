@@ -243,6 +243,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "The army protects the Thaian realm. The order of the Knights of Banor's Blood supports them with all our skills." })
 keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "We cleansed the south of any major enemy, but watch out while travelling the north." })
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Nothing new from the north." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "With this weapon in my hand, I would teach the servants of darkness the true meaning of the word fear." })
