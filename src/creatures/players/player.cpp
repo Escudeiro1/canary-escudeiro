@@ -3822,6 +3822,9 @@ BlockType_t Player::blockHit(const std::shared_ptr<Creature> &attacker, const Co
 	BlockType_t blockType = Creature::blockHit(attacker, combatType, damage, checkDefense, checkArmor, field);
 	if (attacker) {
 		sendCreatureSquare(attacker, SQ_COLOR_BLACK);
+		if (const auto &attackerPlayer = attacker->getPlayer()) {
+			addPvpAggressor(attackerPlayer);
+		}
 	}
 
 	if (blockType != BLOCK_NONE) {
@@ -4364,13 +4367,9 @@ void Player::addInFightTicks(bool pzlock /*= false*/) {
 
 	updateImbuementTrackerStats();
 
-	const bool wasInFight = hasCondition(CONDITION_INFIGHT);
 	safeCall([this] {
 		addCondition(Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_INFIGHT, g_configManager().getNumber(PZ_LOCKED)));
 	});
-	if (!wasInFight) {
-		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
-	}
 }
 
 void Player::setDailyReward(uint8_t reward) {
@@ -6279,7 +6278,7 @@ void Player::onEndCondition(ConditionType_t type) {
 			setSkull(SKULL_NONE);
 		}
 
-		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), false);
+		clearPvpAggressors();
 	}
 
 	if (type == CONDITION_OUTFIT && wasMounted) {
@@ -7085,6 +7084,31 @@ void Player::removeAttacked(const std::shared_ptr<Player> &attacked) {
 
 void Player::clearAttacked() {
 	attackedSet.clear();
+}
+
+void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
+	if (!target || target == getPlayer()) {
+		return;
+	}
+	const bool newOnMySide = pvpAggressors.emplace(target->getGUID()).second;
+	const bool newOnTheirSide = target->pvpAggressors.emplace(getGUID()).second;
+	if (newOnMySide) {
+		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
+	}
+	if (newOnTheirSide) {
+		g_game().updateCreaturePvpSquare(target, true);
+	}
+}
+
+void Player::clearPvpAggressors() {
+	for (const uint32_t guid : pvpAggressors) {
+		const auto &target = g_game().getPlayerByGUID(guid);
+		if (target) {
+			target->pvpAggressors.erase(getGUID());
+		}
+	}
+	pvpAggressors.clear();
+	g_game().updateCreaturePvpSquare(static_self_cast<Player>(), false);
 }
 
 void Player::addUnjustifiedDead(const std::shared_ptr<Player> &attacked) {

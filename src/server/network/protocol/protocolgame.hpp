@@ -423,6 +423,7 @@ private:
 	void sendTibiaTime(int32_t time);
 
 	void sendCreatureSquare(const std::shared_ptr<Creature> &creature, SquareColor_t color, uint8_t squareType = 1);
+	void resendPvpSquares();
 
 	void sendSpellCooldown(uint16_t spellId, uint32_t time);
 	void sendSpellGroupCooldown(SpellGroup_t groupId, uint32_t time);

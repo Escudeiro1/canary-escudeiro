@@ -911,6 +911,9 @@ public:
 	void addAttacked(const std::shared_ptr<Player> &attacked);
 	void removeAttacked(const std::shared_ptr<Player> &attacked);
 	void clearAttacked();
+	void addPvpAggressor(const std::shared_ptr<Player> &target);
+	void clearPvpAggressors();
+	bool hasPvpAggressor(uint32_t guid) const { return pvpAggressors.contains(guid); }
 	void addUnjustifiedDead(const std::shared_ptr<Player> &attacked);
 	void sendCreatureEmblem(const std::shared_ptr<Creature> &creature) const;
 	void sendCreatureSkull(const std::shared_ptr<Creature> &creature) const;
@@ -1640,6 +1643,7 @@ private:
 	void healFromHarmony(uint8_t charges = 1);
 
 	phmap::flat_hash_set<uint32_t> attackedSet {};
+	phmap::flat_hash_set<uint32_t> pvpAggressors {};
 
 	std::map<uint8_t, OpenContainer> openContainers;
 	std::map<uint32_t, std::shared_ptr<DepotLocker>> depotLockerMap;
