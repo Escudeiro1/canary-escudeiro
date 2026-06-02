@@ -9008,6 +9008,17 @@ void Game::updateCreatureSkull(const std::shared_ptr<Creature> &creature) const 
 	}
 }
 
+void Game::updateCreaturePvpSquare(const std::shared_ptr<Creature> &creature, bool show) const {
+	for (const auto &spectator : Spectators().find<Player>(creature->getPosition(), true)) {
+		const auto &spectatorPlayer = spectator->getPlayer();
+		if (show) {
+			spectatorPlayer->sendCreatureStaticSquare(creature, SQ_COLOR_YELLOW);
+		} else {
+			spectatorPlayer->sendCreatureClearSquare(creature);
+		}
+	}
+}
+
 void Game::updatePlayerShield(const std::shared_ptr<Player> &player) {
 	for (const auto &spectator : Spectators().find<Player>(player->getPosition(), true)) {
 		spectator->getPlayer()->sendCreatureShield(player);

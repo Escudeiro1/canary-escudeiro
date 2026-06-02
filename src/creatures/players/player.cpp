@@ -4364,9 +4364,13 @@ void Player::addInFightTicks(bool pzlock /*= false*/) {
 
 	updateImbuementTrackerStats();
 
+	const bool wasInFight = hasCondition(CONDITION_INFIGHT);
 	safeCall([this] {
 		addCondition(Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_INFIGHT, g_configManager().getNumber(PZ_LOCKED)));
 	});
+	if (!wasInFight) {
+		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
+	}
 }
 
 void Player::setDailyReward(uint8_t reward) {
@@ -6274,6 +6278,8 @@ void Player::onEndCondition(ConditionType_t type) {
 		if (getSkull() != SKULL_RED && getSkull() != SKULL_BLACK) {
 			setSkull(SKULL_NONE);
 		}
+
+		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), false);
 	}
 
 	if (type == CONDITION_OUTFIT && wasMounted) {
@@ -8670,6 +8676,18 @@ void Player::sendPrivateMessage(const std::shared_ptr<Player> &speaker, SpeakCla
 void Player::sendCreatureSquare(const std::shared_ptr<Creature> &creature, SquareColor_t color) const {
 	if (client) {
 		client->sendCreatureSquare(creature, color);
+	}
+}
+
+void Player::sendCreatureStaticSquare(const std::shared_ptr<Creature> &creature, SquareColor_t color) const {
+	if (client) {
+		client->sendCreatureSquare(creature, color, 2);
+	}
+}
+
+void Player::sendCreatureClearSquare(const std::shared_ptr<Creature> &creature) const {
+	if (client) {
+		client->sendCreatureSquare(creature, SQ_COLOR_BLACK, 0);
 	}
 }
 
