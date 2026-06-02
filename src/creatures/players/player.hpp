@@ -737,6 +737,8 @@ public:
 	void setChaseMode(bool mode);
 	void setFightMode(FightMode_t mode);
 	void setSecureMode(bool mode);
+	void setPvpMode(uint8_t mode) { pvpMode = mode; }
+	uint8_t getPvpMode() const { return pvpMode; }
 
 	Faction_t getFaction() const override;
 
@@ -1831,6 +1833,7 @@ private:
 
 	bool chaseMode = false;
 	bool secureMode = true;
+	uint8_t pvpMode = 0;
 	bool inMarket = false;
 	bool wasMounted = false;
 	bool ghostMode = false;

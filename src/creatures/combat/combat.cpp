@@ -1105,6 +1105,20 @@ void Combat::combatTileEffects(const CreatureVector &spectators, const std::shar
 					}
 				} else if (itemId == ITEM_FIREFIELD_PVP_FULL || itemId == ITEM_POISONFIELD_PVP || itemId == ITEM_ENERGYFIELD_PVP || itemId == ITEM_MAGICWALL || itemId == ITEM_WILDGROWTH) {
 					casterPlayer->addInFightTicks();
+					// visual only: golden/safe appearance for non-red-fist modes
+					if (casterPlayer->getPvpMode() != 3) {
+						if (itemId == ITEM_FIREFIELD_PVP_FULL) {
+							itemId = ITEM_FIREFIELD_NOPVP;
+						} else if (itemId == ITEM_POISONFIELD_PVP) {
+							itemId = ITEM_POISONFIELD_NOPVP;
+						} else if (itemId == ITEM_ENERGYFIELD_PVP) {
+							itemId = ITEM_ENERGYFIELD_NOPVP;
+						} else if (itemId == ITEM_MAGICWALL) {
+							itemId = ITEM_MAGICWALL_SAFE;
+						} else if (itemId == ITEM_WILDGROWTH) {
+							itemId = ITEM_WILDGROWTH_SAFE;
+						}
+					}
 				}
 			}
 		}
