@@ -6368,6 +6368,8 @@ void Player::onAttackedCreature(const std::shared_ptr<Creature> &target) {
 				}
 			}
 		}
+
+		addPvpAggressor(targetPlayer);
 	}
 
 	addInFightTicks();
@@ -7093,14 +7095,17 @@ void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
 	const bool newOnMySide = pvpAggressors.emplace(target->getGUID()).second;
 	const bool newOnTheirSide = target->pvpAggressors.emplace(getGUID()).second;
 	if (newOnMySide) {
+		std::cout << "[PVP DEBUG] Aggression started: " << getName() << " <-> " << target->getName() << " | sending yellow frame for " << getName() << std::endl;
 		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
 	}
 	if (newOnTheirSide) {
+		std::cout << "[PVP DEBUG] sending yellow frame for " << target->getName() << std::endl;
 		g_game().updateCreaturePvpSquare(target, true);
 	}
 }
 
 void Player::clearPvpAggressors() {
+	std::cout << "[PVP DEBUG] clearPvpAggressors called for " << getName() << " | aggressors count: " << pvpAggressors.size() << std::endl;
 	for (const uint32_t guid : pvpAggressors) {
 		const auto &target = g_game().getPlayerByGUID(guid);
 		if (target) {
@@ -7108,6 +7113,7 @@ void Player::clearPvpAggressors() {
 		}
 	}
 	pvpAggressors.clear();
+	std::cout << "[PVP DEBUG] sending yellow frame OFF for " << getName() << std::endl;
 	g_game().updateCreaturePvpSquare(static_self_cast<Player>(), false);
 }
 
@@ -8711,7 +8717,7 @@ void Player::sendCreatureStaticSquare(const std::shared_ptr<Creature> &creature,
 
 void Player::sendCreatureClearSquare(const std::shared_ptr<Creature> &creature) const {
 	if (client) {
-		client->sendCreatureSquare(creature, SQ_COLOR_BLACK, 0);
+		client->reloadCreature(creature);
 	}
 }
 

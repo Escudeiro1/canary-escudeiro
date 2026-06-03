@@ -3786,6 +3786,7 @@ void ProtocolGame::resendPvpSquares() {
 	if (player->pvpAggressors.empty()) {
 		return;
 	}
+	std::cout << "[PVP DEBUG] resendPvpSquares for " << player->getName() << " (triggered by movement/mapdesc)" << std::endl;
 	sendCreatureSquare(player, SQ_COLOR_YELLOW, 2);
 	for (const auto &spectator : Spectators().find<Player>(player->getPosition(), true, 0, 0, 0, 0, false)) {
 		const auto &sp = spectator->getPlayer();
@@ -7322,6 +7323,7 @@ void ProtocolGame::sendFYIBox(const std::string &message) {
 
 // tile
 void ProtocolGame::sendMapDescription(const Position &pos) {
+	std::cout << "[PVP DEBUG] sendMapDescription (0x64 full map redraw) for " << player->getName() << std::endl;
 	NetworkMessage msg;
 	msg.addByte(0x64);
 	msg.addPosition(player->getPosition());
