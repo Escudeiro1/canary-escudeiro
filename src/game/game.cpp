@@ -9013,10 +9013,8 @@ void Game::updateCreatureSkull(const std::shared_ptr<Creature> &creature) const 
 
 void Game::updateCreaturePvpSquare(const std::shared_ptr<Creature> &creature, bool show) const {
 	const auto spectators = Spectators().find<Player>(creature->getPosition(), true);
-	std::cout << "[PVP DEBUG] updateCreaturePvpSquare for " << creature->getName() << " show=" << show << " | spectator count: " << spectators.size() << std::endl;
 	for (const auto &spectator : spectators) {
 		const auto &spectatorPlayer = spectator->getPlayer();
-		std::cout << "[PVP DEBUG]   -> sending to spectator: " << spectatorPlayer->getName() << std::endl;
 		if (show) {
 			spectatorPlayer->sendCreatureStaticSquare(creature, SQ_COLOR_YELLOW);
 		} else {

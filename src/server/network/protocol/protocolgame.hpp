@@ -575,6 +575,7 @@ private:
 	friend class LivestreamManager;
 
 	std::unordered_set<uint32_t> knownCreatureSet;
+	std::vector<std::shared_ptr<Creature>> m_pendingPvpSquares;
 	std::shared_ptr<Player> player = nullptr;
 
 	uint32_t eventConnect = 0;

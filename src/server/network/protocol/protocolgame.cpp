@@ -1642,6 +1642,10 @@ void ProtocolGame::GetTileDescription(const std::shared_ptr<Tile> &tile, Network
 			checkCreatureAsKnown(creature->getID(), known, removedKnown);
 			AddCreature(msg, creature, known, removedKnown);
 
+			if (const auto &cp = creature->getPlayer(); cp && !cp->pvpAggressors.empty()) {
+				m_pendingPvpSquares.push_back(creature);
+			}
+
 			if (++count == 10) {
 				return;
 			}
@@ -3783,14 +3787,12 @@ void ProtocolGame::sendCreatureSquare(const std::shared_ptr<Creature> &creature,
 }
 
 void ProtocolGame::resendPvpSquares() {
-	if (player->pvpAggressors.empty()) {
-		return;
+	if (!player->pvpAggressors.empty()) {
+		sendCreatureSquare(player, SQ_COLOR_YELLOW, 2);
 	}
-	std::cout << "[PVP DEBUG] resendPvpSquares for " << player->getName() << " (triggered by movement/mapdesc)" << std::endl;
-	sendCreatureSquare(player, SQ_COLOR_YELLOW, 2);
 	for (const auto &spectator : Spectators().find<Player>(player->getPosition(), true, 0, 0, 0, 0, false)) {
 		const auto &sp = spectator->getPlayer();
-		if (sp && sp != player && player->hasPvpAggressor(sp->getGUID())) {
+		if (sp && sp != player && !sp->pvpAggressors.empty()) {
 			sendCreatureSquare(sp, SQ_COLOR_YELLOW, 2);
 		}
 	}
@@ -7323,13 +7325,15 @@ void ProtocolGame::sendFYIBox(const std::string &message) {
 
 // tile
 void ProtocolGame::sendMapDescription(const Position &pos) {
-	std::cout << "[PVP DEBUG] sendMapDescription (0x64 full map redraw) for " << player->getName() << std::endl;
 	NetworkMessage msg;
 	msg.addByte(0x64);
 	msg.addPosition(player->getPosition());
 	GetMapDescription(pos.x - MAP_MAX_CLIENT_VIEW_PORT_X, pos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, pos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
 	writeToOutputBuffer(msg);
-	resendPvpSquares();
+	for (const auto &c : m_pendingPvpSquares) {
+		sendCreatureSquare(c, SQ_COLOR_YELLOW, 2);
+	}
+	m_pendingPvpSquares.clear();
 }
 
 void ProtocolGame::sendAddTileItem(const Position &pos, uint32_t stackpos, const std::shared_ptr<Item> &item) {
@@ -7467,7 +7471,7 @@ void ProtocolGame::sendAddCreature(const std::shared_ptr<Creature> &creature, co
 		writeToOutputBuffer(msg);
 
 		if (const auto &creaturePlayer = creature->getPlayer()) {
-			if (player->hasPvpAggressor(creaturePlayer->getGUID())) {
+			if (!creaturePlayer->pvpAggressors.empty()) {
 				sendCreatureSquare(creature, SQ_COLOR_YELLOW, 2);
 			}
 		}
@@ -7667,7 +7671,10 @@ void ProtocolGame::sendMoveCreature(const std::shared_ptr<Creature> &creature, c
 				GetMapDescription(newPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, newPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z, 1, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
 			}
 			writeToOutputBuffer(msg);
-			resendPvpSquares();
+			for (const auto &c : m_pendingPvpSquares) {
+				sendCreatureSquare(c, SQ_COLOR_YELLOW, 2);
+			}
+			m_pendingPvpSquares.clear();
 		}
 	} else if (canSee(oldPos) && canSee(newPos)) {
 		if (teleport || (oldPos.z == MAP_INIT_SURFACE_LAYER && newPos.z >= MAP_INIT_SURFACE_LAYER + 1) || oldStackPos >= 10) {
@@ -9480,7 +9487,7 @@ void ProtocolGame::reloadCreature(const std::shared_ptr<Creature> &creature) {
 		AddCreature(msg, creature, false, 0);
 		writeToOutputBuffer(msg);
 		if (const auto &creaturePlayer = creature->getPlayer()) {
-			if (player->hasPvpAggressor(creaturePlayer->getGUID())) {
+			if (!creaturePlayer->pvpAggressors.empty()) {
 				sendCreatureSquare(creature, SQ_COLOR_YELLOW, 2);
 			}
 		}
