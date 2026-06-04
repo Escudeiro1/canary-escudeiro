@@ -1421,14 +1421,20 @@ bool Player::canWalkthrough(const std::shared_ptr<Creature> &creature) {
 	}
 
 	if (player) {
-		const auto &playerTile = player->getTile();
-		if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) && player->getLevel() > static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL)) && g_game().getWorldType() != WORLD_TYPE_NO_PVP)) {
+		if (hasPvpAggressor(player->getGUID())) {
 			return false;
 		}
 
-		const auto &playerTileGround = playerTile->getGround();
-		if (!playerTileGround || !playerTileGround->hasWalkStack()) {
-			return false;
+		if (g_game().getWorldType() != WORLD_TYPE_PVP) {
+			const auto &playerTile = player->getTile();
+			if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) && player->getLevel() > static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL)) && g_game().getWorldType() != WORLD_TYPE_NO_PVP)) {
+				return false;
+			}
+
+			const auto &playerTileGround = playerTile->getGround();
+			if (!playerTileGround || !playerTileGround->hasWalkStack()) {
+				return false;
+			}
 		}
 
 		const auto &thisPlayer = getPlayer();
@@ -1469,6 +1475,9 @@ bool Player::canWalkthroughEx(const std::shared_ptr<Creature> &creature) const {
 	const auto &player = creature->getPlayer();
 	const auto &npc = creature->getNpc();
 	if (player) {
+		if (g_game().getWorldType() == WORLD_TYPE_PVP) {
+			return !hasPvpAggressor(player->getGUID());
+		}
 		const auto &playerTile = player->getTile();
 		return playerTile && (playerTile->hasFlag(TILESTATE_NOPVPZONE) || playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL)) || g_game().getWorldType() == WORLD_TYPE_NO_PVP);
 	} else if (npc) {
@@ -7096,9 +7105,11 @@ void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
 	const bool newOnTheirSide = target->pvpAggressors.emplace(getGUID()).second;
 	if (newOnMySide) {
 		g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
+		g_game().updateCreatureWalkthrough(static_self_cast<Player>());
 	}
 	if (newOnTheirSide) {
 		g_game().updateCreaturePvpSquare(target, true);
+		g_game().updateCreatureWalkthrough(target);
 	}
 
 	// Join target's existing aggression group (one level, no recursion)
@@ -7116,11 +7127,13 @@ void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
 			if (pvpAggressors.emplace(guid).second) {
 				existing->pvpAggressors.emplace(getGUID());
 				g_game().updateCreaturePvpSquare(existing, true);
+				g_game().updateCreatureWalkthrough(existing);
 				joinedNew = true;
 			}
 		}
 		if (joinedNew) {
 			g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
+			g_game().updateCreatureWalkthrough(static_self_cast<Player>());
 		}
 	}
 }
@@ -7130,6 +7143,7 @@ void Player::clearPvpAggressors() {
 		const auto &target = g_game().getPlayerByGUID(guid);
 		if (target) {
 			target->pvpAggressors.erase(getGUID());
+			g_game().updateCreatureWalkthrough(target);
 			if (target->pvpAggressors.empty()) {
 				g_game().updateCreaturePvpSquare(target, false);
 			}
@@ -7137,6 +7151,7 @@ void Player::clearPvpAggressors() {
 	}
 	pvpAggressors.clear();
 	g_game().updateCreaturePvpSquare(static_self_cast<Player>(), false);
+	g_game().updateCreatureWalkthrough(static_self_cast<Player>());
 }
 
 void Player::addUnjustifiedDead(const std::shared_ptr<Player> &attacked) {
