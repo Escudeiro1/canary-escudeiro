@@ -9012,11 +9012,13 @@ void Game::updateCreatureSkull(const std::shared_ptr<Creature> &creature) const 
 }
 
 void Game::updateCreaturePvpSquare(const std::shared_ptr<Creature> &creature, bool show) const {
+	const auto &creaturePlayer = creature->getPlayer();
 	const auto spectators = Spectators().find<Player>(creature->getPosition(), true);
 	for (const auto &spectator : spectators) {
 		const auto &spectatorPlayer = spectator->getPlayer();
 		if (show) {
-			spectatorPlayer->sendCreatureStaticSquare(creature, SQ_COLOR_YELLOW);
+			const bool involved = creaturePlayer && (spectatorPlayer == creaturePlayer || spectatorPlayer->hasPvpAggressor(creaturePlayer->getGUID()));
+			spectatorPlayer->sendCreatureStaticSquare(creature, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN);
 		} else {
 			spectatorPlayer->sendCreatureClearSquare(creature);
 		}

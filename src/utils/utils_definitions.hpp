@@ -436,6 +436,7 @@ enum Fluids_t : uint8_t {
 
 enum SquareColor_t : uint8_t {
 	SQ_COLOR_BLACK = 0,
+	SQ_COLOR_BROWN = 78,
 	SQ_COLOR_YELLOW = 210,
 };
 

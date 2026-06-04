@@ -7100,6 +7100,29 @@ void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
 	if (newOnTheirSide) {
 		g_game().updateCreaturePvpSquare(target, true);
 	}
+
+	// Join target's existing aggression group (one level, no recursion)
+	if (newOnMySide) {
+		const std::vector<uint32_t> existingGuids(target->pvpAggressors.begin(), target->pvpAggressors.end());
+		bool joinedNew = false;
+		for (const uint32_t guid : existingGuids) {
+			if (guid == getGUID()) {
+				continue;
+			}
+			const auto &existing = g_game().getPlayerByGUID(guid);
+			if (!existing) {
+				continue;
+			}
+			if (pvpAggressors.emplace(guid).second) {
+				existing->pvpAggressors.emplace(getGUID());
+				g_game().updateCreaturePvpSquare(existing, true);
+				joinedNew = true;
+			}
+		}
+		if (joinedNew) {
+			g_game().updateCreaturePvpSquare(static_self_cast<Player>(), true);
+		}
+	}
 }
 
 void Player::clearPvpAggressors() {

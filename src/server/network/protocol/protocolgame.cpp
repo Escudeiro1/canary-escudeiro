@@ -3793,7 +3793,8 @@ void ProtocolGame::resendPvpSquares() {
 	for (const auto &spectator : Spectators().find<Player>(player->getPosition(), true, 0, 0, 0, 0, false)) {
 		const auto &sp = spectator->getPlayer();
 		if (sp && sp != player && !sp->pvpAggressors.empty()) {
-			sendCreatureSquare(sp, SQ_COLOR_YELLOW, 2);
+			const bool involved = player->hasPvpAggressor(sp->getGUID());
+			sendCreatureSquare(sp, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN, 2);
 		}
 	}
 }
@@ -7331,9 +7332,12 @@ void ProtocolGame::sendMapDescription(const Position &pos) {
 	GetMapDescription(pos.x - MAP_MAX_CLIENT_VIEW_PORT_X, pos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, pos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
 	writeToOutputBuffer(msg);
 	for (const auto &c : m_pendingPvpSquares) {
-		sendCreatureSquare(c, SQ_COLOR_YELLOW, 2);
+		const auto &cp = c->getPlayer();
+		const bool involved = cp && (player == cp || player->hasPvpAggressor(cp->getGUID()));
+		sendCreatureSquare(c, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN, 2);
 	}
 	m_pendingPvpSquares.clear();
+	resendPvpSquares();
 }
 
 void ProtocolGame::sendAddTileItem(const Position &pos, uint32_t stackpos, const std::shared_ptr<Item> &item) {
@@ -7472,7 +7476,8 @@ void ProtocolGame::sendAddCreature(const std::shared_ptr<Creature> &creature, co
 
 		if (const auto &creaturePlayer = creature->getPlayer()) {
 			if (!creaturePlayer->pvpAggressors.empty()) {
-				sendCreatureSquare(creature, SQ_COLOR_YELLOW, 2);
+				const bool involved = player->hasPvpAggressor(creaturePlayer->getGUID());
+				sendCreatureSquare(creature, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN, 2);
 			}
 		}
 
@@ -7672,9 +7677,14 @@ void ProtocolGame::sendMoveCreature(const std::shared_ptr<Creature> &creature, c
 			}
 			writeToOutputBuffer(msg);
 			for (const auto &c : m_pendingPvpSquares) {
-				sendCreatureSquare(c, SQ_COLOR_YELLOW, 2);
+				const auto &cp = c->getPlayer();
+				const bool involved = cp && (player == cp || player->hasPvpAggressor(cp->getGUID()));
+				sendCreatureSquare(c, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN, 2);
 			}
 			m_pendingPvpSquares.clear();
+			if (newPos.z != oldPos.z) {
+				resendPvpSquares();
+			}
 		}
 	} else if (canSee(oldPos) && canSee(newPos)) {
 		if (teleport || (oldPos.z == MAP_INIT_SURFACE_LAYER && newPos.z >= MAP_INIT_SURFACE_LAYER + 1) || oldStackPos >= 10) {
@@ -9488,7 +9498,8 @@ void ProtocolGame::reloadCreature(const std::shared_ptr<Creature> &creature) {
 		writeToOutputBuffer(msg);
 		if (const auto &creaturePlayer = creature->getPlayer()) {
 			if (!creaturePlayer->pvpAggressors.empty()) {
-				sendCreatureSquare(creature, SQ_COLOR_YELLOW, 2);
+				const bool involved = player->hasPvpAggressor(creaturePlayer->getGUID());
+				sendCreatureSquare(creature, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN, 2);
 			}
 		}
 	} else {
