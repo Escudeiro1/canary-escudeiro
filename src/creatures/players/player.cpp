@@ -7146,6 +7146,8 @@ void Player::clearPvpAggressors() {
 			g_game().updateCreatureWalkthrough(target);
 			if (target->pvpAggressors.empty()) {
 				g_game().updateCreaturePvpSquare(target, false);
+			} else {
+				g_game().updateCreaturePvpSquare(target, true);
 			}
 		}
 	}
