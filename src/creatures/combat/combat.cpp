@@ -259,6 +259,7 @@ ReturnValue Combat::canTargetCreature(const std::shared_ptr<Player> &player, con
 		if (player->hasSecureMode() && !Combat::isInPvpZone(player, target) && player->getSkullClient(target->getPlayer()) == SKULL_NONE) {
 			return RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS;
 		}
+
 	}
 
 	return canDoCombat(player, target, true);
