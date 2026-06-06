@@ -396,7 +396,7 @@ public:
 	uint32_t getProtocolVersion() const;
 	std::shared_ptr<ProtocolGame> getClient() const;
 
-	bool hasSecureMode() const;
+	uint8_t hasSecureMode() const;
 
 	void setParty(std::shared_ptr<Party> newParty);
 	std::shared_ptr<Party> getParty() const;
@@ -742,7 +742,7 @@ public:
 
 	void setChaseMode(bool mode);
 	void setFightMode(FightMode_t mode);
-	void setSecureMode(bool mode);
+	void setSecureMode(uint8_t mode);
 	void setPvpMode(uint8_t mode) { pvpMode = mode; }
 	uint8_t getPvpMode() const { return pvpMode; }
 
@@ -920,6 +920,7 @@ public:
 	void addPvpAggressor(const std::shared_ptr<Player> &target);
 	void clearPvpAggressors();
 	bool hasPvpAggressor(uint32_t guid) const { return pvpAggressors.contains(guid); }
+	bool hasPvpAggressors() const { return !pvpAggressors.empty(); }
 	void addUnjustifiedDead(const std::shared_ptr<Player> &attacked);
 	void sendCreatureEmblem(const std::shared_ptr<Creature> &creature) const;
 	void sendCreatureSkull(const std::shared_ptr<Creature> &creature) const;
@@ -1844,7 +1845,7 @@ private:
 	ExivaRestrictions exivaRestrictions;
 
 	bool chaseMode = false;
-	bool secureMode = true;
+	uint8_t secureMode = 0; // 0-2 = safe (can't attack unmarked), 3 = can attack players
 	uint8_t pvpMode = 0;
 	bool inMarket = false;
 	bool wasMounted = false;

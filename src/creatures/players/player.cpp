@@ -1013,7 +1013,7 @@ std::shared_ptr<ProtocolGame> Player::getClient() const {
 	return client;
 }
 
-bool Player::hasSecureMode() const {
+uint8_t Player::hasSecureMode() const {
 	return secureMode;
 }
 
@@ -6100,7 +6100,7 @@ void Player::setFightMode(FightMode_t mode) {
 	sendSkills();
 }
 
-void Player::setSecureMode(bool mode) {
+void Player::setSecureMode(uint8_t mode) {
 	secureMode = mode;
 }
 

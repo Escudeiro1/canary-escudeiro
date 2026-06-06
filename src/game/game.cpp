@@ -6565,8 +6565,8 @@ void Game::playerSetFightModes(uint32_t playerId, FightMode_t fightMode, bool ch
 
 	player->setFightMode(fightMode);
 	player->setChaseMode(chaseMode);
-	player->setSecureMode(secureMode);
 	player->setPvpMode(pvpMode);
+	player->setSecureMode(pvpMode != 3 ? 0 : 3);
 }
 
 void Game::playerRequestAddVip(uint32_t playerId, const std::string &name) {

@@ -23,6 +23,9 @@ function onCreateWildGrowth(creature, position)
 	if item then
 		item:setDuration(30)
 		item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, string.format("Casted by: %s", creature:getName()))
+		if creature:isPlayer() then
+			item:setAttribute(ITEM_ATTRIBUTE_OWNER, creature:getGuid())
+		end
 	end
 end
 

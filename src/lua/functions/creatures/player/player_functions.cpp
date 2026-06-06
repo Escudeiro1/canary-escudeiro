@@ -371,6 +371,7 @@ void PlayerFunctions::init(lua_State* L) {
 
 	Lua::registerMethod(L, "Player", "hasChaseMode", PlayerFunctions::luaPlayerHasChaseMode);
 	Lua::registerMethod(L, "Player", "hasSecureMode", PlayerFunctions::luaPlayerHasSecureMode);
+	Lua::registerMethod(L, "Player", "hasPvpAggressor", PlayerFunctions::luaPlayerHasPvpAggressor);
 	Lua::registerMethod(L, "Player", "getFightMode", PlayerFunctions::luaPlayerGetFightMode);
 	Lua::registerMethod(L, "Player", "getPvpMode", PlayerFunctions::luaPlayerGetPvpMode);
 
@@ -3852,7 +3853,21 @@ int PlayerFunctions::luaPlayerHasSecureMode(lua_State* L) {
 	// player:hasSecureMode()
 	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
 	if (player) {
-		Lua::pushBoolean(L, player->secureMode);
+		Lua::pushBoolean(L, player->secureMode != 3);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerHasPvpAggressor(lua_State* L) {
+	// player:hasPvpAggressor(creatureId)
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (player) {
+		const uint32_t creatureId = Lua::getNumber<uint32_t>(L, 2);
+		const auto &target = g_game().getCreatureByID(creatureId);
+		const auto &targetPlayer = target ? target->getPlayer() : nullptr;
+		Lua::pushBoolean(L, targetPlayer && player->hasPvpAggressor(targetPlayer->getGUID()));
 	} else {
 		lua_pushnil(L);
 	}

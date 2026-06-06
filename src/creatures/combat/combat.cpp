@@ -256,7 +256,7 @@ ReturnValue Combat::canTargetCreature(const std::shared_ptr<Player> &player, con
 			return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
 		}
 
-		if (player->hasSecureMode() && !Combat::isInPvpZone(player, target) && player->getSkullClient(target->getPlayer()) == SKULL_NONE) {
+		if (player->hasSecureMode() != 3 && !Combat::isInPvpZone(player, target) && player->getSkullClient(target->getPlayer()) == SKULL_NONE) {
 			return RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS;
 		}
 
@@ -1127,6 +1127,10 @@ void Combat::combatTileEffects(const CreatureVector &spectators, const std::shar
 		const auto &item = Item::CreateItem(itemId);
 		if (caster) {
 			item->setOwner(caster);
+			if (const auto &field = item->getMagicField()) {
+				const auto &casterPlayer = caster->getPlayer();
+				field->safe = casterPlayer && casterPlayer->getPvpMode() == 0 && !casterPlayer->hasPvpAggressors();
+			}
 		}
 
 		ReturnValue ret = g_game().internalAddItem(tile, item);
@@ -2484,15 +2488,25 @@ void MagicField::onStepInField(const std::shared_ptr<Creature> &creature) {
 
 			const auto &targetPlayer = creature->getPlayer();
 			if (targetPlayer) {
-				const auto &attackerPlayer = g_game().getPlayerByID(ownerId);
+				if (safe) {
+					g_game().addMagicEffect(creature->getPosition(), CONST_ME_POFF);
+					return;
+				}
+				const auto &attackerPlayer = g_game().getPlayerByGUID(ownerId);
 				if (attackerPlayer) {
 					if (Combat::isProtected(attackerPlayer, targetPlayer)) {
 						harmfulField = false;
 					}
+					if (attackerPlayer->getPvpMode() == 0 && !attackerPlayer->hasPvpAggressor(targetPlayer->getGUID())) {
+						if (attackerPlayer != targetPlayer || !attackerPlayer->hasPvpAggressors()) {
+							g_game().addMagicEffect(creature->getPosition(), CONST_ME_POFF);
+							return;
+						}
+					}
 				}
 			}
 
-			if (!harmfulField || (OTSYS_TIME() - createTime <= 5000) || creature->hasBeenAttacked(ownerId)) {
+			if (!harmfulField || creature->hasBeenAttacked(ownerId)) {
 				conditionCopy->setParam(CONDITION_PARAM_OWNER, ownerId);
 			}
 		}

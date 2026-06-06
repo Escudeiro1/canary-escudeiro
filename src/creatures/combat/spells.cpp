@@ -689,7 +689,7 @@ bool Spell::playerRuneSpellCheck(const std::shared_ptr<Player> &player, const Po
 		return false;
 	}
 
-	if (aggressive && needTarget && topVisibleCreature && player->hasSecureMode()) {
+	if (aggressive && needTarget && topVisibleCreature && player->hasSecureMode() != 3) {
 		const auto &targetPlayer = topVisibleCreature->getPlayer();
 		if (targetPlayer && targetPlayer != player && player->getSkullClient(targetPlayer) == SKULL_NONE && !Combat::isInPvpZone(player, targetPlayer)) {
 			player->sendCancelMessage(RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS);
@@ -1254,7 +1254,7 @@ bool InstantSpell::playerCastInstant(const std::shared_ptr<Player> &player, std:
 	}
 
 	auto worldType = g_game().getWorldType();
-	if (pzLocked && (worldType == WORLD_TYPE_PVP || worldType == WORLD_TYPE_PVP_ENFORCED)) {
+	if (pzLocked && (worldType == WORLD_TYPE_PVP || worldType == WORLD_TYPE_PVP_ENFORCED) && player->getPvpMode() != 0) {
 		player->addInFightTicks(true);
 		player->updateLastAggressiveAction();
 	}
@@ -1517,7 +1517,7 @@ bool RuneSpell::executeUse(const std::shared_ptr<Player> &player, const std::sha
 	}
 
 	auto worldType = g_game().getWorldType();
-	if (pzLocked && (worldType == WORLD_TYPE_PVP || worldType == WORLD_TYPE_PVP_ENFORCED)) {
+	if (pzLocked && (worldType == WORLD_TYPE_PVP || worldType == WORLD_TYPE_PVP_ENFORCED) && player->getPvpMode() != 0) {
 		player->addInFightTicks(true);
 		player->updateLastAggressiveAction();
 	}

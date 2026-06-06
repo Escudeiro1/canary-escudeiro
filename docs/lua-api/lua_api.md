@@ -4625,6 +4625,11 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 - Returns: `boolean|nil`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
+#### `Player:hasPvpAggressor(creatureId: number)`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
 #### `Player:hasSecureMode()`
 
 - Returns: `boolean|nil`

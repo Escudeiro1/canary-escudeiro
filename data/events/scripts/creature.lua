@@ -21,7 +21,7 @@ function Creature:onTargetCombat(target)
 
 	if not IsRetroPVP() or ADVANCED_SECURE_MODE ~= 0 then
 		if self:isPlayer() and target:isPlayer() then
-			if self:hasSecureMode() then
+			if self:hasSecureMode() and not self:hasPvpAggressor(target:getId()) then
 				return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
 			end
 		end

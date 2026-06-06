@@ -3621,6 +3621,10 @@ function Player:hasMount(mountIdOrMountName) end
 ---@return boolean|nil
 function Player:hasOutfit(lookType, addon) end
 
+---@param creatureId number
+---@return boolean|nil
+function Player:hasPvpAggressor(creatureId) end
+
 ---@return boolean|nil
 function Player:hasSecureMode() end
 

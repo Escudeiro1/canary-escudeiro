@@ -368,6 +368,8 @@ public:
 	int32_t getDamage() const;
 	void onStepInField(const std::shared_ptr<Creature> &creature);
 
+	bool safe = false;
+
 private:
 	int64_t createTime;
 };

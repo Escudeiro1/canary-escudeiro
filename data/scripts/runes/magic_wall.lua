@@ -23,6 +23,9 @@ function onCreateMagicWall(creature, position)
 	if item then
 		item:setDuration(16, 24)
 		item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, string.format("Casted by: %s", creature:getName()))
+		if creature:isPlayer() then
+			item:setAttribute(ITEM_ATTRIBUTE_OWNER, creature:getGuid())
+		end
 	end
 end
 

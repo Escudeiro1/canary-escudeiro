@@ -6846,6 +6846,14 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "hasPvpAggressor",
+        "params": [
+          "creatureId: number"
+        ],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "hasSecureMode",
         "params": [],
         "return": "boolean|nil",

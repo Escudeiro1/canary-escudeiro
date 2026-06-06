@@ -751,11 +751,18 @@ ReturnValue Tile::queryAdd(int32_t, const std::shared_ptr<Thing> &thing, uint32_
 		if (!hasBitSet(FLAG_IGNOREBLOCKITEM, tileFlags)) {
 			// If the FLAG_IGNOREBLOCKITEM bit isn't set we dont have to iterate every single item
 			if (hasFlag(TILESTATE_BLOCKSOLID)) {
-				// NO PVP magic wall or wild growth field check
+				// owner and aggressors are blocked by safe magic walls; uninvolved players pass through
 				if (creature && creature->getPlayer()) {
+					const auto &movingPlayer = creature->getPlayer();
 					if (const auto fieldList = getItemList()) {
 						for (const auto &findfield : *fieldList) {
 							if (findfield && (findfield->getID() == ITEM_WILDGROWTH_SAFE || findfield->getID() == ITEM_MAGICWALL_SAFE)) {
+								const auto &ownerPlayer = g_game().getPlayerByGUID(findfield->getOwnerId());
+								if (ownerPlayer) {
+									if (movingPlayer == ownerPlayer || movingPlayer->hasPvpAggressor(ownerPlayer->getGUID())) {
+										break;
+									}
+								}
 								return RETURNVALUE_NOERROR;
 							}
 						}
