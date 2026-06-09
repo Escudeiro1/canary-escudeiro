@@ -204,6 +204,7 @@ class PlayerFunctions {
 	static int luaPlayerGetSlotItem(lua_State* L);
 	static int luaPlayerGetBackpack(lua_State* L);
 	static int luaPlayerGetLootPouch(lua_State* L);
+	static int luaPlayerQuickLootCorpse(lua_State* L);
 
 	static int luaPlayerGetParty(lua_State* L);
 

@@ -297,6 +297,7 @@ void PlayerFunctions::init(lua_State* L) {
 	Lua::registerMethod(L, "Player", "getSlotItem", PlayerFunctions::luaPlayerGetSlotItem);
 	Lua::registerMethod(L, "Player", "getBackpack", PlayerFunctions::luaPlayerGetBackpack);
 	Lua::registerMethod(L, "Player", "getLootPouch", PlayerFunctions::luaPlayerGetLootPouch);
+	Lua::registerMethod(L, "Player", "quickLootCorpse", PlayerFunctions::luaPlayerQuickLootCorpse);
 
 	Lua::registerMethod(L, "Player", "getParty", PlayerFunctions::luaPlayerGetParty);
 
@@ -2877,6 +2878,19 @@ int PlayerFunctions::luaPlayerGetLootPouch(lua_State* L) {
 	} else {
 		lua_pushnil(L);
 	}
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerQuickLootCorpse(lua_State* L) {
+	// player:quickLootCorpse(corpse)
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	const auto &corpse = Lua::getUserdataShared<Container>(L, 2, "Container");
+	if (!player || !corpse) {
+		Lua::pushBoolean(L, false);
+		return 1;
+	}
+	g_game().playerQuickLootCorpse(player, corpse, corpse->getPosition());
+	Lua::pushBoolean(L, true);
 	return 1;
 }
 
