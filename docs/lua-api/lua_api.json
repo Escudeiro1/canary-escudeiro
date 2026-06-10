@@ -7010,6 +7010,14 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "quickLootCorpse",
+        "params": [
+          "corpse: Container"
+        ],
+        "return": "boolean",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "reloadData",
         "params": [],
         "return": "boolean|nil",

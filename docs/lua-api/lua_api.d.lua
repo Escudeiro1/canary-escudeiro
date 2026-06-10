@@ -3704,6 +3704,10 @@ function Player:popupFYI(message) end
 ---@return boolean|nil
 function Player:preyThirdSlot(arg2) end
 
+---@param corpse Container
+---@return boolean
+function Player:quickLootCorpse(corpse) end
+
 ---@return boolean|nil
 function Player:reloadData() end
 
