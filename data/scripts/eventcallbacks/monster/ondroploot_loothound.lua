@@ -3,7 +3,7 @@ local callback = EventCallback("MonsterOnDropLootHound")
 local LOOT_HOUND_NAME = "Loot Hound"
 local COLLECT_WINDOW = 1000  -- ms to wait after first kill, collecting the whole pack
 local STEP_MS = 250           -- ms between each walk step
-local CORPSE_MS = 400         -- ms to pause at corpse before moving to next
+local CORPSE_MS = 100         -- ms to pause at corpse before moving to next
 
 local petLootQueue = {}   -- [playerId] = { corpse, ... }
 local petLoopRunning = {} -- [playerId] = true
@@ -18,6 +18,24 @@ local function getLootHound(player)
 		end
 	end
 	return nil
+end
+
+-- Instantly loot all remaining corpses in the queue without walking.
+-- Called when the pet was teleported to master (different floor or too far),
+-- so walking is no longer viable but loot should not be abandoned.
+local function drainQueueInstantly(player, pet, playerId)
+	local queue = petLootQueue[playerId]
+	if queue then
+		for _, corpse in ipairs(queue) do
+			if corpse then
+				player:quickLootCorpse(corpse)
+			end
+		end
+	end
+	petLootQueue[playerId] = nil
+	petLoopRunning[playerId] = nil
+	petWalkState[playerId] = nil
+	pet:setFollowCreature(player)
 end
 
 local function processPetLootQueue(playerId)
@@ -43,10 +61,16 @@ local function processPetLootQueue(playerId)
 		return
 	end
 
+	-- Pet was teleported to master on a different floor — loot everything instantly
+	if pet:getPosition().z ~= corpse:getPosition().z then
+		player:quickLootCorpse(corpse)
+		drainQueueInstantly(player, pet, playerId)
+		return
+	end
+
 	local path = pet:getPathTo(corpse:getPosition(), 0, 1, true, true, 30)
 	if not path or type(path) ~= "table" or #path == 0 then
-		-- no path found — teleport as fallback so loot is never skipped
-		pet:teleportTo(corpse:getPosition(), false)
+		-- corpse unreachable (too far or blocked) — loot in place, no teleport
 		player:quickLootCorpse(corpse)
 		addEvent(processPetLootQueue, CORPSE_MS, playerId)
 		return
@@ -78,11 +102,19 @@ walkStep = function(playerId)
 		return
 	end
 
+	-- Pet was teleported to master mid-walk — loot everything instantly
+	if pet:getPosition().z ~= state.corpse:getPosition().z then
+		petWalkState[playerId] = nil
+		player:quickLootCorpse(state.corpse)
+		drainQueueInstantly(player, pet, playerId)
+		return
+	end
+
 	if state.index < 1 then
 		-- arrived at corpse
 		petWalkState[playerId] = nil
 		player:quickLootCorpse(state.corpse)
-		pet:setFollowCreature(player)  -- restore normal follow
+		pet:setFollowCreature(player)
 		addEvent(processPetLootQueue, CORPSE_MS, playerId)
 		return
 	end
