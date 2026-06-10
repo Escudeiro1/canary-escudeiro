@@ -462,6 +462,8 @@ int GameFunctions::luaGameCreateItem(lua_State* L) {
 		position = Lua::getPosition(L, 3);
 	}
 
+	const uint32_t ownerGuid = Lua::getNumber<uint32_t>(L, 4, 0);
+
 	const bool hasTable = itemCount > 1;
 	if (hasTable) {
 		lua_newtable(L);
@@ -483,6 +485,10 @@ int GameFunctions::luaGameCreateItem(lua_State* L) {
 				lua_pushnil(L);
 			}
 			return 1;
+		}
+
+		if (ownerGuid != 0) {
+			item->setOwner(ownerGuid);
 		}
 
 		if (position.x != 0) {

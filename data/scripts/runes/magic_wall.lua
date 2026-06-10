@@ -19,13 +19,11 @@ function onCreateMagicWall(creature, position)
 		magicWall = ITEM_MAGICWALL
 	end
 
-	local item = Game.createItem(magicWall, 1, position)
+	local ownerGuid = creature:isPlayer() and creature:getGuid() or 0
+	local item = Game.createItem(magicWall, 1, position, ownerGuid)
 	if item then
 		item:setDuration(16, 24)
 		item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, string.format("Casted by: %s", creature:getName()))
-		if creature:isPlayer() then
-			item:setAttribute(ITEM_ATTRIBUTE_OWNER, creature:getGuid())
-		end
 	end
 end
 

@@ -443,7 +443,16 @@ void ProtocolGame::AddItem(NetworkMessage &msg, const std::shared_ptr<Item> &ite
 		return;
 	}
 
-	const ItemType &it = Item::items[item->getID()];
+	uint16_t resolvedId = item->getID();
+	if (resolvedId == ITEM_MAGICWALL_SAFE || resolvedId == ITEM_WILDGROWTH_SAFE) {
+		const uint32_t ownerId = item->getOwnerId();
+		const bool blocked = item->isOwner(player) || (ownerId != 0 && player->hasPvpAggressor(ownerId));
+		if (blocked) {
+			resolvedId = (resolvedId == ITEM_MAGICWALL_SAFE) ? ITEM_MAGICWALL : ITEM_WILDGROWTH;
+		}
+	}
+
+	const ItemType &it = Item::items[resolvedId];
 
 	msg.add<uint16_t>(it.id);
 

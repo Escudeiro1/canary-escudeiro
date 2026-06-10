@@ -19,13 +19,11 @@ function onCreateWildGrowth(creature, position)
 		wildGrowth = ITEM_WILDGROWTH
 	end
 
-	local item = Game.createItem(wildGrowth, 1, position)
+	local ownerGuid = creature:isPlayer() and creature:getGuid() or 0
+	local item = Game.createItem(wildGrowth, 1, position, ownerGuid)
 	if item then
 		item:setDuration(30)
 		item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, string.format("Casted by: %s", creature:getName()))
-		if creature:isPlayer() then
-			item:setAttribute(ITEM_ATTRIBUTE_OWNER, creature:getGuid())
-		end
 	end
 end
 
