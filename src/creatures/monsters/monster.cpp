@@ -680,6 +680,10 @@ bool Monster::isOpponent(const std::shared_ptr<Creature> &creature) const {
 		return false;
 	}
 
+	if (m_monsterType->info.staticAttackChance == 0) {
+		return false;
+	}
+
 	const auto &master = getMaster();
 	const auto &masterPlayer = master ? master->getPlayer() : nullptr;
 	if (isSummon() && masterPlayer) {
@@ -1114,11 +1118,18 @@ void Monster::onThink_async() {
 		if (attackedCreature.get() == this) {
 			setFollowCreature(nullptr);
 		} else if (attackedCreature && followCreature != attackedCreature) {
-			// This happens just after a master orders an attack, so lets follow it aswell.
-			setFollowCreature(attackedCreature);
-		} else if (master && master->getAttackedCreature()) {
+			if (m_monsterType->info.staticAttackChance == 0) {
+				// Non-combat summon (e.g. loot hound): ignore attacked creature, stay with master.
+				setFollowCreature(master);
+			} else {
+				// This happens just after a master orders an attack, so lets follow it aswell.
+				setFollowCreature(attackedCreature);
+			}
+		} else if (master && master->getAttackedCreature() && m_monsterType->info.staticAttackChance > 0) {
 			// This happens if the monster is summoned during combat
 			selectTarget(master->getAttackedCreature());
+		} else if (master && master->getAttackedCreature() && m_monsterType->info.staticAttackChance == 0) {
+			setFollowCreature(master);
 		} else if (master && master != followCreature) {
 			// Our master has not ordered us to attack anything, lets follow him around instead.
 			setFollowCreature(master);
