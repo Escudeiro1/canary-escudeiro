@@ -452,6 +452,19 @@ void ProtocolGame::AddItem(NetworkMessage &msg, const std::shared_ptr<Item> &ite
 		}
 	}
 
+	if (resolvedId == ITEM_FIREFIELD_NOPVP || resolvedId == ITEM_POISONFIELD_NOPVP || resolvedId == ITEM_ENERGYFIELD_NOPVP) {
+		const auto &magicField = item->getMagicField();
+		if (magicField && !magicField->safe) {
+			const uint32_t ownerId = item->getOwnerId();
+			const bool willHurt = item->isOwner(player) || (ownerId != 0 && player->hasPvpAggressor(ownerId));
+			if (willHurt) {
+				if (resolvedId == ITEM_FIREFIELD_NOPVP) resolvedId = ITEM_FIREFIELD_PVP_FULL;
+				else if (resolvedId == ITEM_POISONFIELD_NOPVP) resolvedId = ITEM_POISONFIELD_PVP;
+				else resolvedId = ITEM_ENERGYFIELD_PVP;
+			}
+		}
+	}
+
 	const ItemType &it = Item::items[resolvedId];
 
 	msg.add<uint16_t>(it.id);
