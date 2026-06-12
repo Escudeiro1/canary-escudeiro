@@ -9520,8 +9520,15 @@ void ProtocolGame::reloadCreature(const std::shared_ptr<Creature> &creature) {
 		writeToOutputBuffer(msg);
 		if (const auto &creaturePlayer = creature->getPlayer()) {
 			if (!creaturePlayer->pvpAggressors.empty()) {
-				const bool involved = (player == creaturePlayer) || player->hasPvpAggressor(creaturePlayer->getGUID());
-				sendCreatureSquare(creature, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN, 2);
+				const bool involved = (player == creaturePlayer && creaturePlayer->hasPvpAggressors())
+				    || player->hasPvpAggressor(creaturePlayer->getGUID());
+				if (involved) {
+					sendCreatureSquare(creature, SQ_COLOR_YELLOW, 2);
+				} else if (player->isOrangeFightParticipant(creaturePlayer)) {
+					sendCreatureSquare(creature, SQ_COLOR_ORANGE, 2);
+				} else {
+					sendCreatureSquare(creature, SQ_COLOR_BROWN, 2);
+				}
 			}
 		}
 	} else {

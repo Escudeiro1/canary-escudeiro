@@ -347,9 +347,14 @@ ReturnValue Combat::canDoCombat(const std::shared_ptr<Creature> &attacker, const
 				if (targetPlayer->hasPvpAggressors()
 				    && !healerPlayer->hasCommonPvpAggressor(targetPlayer)
 				    && !healerPlayer->hasPvpAggressor(targetPlayer->getGUID())) {
-					if (healerPlayer->getPvpMode() != 1 || !healerPlayer->isOrangeFightParticipant(targetPlayer)) {
+					const uint8_t pvpMode = healerPlayer->getPvpMode();
+					if (pvpMode == 0) {
 						return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
 					}
+					if (pvpMode == 1 && !healerPlayer->isOrangeFightParticipant(targetPlayer)) {
+						return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
+					}
+					// pvpMode >= 2 (yellow/red hand): allowed, will join fight after heal
 				}
 			}
 		}
@@ -815,7 +820,7 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 		CombatDispelFunc(caster, target, params, nullptr);
 
 		if (attackerPlayer && targetPlayer && attackerPlayer != targetPlayer
-		    && attackerPlayer->getPvpMode() == 1
+		    && attackerPlayer->getPvpMode() >= 1
 		    && damage.primary.type == COMBAT_HEALING && damage.primary.value > 0
 		    && targetPlayer->hasPvpAggressors()
 		    && !attackerPlayer->hasCommonPvpAggressor(targetPlayer)) {
