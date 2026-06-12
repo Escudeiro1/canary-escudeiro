@@ -921,6 +921,14 @@ public:
 	void clearPvpAggressors();
 	bool hasPvpAggressor(uint32_t guid) const { return pvpAggressors.contains(guid); }
 	bool hasPvpAggressors() const { return !pvpAggressors.empty(); }
+	bool hasCommonPvpAggressor(const std::shared_ptr<Player> &other) const {
+		for (const uint32_t guid : pvpAggressors) {
+			if (other->hasPvpAggressor(guid)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	void addUnjustifiedDead(const std::shared_ptr<Player> &attacked);
 	void sendCreatureEmblem(const std::shared_ptr<Creature> &creature) const;
 	void sendCreatureSkull(const std::shared_ptr<Creature> &creature) const;

@@ -340,6 +340,17 @@ bool Combat::isProtected(const std::shared_ptr<Player> &attacker, const std::sha
 
 ReturnValue Combat::canDoCombat(const std::shared_ptr<Creature> &attacker, const std::shared_ptr<Creature> &target, bool aggressive) {
 	if (!aggressive) {
+		if (attacker && target) {
+			const auto &healerPlayer = attacker->getPlayer();
+			const auto &targetPlayer = target->getPlayer();
+			if (healerPlayer && targetPlayer && healerPlayer->getGUID() != targetPlayer->getGUID()) {
+				if (targetPlayer->hasPvpAggressors()
+				    && !healerPlayer->hasCommonPvpAggressor(targetPlayer)
+				    && !healerPlayer->hasPvpAggressor(targetPlayer->getGUID())) {
+					return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
+				}
+			}
+		}
 		return RETURNVALUE_NOERROR;
 	}
 
@@ -1451,7 +1462,10 @@ void Combat::CombatFunc(const std::shared_ptr<Creature> &caster, const Position 
 					}
 				}
 
-				if (!params.aggressive || (caster != creature && Combat::canDoCombat(caster, creature, params.aggressive) == RETURNVALUE_NOERROR)) {
+				const bool canAffect = params.aggressive
+				    ? (caster != creature && Combat::canDoCombat(caster, creature, true) == RETURNVALUE_NOERROR)
+				    : (caster == creature || Combat::canDoCombat(caster, creature, false) == RETURNVALUE_NOERROR);
+				if (canAffect) {
 					affectedTargets.push_back(creature);
 				}
 			}
@@ -1499,7 +1513,10 @@ void Combat::CombatFunc(const std::shared_ptr<Creature> &caster, const Position 
 					}
 				}
 
-				if (!params.aggressive || (caster != creature && Combat::canDoCombat(caster, creature, params.aggressive) == RETURNVALUE_NOERROR)) {
+				const bool canAffect = params.aggressive
+				    ? (caster != creature && Combat::canDoCombat(caster, creature, true) == RETURNVALUE_NOERROR)
+				    : (caster == creature || Combat::canDoCombat(caster, creature, false) == RETURNVALUE_NOERROR);
+				if (canAffect) {
 					// Wheel of destiny update beam mastery damage
 					if (casterPlayer) {
 						casterPlayer->wheel().updateBeamMasteryDamage(tmpDamage, beamAffectedTotal, beamAffectedCurrent);
@@ -1536,7 +1553,9 @@ void Combat::doCombatHealth(const std::shared_ptr<Creature> &caster, const std::
 }
 
 void Combat::doCombatHealth(const std::shared_ptr<Creature> &caster, const std::shared_ptr<Creature> &target, const Position &origin, CombatDamage &damage, const CombatParams &params) {
-	bool canCombat = !params.aggressive || (caster != target && Combat::canDoCombat(caster, target, params.aggressive) == RETURNVALUE_NOERROR);
+	bool canCombat = params.aggressive
+	    ? (caster != target && Combat::canDoCombat(caster, target, true) == RETURNVALUE_NOERROR)
+	    : (caster == target || Combat::canDoCombat(caster, target, false) == RETURNVALUE_NOERROR);
 	if ((caster && target)
 	    && (caster == target || canCombat)
 	    && (params.impactEffect != CONST_ME_NONE)) {
