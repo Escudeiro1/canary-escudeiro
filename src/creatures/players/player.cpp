@@ -6356,24 +6356,31 @@ void Player::onAttackedCreature(const std::shared_ptr<Creature> &target) {
 			sendIcons();
 		}
 
+		// White hand (pvpMode=1) defending a party/guild member: no PZ lock, no skull
+		const bool whiteHandDefense = getPvpMode() == 1 && isOrangeFightParticipant(targetPlayer);
+
 		if (getSkull() == SKULL_NONE && getSkullClient(targetPlayer) == SKULL_YELLOW) {
 			addAttacked(targetPlayer);
 			targetPlayer->sendCreatureSkull(static_self_cast<Player>());
 		} else if (!targetPlayer->hasAttacked(static_self_cast<Player>())) {
-			if (!pzLocked) {
-				pzLocked = true;
-				sendIcons();
+			if (!whiteHandDefense) {
+				if (!pzLocked) {
+					pzLocked = true;
+					sendIcons();
+				}
 			}
 
 			if (!Combat::isInPvpZone(static_self_cast<Player>(), targetPlayer) && !isInWar(targetPlayer)) {
 				addAttacked(targetPlayer);
 
-				if (targetPlayer->getSkull() == SKULL_NONE && getSkull() == SKULL_NONE && !targetPlayer->hasKilled(static_self_cast<Player>())) {
-					setSkull(SKULL_WHITE);
-				}
+				if (!whiteHandDefense) {
+					if (targetPlayer->getSkull() == SKULL_NONE && getSkull() == SKULL_NONE && !targetPlayer->hasKilled(static_self_cast<Player>())) {
+						setSkull(SKULL_WHITE);
+					}
 
-				if (getSkull() == SKULL_NONE) {
-					targetPlayer->sendCreatureSkull(static_self_cast<Player>());
+					if (getSkull() == SKULL_NONE) {
+						targetPlayer->sendCreatureSkull(static_self_cast<Player>());
+					}
 				}
 			}
 		}
@@ -7097,6 +7104,53 @@ void Player::clearAttacked() {
 	attackedSet.clear();
 }
 
+bool Player::isOrangeFightParticipant(const std::shared_ptr<Player> &target) const {
+	// viewer (this) sees target as orange if target is in a fight that involves
+	// a party/guild member of this player, or target is a party/guild member
+	// of someone this player is fighting — but they are NOT direct opponents (yellow).
+
+	// Self-view: am I a party/guild member of someone currently in a fight?
+	if (target.get() == this) {
+		if (const auto &party = getParty()) {
+			const auto &leader = party->getLeader();
+			if (leader && leader.get() != this && leader->hasPvpAggressors()) {
+				return true;
+			}
+			for (const auto &member : party->getMembers()) {
+				if (member.get() != this && member->hasPvpAggressors()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Case 1: target is viewer's party/guild member and either is in a fight
+	if ((isPartner(target) || isGuildMate(target)) && (hasPvpAggressors() || target->hasPvpAggressors())) {
+		return true;
+	}
+
+	// Case 2: target is fighting viewer's party/guild member
+	// (target's aggressors include someone who is viewer's ally)
+	for (const uint32_t guid : target->pvpAggressors) {
+		const auto &fighter = g_game().getPlayerByGUID(guid);
+		if (fighter && (isPartner(fighter) || isGuildMate(fighter))) {
+			return true;
+		}
+	}
+
+	// Case 3: viewer is fighting target's party/guild member
+	// (viewer's aggressors include someone who is target's ally)
+	for (const uint32_t guid : pvpAggressors) {
+		const auto &fighter = g_game().getPlayerByGUID(guid);
+		if (fighter && (target->isPartner(fighter) || target->isGuildMate(fighter))) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
 	if (!target || target == getPlayer()) {
 		return;
@@ -7110,6 +7164,29 @@ void Player::addPvpAggressor(const std::shared_ptr<Player> &target) {
 	if (newOnTheirSide) {
 		g_game().updateCreaturePvpSquare(target, true);
 		g_game().updateCreatureWalkthrough(target);
+	}
+
+	// Notify party/guild members of both fighters so they get orange squares
+	auto notifyParty = [](const std::shared_ptr<Player> &fighter) {
+		const auto &party = fighter->getParty();
+		if (!party) {
+			return;
+		}
+		const auto &leader = party->getLeader();
+		if (leader && leader != fighter) {
+			g_game().updateCreaturePvpSquare(leader, true);
+		}
+		for (const auto &member : party->getMembers()) {
+			if (member != fighter) {
+				g_game().updateCreaturePvpSquare(member, true);
+			}
+		}
+	};
+	if (newOnMySide) {
+		notifyParty(static_self_cast<Player>());
+	}
+	if (newOnTheirSide) {
+		notifyParty(target);
 	}
 
 	// Join target's existing aggression group (one level, no recursion)
@@ -7154,6 +7231,31 @@ void Player::clearPvpAggressors() {
 	pvpAggressors.clear();
 	g_game().updateCreaturePvpSquare(static_self_cast<Player>(), false);
 	g_game().updateCreatureWalkthrough(static_self_cast<Player>());
+
+	const auto &party = getParty();
+	if (party) {
+		bool anyMemberFighting = false;
+		const auto &leader = party->getLeader();
+		if (leader && leader.get() != this && !leader->pvpAggressors.empty()) {
+			anyMemberFighting = true;
+		}
+		if (!anyMemberFighting) {
+			for (const auto &member : party->getMembers()) {
+				if (member.get() != this && !member->pvpAggressors.empty()) {
+					anyMemberFighting = true;
+					break;
+				}
+			}
+		}
+		if (leader && leader.get() != this && leader->pvpAggressors.empty()) {
+			g_game().updateCreaturePvpSquare(leader, anyMemberFighting);
+		}
+		for (const auto &member : party->getMembers()) {
+			if (member.get() != this && member->pvpAggressors.empty()) {
+				g_game().updateCreaturePvpSquare(member, anyMemberFighting);
+			}
+		}
+	}
 }
 
 void Player::addUnjustifiedDead(const std::shared_ptr<Player> &attacked) {

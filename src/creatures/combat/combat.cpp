@@ -347,7 +347,9 @@ ReturnValue Combat::canDoCombat(const std::shared_ptr<Creature> &attacker, const
 				if (targetPlayer->hasPvpAggressors()
 				    && !healerPlayer->hasCommonPvpAggressor(targetPlayer)
 				    && !healerPlayer->hasPvpAggressor(targetPlayer->getGUID())) {
-					return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
+					if (healerPlayer->getPvpMode() != 1 || !healerPlayer->isOrangeFightParticipant(targetPlayer)) {
+						return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER;
+					}
 				}
 			}
 		}
@@ -811,6 +813,14 @@ void Combat::CombatHealthFunc(const std::shared_ptr<Creature> &caster, const std
 	if (g_game().combatChangeHealth(caster, target, damage)) {
 		CombatConditionFunc(caster, target, params, &damage);
 		CombatDispelFunc(caster, target, params, nullptr);
+
+		if (attackerPlayer && targetPlayer && attackerPlayer != targetPlayer
+		    && attackerPlayer->getPvpMode() == 1
+		    && damage.primary.type == COMBAT_HEALING && damage.primary.value > 0
+		    && targetPlayer->hasPvpAggressors()
+		    && !attackerPlayer->hasCommonPvpAggressor(targetPlayer)) {
+			attackerPlayer->addPvpAggressor(targetPlayer);
+		}
 
 		if (!targetMonster || !attackerPlayer) {
 			return;

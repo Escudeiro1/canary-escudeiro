@@ -6897,6 +6897,14 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "isOrangeFightParticipant",
+        "params": [
+          "creatureId: number"
+        ],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "isPlayer",
         "params": [],
         "return": "boolean",

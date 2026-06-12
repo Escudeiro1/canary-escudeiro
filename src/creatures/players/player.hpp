@@ -929,6 +929,7 @@ public:
 		}
 		return false;
 	}
+	bool isOrangeFightParticipant(const std::shared_ptr<Player> &target) const;
 	void addUnjustifiedDead(const std::shared_ptr<Player> &attacked);
 	void sendCreatureEmblem(const std::shared_ptr<Creature> &creature) const;
 	void sendCreatureSkull(const std::shared_ptr<Creature> &creature) const;

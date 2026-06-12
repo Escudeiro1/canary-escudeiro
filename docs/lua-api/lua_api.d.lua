@@ -3647,6 +3647,10 @@ function Player:isMonsterPrey(raceId) end
 ---@return boolean
 function Player:isOffline() end
 
+---@param creatureId number
+---@return boolean|nil
+function Player:isOrangeFightParticipant(creatureId) end
+
 ---@return boolean
 function Player:isPlayer() end
 

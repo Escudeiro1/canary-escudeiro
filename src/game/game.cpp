@@ -9236,8 +9236,17 @@ void Game::updateCreaturePvpSquare(const std::shared_ptr<Creature> &creature, bo
 	for (const auto &spectator : spectators) {
 		const auto &spectatorPlayer = spectator->getPlayer();
 		if (show) {
-			const bool involved = creaturePlayer && (spectatorPlayer == creaturePlayer || spectatorPlayer->hasPvpAggressor(creaturePlayer->getGUID()));
-			spectatorPlayer->sendCreatureStaticSquare(creature, involved ? SQ_COLOR_YELLOW : SQ_COLOR_BROWN);
+			const bool involved = creaturePlayer && (
+			    (spectatorPlayer == creaturePlayer && creaturePlayer->hasPvpAggressors()) ||
+			    spectatorPlayer->hasPvpAggressor(creaturePlayer->getGUID())
+			);
+			if (involved) {
+				spectatorPlayer->sendCreatureStaticSquare(creature, SQ_COLOR_YELLOW);
+			} else if (creaturePlayer && spectatorPlayer->isOrangeFightParticipant(creaturePlayer)) {
+				spectatorPlayer->sendCreatureStaticSquare(creature, SQ_COLOR_ORANGE);
+			} else {
+				spectatorPlayer->sendCreatureStaticSquare(creature, SQ_COLOR_BROWN);
+			}
 		} else {
 			spectatorPlayer->sendCreatureClearSquare(creature);
 		}
