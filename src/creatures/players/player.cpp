@@ -1425,6 +1425,90 @@ bool Player::canWalkthrough(const std::shared_ptr<Creature> &creature) {
 			return false;
 		}
 
+		// Red fist (pvpMode=3): body blocking counts as an attack in both directions
+		const bool blockerRedFist = player->getPvpMode() == 3;
+		const bool moverRedFist = getPvpMode() == 3;
+		if ((blockerRedFist || moverRedFist) && !isPartner(player) && !isGuildMate(player)) {
+			const auto &thisPlayer = getPlayer();
+			if (thisPlayer) {
+				const auto &myTile = getTile();
+				const auto &theirTile = player->getTile();
+				const uint32_t protLevel = static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL));
+				if (myTile && theirTile
+				    && !myTile->hasFlag(TILESTATE_PROTECTIONZONE)
+				    && !theirTile->hasFlag(TILESTATE_PROTECTIONZONE)
+				    && getLevel() > protLevel
+				    && player->getLevel() > protLevel) {
+					if (blockerRedFist) {
+						player->onAttackedCreature(thisPlayer);
+					}
+					if (moverRedFist) {
+						thisPlayer->onAttackedCreature(player);
+					}
+				}
+			}
+			return false;
+		}
+
+		// Yellow hand (pvpMode=2): body-blocking a skulled player counts as attacking them
+		{
+			const bool moverAggresses = getPvpMode() == 2 && player->getSkull() != SKULL_NONE;
+			const bool blockerAggresses = player->getPvpMode() == 2 && getSkull() != SKULL_NONE;
+			if ((moverAggresses || blockerAggresses) && !isPartner(player) && !isGuildMate(player)) {
+				const auto &thisPlayer = getPlayer();
+				if (thisPlayer) {
+					const auto &myTile = getTile();
+					const auto &theirTile = player->getTile();
+					const uint32_t protLevel = static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL));
+					if (myTile && theirTile
+					    && !myTile->hasFlag(TILESTATE_PROTECTIONZONE)
+					    && !theirTile->hasFlag(TILESTATE_PROTECTIONZONE)
+					    && getLevel() > protLevel
+					    && player->getLevel() > protLevel) {
+						if (moverAggresses) {
+							thisPlayer->onAttackedCreature(player);
+						}
+						if (blockerAggresses) {
+							player->onAttackedCreature(thisPlayer);
+						}
+					}
+				}
+				return false;
+			}
+		}
+
+		// White hand (pvpMode=1): body-blocking joins the fight to defend a party/guild member
+		// No PZ lock or skull — uses addPvpAggressor directly, not onAttackedCreature
+		{
+			const auto &thisPlayer = getPlayer();
+			if (thisPlayer) {
+				const bool moverJoins = getPvpMode() == 1 && thisPlayer->isOrangeFightParticipant(player);
+				const bool blockerJoins = player->getPvpMode() == 1 && player->isOrangeFightParticipant(thisPlayer);
+				if (moverJoins || blockerJoins) {
+					const auto &myTile = getTile();
+					const auto &theirTile = player->getTile();
+					const uint32_t protLevel = static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL));
+					if (myTile && theirTile
+					    && !myTile->hasFlag(TILESTATE_PROTECTIONZONE)
+					    && !theirTile->hasFlag(TILESTATE_PROTECTIONZONE)
+					    && getLevel() > protLevel
+					    && player->getLevel() > protLevel) {
+						if (moverJoins) {
+							thisPlayer->addPvpAggressor(player);
+							thisPlayer->addInFightTicks();
+							thisPlayer->sendOpenPvpSituations();
+						}
+						if (blockerJoins) {
+							player->addPvpAggressor(thisPlayer);
+							player->addInFightTicks();
+							player->sendOpenPvpSituations();
+						}
+					}
+					return false;
+				}
+			}
+		}
+
 		if (g_game().getWorldType() != WORLD_TYPE_PVP) {
 			const auto &playerTile = player->getTile();
 			if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) && player->getLevel() > static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL)) && g_game().getWorldType() != WORLD_TYPE_NO_PVP)) {
