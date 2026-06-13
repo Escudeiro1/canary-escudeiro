@@ -2538,6 +2538,12 @@ void MagicField::onStepInField(const std::shared_ptr<Creature> &creature) {
 						}
 					}
 				}
+
+				// Field damage triggers full aggression consequences for A against B
+				if (harmfulField && attackerPlayer && attackerPlayer != targetPlayer
+				    && !attackerPlayer->hasPvpAggressor(targetPlayer->getGUID())) {
+					attackerPlayer->onAttackedCreature(targetPlayer);
+				}
 			}
 
 			if (!harmfulField || creature->hasBeenAttacked(ownerId)) {
