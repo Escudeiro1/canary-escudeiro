@@ -766,6 +766,32 @@ ReturnValue Tile::queryAdd(int32_t, const std::shared_ptr<Thing> &thing, uint32_
 								return RETURNVALUE_NOERROR;
 							}
 						}
+
+						// Aggressive magic wall/wild growth: trigger owner aggression against the blocked player
+						for (const auto &findfield : *fieldList) {
+							if (!findfield) {
+								continue;
+							}
+							const uint16_t fid = findfield->getID();
+							if (fid == ITEM_MAGICWALL || fid == ITEM_MAGICWALL_PERSISTENT
+							    || fid == ITEM_WILDGROWTH || fid == ITEM_WILDGROWTH_PERSISTENT) {
+								const auto &ownerPlayer = g_game().getPlayerByGUID(findfield->getOwnerId());
+								if (ownerPlayer && ownerPlayer != movingPlayer
+								    && !ownerPlayer->hasPvpAggressor(movingPlayer->getGUID())) {
+									const auto &movingTile = movingPlayer->getTile();
+									const uint32_t protLevel = static_cast<uint32_t>(g_configManager().getNumber(PROTECTION_LEVEL));
+									if (movingTile
+									    && !hasFlag(TILESTATE_PROTECTIONZONE)
+									    && !hasFlag(TILESTATE_NOPVPZONE)
+									    && !movingTile->hasFlag(TILESTATE_PROTECTIONZONE)
+									    && movingPlayer->getLevel() > protLevel
+									    && ownerPlayer->getLevel() > protLevel) {
+										ownerPlayer->onAttackedCreature(movingPlayer);
+									}
+								}
+								break;
+							}
+						}
 					}
 				}
 				return RETURNVALUE_NOTENOUGHROOM;
