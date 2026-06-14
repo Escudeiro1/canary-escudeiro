@@ -6784,8 +6784,6 @@ void Game::playerSetFightModes(uint32_t playerId, FightMode_t fightMode, bool ch
 		return;
 	}
 
-	g_logger().info("[DEBUG] Player {} activated pvpMode={}", player->getName(), pvpMode);
-
 	player->setFightMode(fightMode);
 	player->setChaseMode(chaseMode);
 	player->setPvpMode(pvpMode);
