@@ -13,7 +13,7 @@ function onCreateWildGrowth(creature, position)
 	end
 
 	local wildGrowth
-	if Game.getWorldType() == WORLD_TYPE_NO_PVP or (creature:isPlayer() and creature:getPvpMode() ~= 3) then
+	if Game.getWorldType() == WORLD_TYPE_NO_PVP or (creature:isPlayer() and creature:getPvpMode() < 3) then
 		wildGrowth = ITEM_WILDGROWTH_SAFE
 	else
 		wildGrowth = ITEM_WILDGROWTH
