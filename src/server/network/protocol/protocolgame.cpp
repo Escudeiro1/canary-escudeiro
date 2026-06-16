@@ -1812,7 +1812,7 @@ bool ProtocolGame::canSee(int32_t x, int32_t y, int32_t z) const {
 
 	// negative offset means that the action taken place is on a lower floor than ourself
 	const int8_t offsetz = myPos.getZ() - z;
-	return (x >= myPos.getX() - MAP_MAX_CLIENT_VIEW_PORT_X + offsetz) && (x <= myPos.getX() + (MAP_MAX_CLIENT_VIEW_PORT_X + 1) + offsetz) && (y >= myPos.getY() - MAP_MAX_CLIENT_VIEW_PORT_Y + offsetz) && (y <= myPos.getY() + (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) + offsetz);
+	return (x >= myPos.getX() - MAP_SEND_VIEW_PORT_X + offsetz) && (x <= myPos.getX() + (MAP_SEND_VIEW_PORT_X + 1) + offsetz) && (y >= myPos.getY() - MAP_SEND_VIEW_PORT_Y + offsetz) && (y <= myPos.getY() + (MAP_SEND_VIEW_PORT_Y + 1) + offsetz);
 }
 
 // Parse methods
