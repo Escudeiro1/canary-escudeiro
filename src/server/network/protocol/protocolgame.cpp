@@ -7351,7 +7351,7 @@ void ProtocolGame::sendMapDescription(const Position &pos) {
 	NetworkMessage msg;
 	msg.addByte(0x64);
 	msg.addPosition(player->getPosition());
-	GetMapDescription(pos.x - MAP_MAX_CLIENT_VIEW_PORT_X, pos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, pos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
+	GetMapDescription(pos.x - MAP_SEND_VIEW_PORT_X, pos.y - MAP_SEND_VIEW_PORT_Y, pos.z, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, msg);
 	writeToOutputBuffer(msg);
 	for (const auto &c : m_pendingPvpSquares) {
 		const auto &cp = c->getPlayer();
@@ -7684,18 +7684,18 @@ void ProtocolGame::sendMoveCreature(const std::shared_ptr<Creature> &creature, c
 
 			if (oldPos.y > newPos.y) { // north, for old x
 				msg.addByte(0x65);
-				GetMapDescription(oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, newPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, 1, msg);
+				GetMapDescription(oldPos.x - MAP_SEND_VIEW_PORT_X, newPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z, (MAP_SEND_VIEW_PORT_X + 1) * 2, 1, msg);
 			} else if (oldPos.y < newPos.y) { // south, for old x
 				msg.addByte(0x67);
-				GetMapDescription(oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, newPos.y + (MAP_MAX_CLIENT_VIEW_PORT_Y + 1), newPos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, 1, msg);
+				GetMapDescription(oldPos.x - MAP_SEND_VIEW_PORT_X, newPos.y + (MAP_SEND_VIEW_PORT_Y + 1), newPos.z, (MAP_SEND_VIEW_PORT_X + 1) * 2, 1, msg);
 			}
 
 			if (oldPos.x < newPos.x) { // east, [with new y]
 				msg.addByte(0x66);
-				GetMapDescription(newPos.x + (MAP_MAX_CLIENT_VIEW_PORT_X + 1), newPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z, 1, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
+				GetMapDescription(newPos.x + (MAP_SEND_VIEW_PORT_X + 1), newPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z, 1, (MAP_SEND_VIEW_PORT_Y + 1) * 2, msg);
 			} else if (oldPos.x > newPos.x) { // west, [with new y]
 				msg.addByte(0x68);
-				GetMapDescription(newPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, newPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z, 1, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
+				GetMapDescription(newPos.x - MAP_SEND_VIEW_PORT_X, newPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z, 1, (MAP_SEND_VIEW_PORT_Y + 1) * 2, msg);
 			}
 			writeToOutputBuffer(msg);
 			for (const auto &c : m_pendingPvpSquares) {
@@ -9228,12 +9228,12 @@ void ProtocolGame::MoveUpCreature(NetworkMessage &msg, const std::shared_ptr<Cre
 	// going to surface
 	if (newPos.z == MAP_INIT_SURFACE_LAYER) {
 		int32_t skip = -1;
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, 5, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 3, skip); //(floor 7 and 6 already set)
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, 4, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 4, skip);
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, 3, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 5, skip);
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, 2, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 6, skip);
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, 1, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 7, skip);
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, 0, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 8, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, 5, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 3, skip); //(floor 7 and 6 already set)
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, 4, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 4, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, 3, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 5, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, 2, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 6, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, 1, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 7, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, 0, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 8, skip);
 
 		if (skip >= 0) {
 			msg.addByte(skip);
@@ -9243,7 +9243,7 @@ void ProtocolGame::MoveUpCreature(NetworkMessage &msg, const std::shared_ptr<Cre
 	// underground, going one floor up (still underground)
 	else if (newPos.z > MAP_INIT_SURFACE_LAYER) {
 		int32_t skip = -1;
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, oldPos.getZ() - 3, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, 3, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, oldPos.getZ() - 3, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, 3, skip);
 
 		if (skip >= 0) {
 			msg.addByte(skip);
@@ -9254,11 +9254,11 @@ void ProtocolGame::MoveUpCreature(NetworkMessage &msg, const std::shared_ptr<Cre
 	// moving up a floor up makes us out of sync
 	// west
 	msg.addByte(0x68);
-	GetMapDescription(oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - (MAP_MAX_CLIENT_VIEW_PORT_Y - 1), newPos.z, 1, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, msg);
+	GetMapDescription(oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - (MAP_SEND_VIEW_PORT_Y - 1), newPos.z, 1, (MAP_SEND_VIEW_PORT_Y + 1) * 2, msg);
 
 	// north
 	msg.addByte(0x65);
-	GetMapDescription(oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, 1, msg);
+	GetMapDescription(oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z, (MAP_SEND_VIEW_PORT_X + 1) * 2, 1, msg);
 }
 
 void ProtocolGame::MoveDownCreature(NetworkMessage &msg, const std::shared_ptr<Creature> &creature, const Position &newPos, const Position &oldPos) {
@@ -9273,9 +9273,9 @@ void ProtocolGame::MoveDownCreature(NetworkMessage &msg, const std::shared_ptr<C
 	if (newPos.z == MAP_INIT_SURFACE_LAYER + 1) {
 		int32_t skip = -1;
 
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, -1, skip);
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z + 1, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, -2, skip);
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z + 2, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, -3, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, -1, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z + 1, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, -2, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z + 2, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, -3, skip);
 
 		if (skip >= 0) {
 			msg.addByte(skip);
@@ -9285,7 +9285,7 @@ void ProtocolGame::MoveDownCreature(NetworkMessage &msg, const std::shared_ptr<C
 	// going further down
 	else if (newPos.z > oldPos.z && newPos.z > MAP_INIT_SURFACE_LAYER + 1 && newPos.z < MAP_MAX_LAYERS - MAP_LAYER_VIEW_LIMIT) {
 		int32_t skip = -1;
-		GetFloorDescription(msg, oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y - MAP_MAX_CLIENT_VIEW_PORT_Y, newPos.z + MAP_LAYER_VIEW_LIMIT, (MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2, (MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2, -3, skip);
+		GetFloorDescription(msg, oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y - MAP_SEND_VIEW_PORT_Y, newPos.z + MAP_LAYER_VIEW_LIMIT, (MAP_SEND_VIEW_PORT_X + 1) * 2, (MAP_SEND_VIEW_PORT_Y + 1) * 2, -3, skip);
 
 		if (skip >= 0) {
 			msg.addByte(skip);
@@ -9296,11 +9296,11 @@ void ProtocolGame::MoveDownCreature(NetworkMessage &msg, const std::shared_ptr<C
 	// moving down a floor makes us out of sync
 	// east
 	msg.addByte(0x66);
-	GetMapDescription(oldPos.x + MAP_MAX_CLIENT_VIEW_PORT_X + 1, oldPos.y - (MAP_MAX_CLIENT_VIEW_PORT_Y + 1), newPos.z, 1, ((MAP_MAX_CLIENT_VIEW_PORT_Y + 1) * 2), msg);
+	GetMapDescription(oldPos.x + MAP_SEND_VIEW_PORT_X + 1, oldPos.y - (MAP_SEND_VIEW_PORT_Y + 1), newPos.z, 1, ((MAP_SEND_VIEW_PORT_Y + 1) * 2), msg);
 
 	// south
 	msg.addByte(0x67);
-	GetMapDescription(oldPos.x - MAP_MAX_CLIENT_VIEW_PORT_X, oldPos.y + (MAP_MAX_CLIENT_VIEW_PORT_Y + 1), newPos.z, ((MAP_MAX_CLIENT_VIEW_PORT_X + 1) * 2), 1, msg);
+	GetMapDescription(oldPos.x - MAP_SEND_VIEW_PORT_X, oldPos.y + (MAP_SEND_VIEW_PORT_Y + 1), newPos.z, ((MAP_SEND_VIEW_PORT_X + 1) * 2), 1, msg);
 }
 
 void ProtocolGame::AddHiddenShopItem(NetworkMessage &msg) {
