@@ -819,3 +819,38 @@ enum Screenshot_t : uint8_t {
 	SCREENSHOT_TYPE_SKILLUP = 12,
 	SCREENSHOT_TYPE_GIFTOFLIFE = 13,
 };
+
+// 15.21+ client event system (opcode 0x75 repurposed from screenshot-only to full event system)
+// Values must match OTClient's Otc::ClientEventType_t exactly.
+enum ClientEventType_t : uint8_t {
+	CLIENT_EVENT_TYPE_SIMPLE      = 1,
+	CLIENT_EVENT_TYPE_ACHIEVEMENT = 2,
+	CLIENT_EVENT_TYPE_TITLE       = 3,
+	CLIENT_EVENT_TYPE_LEVEL       = 4,
+	CLIENT_EVENT_TYPE_SKILL       = 5,
+	CLIENT_EVENT_TYPE_BESTIARY    = 6,
+	CLIENT_EVENT_TYPE_BOSSTIARY   = 7,
+	CLIENT_EVENT_TYPE_QUEST       = 8,
+	CLIENT_EVENT_TYPE_COSMETIC    = 9,
+	CLIENT_EVENT_TYPE_PROFICIENCY = 10,
+};
+
+// Values must match OTClient's Otc::ClientEvent_t exactly.
+enum ClientEvent_t : uint8_t {
+	CLIENT_EVENT_NONE            = 0,
+	CLIENT_EVENT_BOSSDEFEATED    = 1,
+	CLIENT_EVENT_DEATHPVE        = 2,
+	CLIENT_EVENT_DEATHPVP        = 3,
+	CLIENT_EVENT_PLAYERKILLASSIST = 4,
+	CLIENT_EVENT_PLAYERKILL      = 5,
+	CLIENT_EVENT_PLAYERATTACKING = 6,
+	CLIENT_EVENT_TREASUREFOUND   = 7,
+	CLIENT_EVENT_GIFTOFLIFE      = 8,
+	// values >= 9 show UI popups instead of triggering screenshots
+	CLIENT_EVENT_ATTACKSTOPPED   = 9,
+	CLIENT_EVENT_CAPACITYLIMIT   = 10,
+	CLIENT_EVENT_OUTOFAMMO       = 11,
+	CLIENT_EVENT_TARGETTOOCLOSE  = 12,
+	CLIENT_EVENT_OUTOFSOULPOINTS = 13,
+	CLIENT_EVENT_TUTORIALCOMPLETE = 14,
+};

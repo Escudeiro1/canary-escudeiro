@@ -390,15 +390,23 @@ void IOBestiary::addBestiaryKill(const std::shared_ptr<Player> &player, const st
 
 	player->addBestiaryKillCount(raceid, amount);
 
-	if ((curCount == 0) || // Initial kill stage
-	    (curCount < mtype->info.bestiaryFirstUnlock && (curCount + amount) >= mtype->info.bestiaryFirstUnlock) || // First kill stage reached
-	    (curCount < mtype->info.bestiarySecondUnlock && (curCount + amount) >= mtype->info.bestiarySecondUnlock) || // Second kill stage reached
-	    (curCount < mtype->info.bestiaryToUnlock && (curCount + amount) >= mtype->info.bestiaryToUnlock)) { // Final kill stage reached
+	const uint32_t newCount = curCount + amount;
+	uint8_t bestiaryStage = 0;
+	if (curCount == 0 || (curCount < mtype->info.bestiaryFirstUnlock && newCount >= mtype->info.bestiaryFirstUnlock)) {
+		bestiaryStage = 1;
+	} else if (curCount < mtype->info.bestiarySecondUnlock && newCount >= mtype->info.bestiarySecondUnlock) {
+		bestiaryStage = 2;
+	} else if (curCount < mtype->info.bestiaryToUnlock && newCount >= mtype->info.bestiaryToUnlock) {
+		bestiaryStage = 3;
+	}
+
+	if (bestiaryStage > 0) {
 		ss << "You unlocked details for the creature '" << mtype->name << "'";
 		player->sendTextMessage(MESSAGE_STATUS, ss.str());
 		player->sendBestiaryEntryChanged(raceid);
+		player->sendClientEventBestiary(raceid, bestiaryStage);
 
-		if ((curCount + amount) >= mtype->info.bestiaryToUnlock) {
+		if (newCount >= mtype->info.bestiaryToUnlock) {
 			addCharmPoints(player, mtype->info.bestiaryCharmsPoints);
 		}
 	}

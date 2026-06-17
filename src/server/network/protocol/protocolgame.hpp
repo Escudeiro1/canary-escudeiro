@@ -617,6 +617,16 @@ private:
 	void sendMusicSoundEffect(const SoundMusicEffect_t id);
 
 	void sendTakeScreenshot(Screenshot_t screenshotType);
+	void sendClientEvent(ClientEvent_t eventType);
+	void sendClientEventLevel(uint16_t level);
+	void sendClientEventSkill(skills_t skill, uint16_t level);
+	void sendClientEventAchievement(const std::string &name);
+	void sendClientEventTitle(const std::string &name);
+	void sendClientEventBestiary(uint16_t raceId, uint8_t progressLevel);
+	void sendClientEventBosstiary(uint16_t raceId, uint8_t progressLevel);
+	void sendClientEventQuest(const std::string &questName, bool isCompleted);
+	void sendClientEventCosmetic(uint16_t lookType, const std::string &skinName, uint8_t skinType);
+	void sendClientEventProficiency(uint16_t itemId, const std::string &message);
 	void sendDisableLoginMusic();
 
 	uint8_t m_playerDeathTime = 0;

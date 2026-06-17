@@ -7101,6 +7101,7 @@ void ProtocolGame::sendDistanceShoot(const Position &from, const Position &to, u
 		msg.add<uint16_t>(type);
 		msg.addByte(static_cast<uint8_t>(static_cast<int8_t>(static_cast<int32_t>(to.x) - static_cast<int32_t>(from.x))));
 		msg.addByte(static_cast<uint8_t>(static_cast<int8_t>(static_cast<int32_t>(to.y) - static_cast<int32_t>(from.y))));
+		msg.addByte(0); // effectSource (ME_SOURCE_DEFAULT)
 		msg.addByte(MAGIC_EFFECTS_END_LOOP);
 	}
 	writeToOutputBuffer(msg);
@@ -7166,6 +7167,7 @@ void ProtocolGame::sendMagicEffect(const Position &pos, uint16_t type) {
 		msg.addPosition(pos);
 		msg.addByte(MAGIC_EFFECTS_CREATE_EFFECT);
 		msg.add<uint16_t>(type);
+		msg.addByte(0); // effectSource (ME_SOURCE_DEFAULT)
 		msg.addByte(MAGIC_EFFECTS_END_LOOP);
 	}
 	writeToOutputBuffer(msg);
@@ -8445,10 +8447,7 @@ void ProtocolGame::sendPreyPrices() {
 	if (!oldProtocol) {
 		msg.addByte(static_cast<uint8_t>(g_configManager().getNumber(PREY_BONUS_REROLL_PRICE)));
 		msg.addByte(static_cast<uint8_t>(g_configManager().getNumber(PREY_SELECTION_LIST_PRICE)));
-		msg.add<uint32_t>(player->getTaskHuntingRerollPrice());
-		msg.add<uint32_t>(player->getTaskHuntingRerollPrice());
-		msg.addByte(static_cast<uint8_t>(g_configManager().getNumber(TASK_HUNTING_SELECTION_LIST_PRICE)));
-		msg.addByte(static_cast<uint8_t>(g_configManager().getNumber(TASK_HUNTING_BONUS_REROLL_PRICE)));
+		// 1521+: GameTaskboard-enabled clients no longer read task hunting prices here.
 	}
 
 	writeToOutputBuffer(msg);
@@ -8622,7 +8621,11 @@ void ProtocolGame::AddPlayerStats(NetworkMessage &msg) {
 	msg.add<uint64_t>(player->getExperience());
 
 	msg.add<uint16_t>(player->getLevel());
-	msg.addByte(std::min<uint8_t>(player->getLevelPercent(), 100));
+	if (oldProtocol) {
+		msg.addByte(std::min<uint8_t>(player->getLevelPercent(), 100));
+	} else {
+		msg.add<uint16_t>(static_cast<uint16_t>(player->getLevelPercent()) * 100);
+	}
 
 	msg.add<uint16_t>(player->getBaseXpGain()); // base xp gain rate
 
@@ -10365,9 +10368,158 @@ void ProtocolGame::sendTakeScreenshot(Screenshot_t screenshotType) {
 		return;
 	}
 
+	// Map old screenshot types to 15.21 SIMPLE client events where possible.
+	// LEVELUP and SKILLUP are not handled here — use sendClientEventLevel / sendClientEventSkill.
+	ClientEvent_t mapped = CLIENT_EVENT_NONE;
+	switch (screenshotType) {
+		case SCREENSHOT_TYPE_BOSSDEFEATED:    mapped = CLIENT_EVENT_BOSSDEFEATED;     break;
+		case SCREENSHOT_TYPE_DEATHPVE:        mapped = CLIENT_EVENT_DEATHPVE;         break;
+		case SCREENSHOT_TYPE_DEATHPVP:        mapped = CLIENT_EVENT_DEATHPVP;         break;
+		case SCREENSHOT_TYPE_PLAYERKILLASSIST: mapped = CLIENT_EVENT_PLAYERKILLASSIST; break;
+		case SCREENSHOT_TYPE_PLAYERKILL:      mapped = CLIENT_EVENT_PLAYERKILL;       break;
+		case SCREENSHOT_TYPE_PLAYERATTACKING: mapped = CLIENT_EVENT_PLAYERATTACKING;  break;
+		case SCREENSHOT_TYPE_TREASUREFOUND:   mapped = CLIENT_EVENT_TREASUREFOUND;    break;
+		case SCREENSHOT_TYPE_GIFTOFLIFE:      mapped = CLIENT_EVENT_GIFTOFLIFE;       break;
+		default: return;
+	}
+
 	NetworkMessage msg;
 	msg.addByte(0x75);
-	msg.addByte(screenshotType);
+	msg.addByte(CLIENT_EVENT_TYPE_SIMPLE);
+	msg.addByte(static_cast<uint8_t>(mapped));
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEvent(ClientEvent_t eventType) {
+	if (!player || oldProtocol || eventType == CLIENT_EVENT_NONE) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_SIMPLE);
+	msg.addByte(static_cast<uint8_t>(eventType));
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventLevel(uint16_t level) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_LEVEL);
+	msg.add<uint16_t>(level);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventSkill(skills_t skill, uint16_t level) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	// Map Canary skills_t to the client's SkillId convention used in infobanner.lua.
+	uint8_t clientSkillId;
+	switch (skill) {
+		case SKILL_MAGLEVEL:  clientSkillId = 1; break;
+		case SKILL_SWORD:     clientSkillId = 2; break;
+		case SKILL_CLUB:      clientSkillId = 3; break;
+		case SKILL_AXE:       clientSkillId = 4; break;
+		case SKILL_FIST:      clientSkillId = 5; break;
+		case SKILL_DISTANCE:  clientSkillId = 6; break;
+		case SKILL_SHIELD:    clientSkillId = 7; break;
+		case SKILL_FISHING:   clientSkillId = 8; break;
+		default:              clientSkillId = 0; break;
+	}
+	if (clientSkillId == 0) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_SKILL);
+	msg.addByte(clientSkillId);
+	msg.add<uint16_t>(level);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventAchievement(const std::string &name) {
+	if (!player || oldProtocol || name.empty()) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_ACHIEVEMENT);
+	msg.addString(name);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventTitle(const std::string &name) {
+	if (!player || oldProtocol || name.empty()) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_TITLE);
+	msg.addString(name);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventBestiary(uint16_t raceId, uint8_t progressLevel) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_BESTIARY);
+	msg.add<uint16_t>(raceId);
+	msg.addByte(progressLevel);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventBosstiary(uint16_t raceId, uint8_t progressLevel) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_BOSSTIARY);
+	msg.add<uint16_t>(raceId);
+	msg.addByte(progressLevel);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventQuest(const std::string &questName, bool isCompleted) {
+	if (!player || oldProtocol || questName.empty()) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_QUEST);
+	msg.addString(questName);
+	msg.addByte(isCompleted ? 1 : 0);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventCosmetic(uint16_t lookType, const std::string &skinName, uint8_t skinType) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_COSMETIC);
+	msg.add<uint16_t>(lookType);
+	msg.addString(skinName);
+	msg.addByte(skinType);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendClientEventProficiency(uint16_t itemId, const std::string &message) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x75);
+	msg.addByte(CLIENT_EVENT_TYPE_PROFICIENCY);
+	msg.add<uint16_t>(itemId);
+	msg.addString(message);
 	writeToOutputBuffer(msg);
 }
 

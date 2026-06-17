@@ -1189,9 +1189,9 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count) {
 		ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 		if (skill == SKILL_LEVEL) {
-			sendTakeScreenshot(SCREENSHOT_TYPE_LEVELUP);
+			sendClientEventLevel(skills[skill].level);
 		} else {
-			sendTakeScreenshot(SCREENSHOT_TYPE_SKILLUP);
+			sendClientEventSkill(skill, skills[skill].level);
 		}
 
 		g_creatureEvents().playerAdvance(static_self_cast<Player>(), skill, (skills[skill].level - 1), skills[skill].level);
@@ -3588,10 +3588,9 @@ void Player::addManaSpent(uint64_t amount) {
 		std::ostringstream ss;
 		ss << "You advanced to magic level " << magLevel << '.';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-		sendTakeScreenshot(SCREENSHOT_TYPE_SKILLUP);
+		sendClientEventSkill(SKILL_MAGLEVEL, magLevel);
 
 		g_creatureEvents().playerAdvance(static_self_cast<Player>(), SKILL_MAGLEVEL, magLevel - 1, magLevel);
-		sendTakeScreenshot(SCREENSHOT_TYPE_SKILLUP);
 
 		sendUpdateStats = true;
 		currReqMana = nextReqMana;
@@ -3741,7 +3740,7 @@ void Player::addExperience(const std::shared_ptr<Creature> &target, uint64_t exp
 		std::ostringstream ss;
 		ss << "You advanced from Level " << prevLevel << " to Level " << level << '.';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-		sendTakeScreenshot(SCREENSHOT_TYPE_LEVELUP);
+		sendClientEventLevel(level);
 	}
 
 	if (nextLevelExp > currLevelExp) {
@@ -8257,7 +8256,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries) {
 			std::ostringstream ss;
 			ss << "You advanced to magic level " << magLevel << '.';
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-			sendTakeScreenshot(SCREENSHOT_TYPE_SKILLUP);
+			sendClientEventSkill(SKILL_MAGLEVEL, magLevel);
 		}
 
 		uint8_t newPercent;
@@ -8315,9 +8314,9 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries) {
 			ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 			if (skill == SKILL_LEVEL) {
-				sendTakeScreenshot(SCREENSHOT_TYPE_LEVELUP);
+				sendClientEventLevel(skills[skill].level);
 			} else {
-				sendTakeScreenshot(SCREENSHOT_TYPE_SKILLUP);
+				sendClientEventSkill(skill, skills[skill].level);
 			}
 		}
 
@@ -8632,6 +8631,60 @@ void Player::sendOpenStash(bool isNpc) const {
 void Player::sendTakeScreenshot(Screenshot_t screenshotType) const {
 	if (client) {
 		client->sendTakeScreenshot(screenshotType);
+	}
+}
+
+void Player::sendClientEventLevel(uint16_t level) const {
+	if (client) {
+		client->sendClientEventLevel(level);
+	}
+}
+
+void Player::sendClientEventSkill(skills_t skill, uint16_t level) const {
+	if (client) {
+		client->sendClientEventSkill(skill, level);
+	}
+}
+
+void Player::sendClientEventAchievement(const std::string &name) const {
+	if (client) {
+		client->sendClientEventAchievement(name);
+	}
+}
+
+void Player::sendClientEventTitle(const std::string &name) const {
+	if (client) {
+		client->sendClientEventTitle(name);
+	}
+}
+
+void Player::sendClientEventBestiary(uint16_t raceId, uint8_t progressLevel) const {
+	if (client) {
+		client->sendClientEventBestiary(raceId, progressLevel);
+	}
+}
+
+void Player::sendClientEventBosstiary(uint16_t raceId, uint8_t progressLevel) const {
+	if (client) {
+		client->sendClientEventBosstiary(raceId, progressLevel);
+	}
+}
+
+void Player::sendClientEventQuest(const std::string &questName, bool isCompleted) const {
+	if (client) {
+		client->sendClientEventQuest(questName, isCompleted);
+	}
+}
+
+void Player::sendClientEventCosmetic(uint16_t lookType, const std::string &skinName, uint8_t skinType) const {
+	if (client) {
+		client->sendClientEventCosmetic(lookType, skinName, skinType);
+	}
+}
+
+void Player::sendClientEventProficiency(uint16_t itemId, const std::string &message) const {
+	if (client) {
+		client->sendClientEventProficiency(itemId, message);
 	}
 }
 
@@ -10534,8 +10587,12 @@ void Player::initializeTaskHunting() {
 	}
 
 	if (client && g_configManager().getBoolean(TASK_HUNTING_ENABLED) && !client->oldProtocol) {
-		auto buffer = g_ioprey().getTaskHuntingBaseDate();
-		client->writeToOutputBuffer(buffer);
+		// 1521+: opcode 0xBA uses the new Soul Seal format (mastered race IDs only).
+		// Old bestiary-list format is no longer parsed by GameTaskboard-enabled clients.
+		NetworkMessage taskHuntingBasicMsg;
+		taskHuntingBasicMsg.addByte(0xBA);
+		taskHuntingBasicMsg.add<uint16_t>(0); // no mastered race IDs (Soul Seal stub)
+		client->writeToOutputBuffer(taskHuntingBasicMsg);
 	}
 }
 

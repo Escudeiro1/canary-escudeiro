@@ -58,6 +58,9 @@ bool PlayerTitle::manage(bool canAdd, uint8_t id, uint32_t timestamp /* = 0*/) {
 	m_titlesUnlocked.shrink_to_fit();
 	g_logger().debug("[{}] - Added title: {}", __FUNCTION__, title.m_maleName);
 
+	const std::string &titleName = m_player.getSex() == PLAYERSEX_FEMALE ? title.m_femaleName : title.m_maleName;
+	m_player.sendClientEventTitle(titleName);
+
 	return true;
 }
 

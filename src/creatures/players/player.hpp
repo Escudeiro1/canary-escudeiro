@@ -1167,6 +1167,15 @@ public:
 	void sendOpenStash(bool isNpc = false) const;
 
 	void sendTakeScreenshot(Screenshot_t screenshotType) const;
+	void sendClientEventLevel(uint16_t level) const;
+	void sendClientEventSkill(skills_t skill, uint16_t level) const;
+	void sendClientEventAchievement(const std::string &name) const;
+	void sendClientEventTitle(const std::string &name) const;
+	void sendClientEventBestiary(uint16_t raceId, uint8_t progressLevel) const;
+	void sendClientEventBosstiary(uint16_t raceId, uint8_t progressLevel) const;
+	void sendClientEventQuest(const std::string &questName, bool isCompleted) const;
+	void sendClientEventCosmetic(uint16_t lookType, const std::string &skinName, uint8_t skinType) const;
+	void sendClientEventProficiency(uint16_t itemId, const std::string &message) const;
 
 	void onThink(uint32_t interval) override;
 

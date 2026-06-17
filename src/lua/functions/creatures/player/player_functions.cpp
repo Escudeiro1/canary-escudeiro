@@ -490,6 +490,8 @@ void PlayerFunctions::init(lua_State* L) {
 	Lua::registerMethod(L, "Player", "createTransactionSummary", PlayerFunctions::luaPlayerCreateTransactionSummary);
 
 	Lua::registerMethod(L, "Player", "takeScreenshot", PlayerFunctions::luaPlayerTakeScreenshot);
+	Lua::registerMethod(L, "Player", "sendClientEventQuest", PlayerFunctions::luaPlayerSendClientEventQuest);
+	Lua::registerMethod(L, "Player", "sendClientEventCosmetic", PlayerFunctions::luaPlayerSendClientEventCosmetic);
 	Lua::registerMethod(L, "Player", "sendIconBakragore", PlayerFunctions::luaPlayerSendIconBakragore);
 	Lua::registerMethod(L, "Player", "removeIconBakragore", PlayerFunctions::luaPlayerRemoveIconBakragore);
 	Lua::registerMethod(L, "Player", "sendCreatureAppear", PlayerFunctions::luaPlayerSendCreatureAppear);
@@ -5075,7 +5077,8 @@ int PlayerFunctions::luaPlayerAddAchievement(lua_State* L) {
 
 	const bool success = player->achiev().add(achievementId, Lua::getBoolean(L, 3, true));
 	if (success) {
-		player->sendTakeScreenshot(SCREENSHOT_TYPE_ACHIEVEMENT);
+		const auto &achievement = g_game().getAchievementById(achievementId);
+		player->sendClientEventAchievement(achievement.name);
 	}
 
 	Lua::pushBoolean(L, success);
@@ -5244,6 +5247,36 @@ int PlayerFunctions::luaPlayerTakeScreenshot(lua_State* L) {
 
 	const auto screenshotType = Lua::getNumber<Screenshot_t>(L, 2);
 	player->sendTakeScreenshot(screenshotType);
+	Lua::pushBoolean(L, true);
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerSendClientEventQuest(lua_State* L) {
+	// player:sendClientEventQuest(questName, isCompleted)
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+	const std::string questName = Lua::getString(L, 2);
+	const bool isCompleted = Lua::getBoolean(L, 3, true);
+	player->sendClientEventQuest(questName, isCompleted);
+	Lua::pushBoolean(L, true);
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerSendClientEventCosmetic(lua_State* L) {
+	// player:sendClientEventCosmetic(lookType, skinName, skinType)
+	// skinType: 0=outfit, 1=addon1, 2=addon2, 3=mount
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+	const uint16_t lookType = Lua::getNumber<uint16_t>(L, 2);
+	const std::string skinName = Lua::getString(L, 3);
+	const uint8_t skinType = Lua::getNumber<uint8_t>(L, 4, 0);
+	player->sendClientEventCosmetic(lookType, skinName, skinType);
 	Lua::pushBoolean(L, true);
 	return 1;
 }

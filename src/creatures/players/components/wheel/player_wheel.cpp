@@ -1525,6 +1525,7 @@ void PlayerWheel::sendOpenWheelWindow(NetworkMessage &msg, uint32_t ownerId) {
 	addPromotionScrolls(msg);
 	const auto monkQuestBonus = std::max<int32_t>(0, g_configManager().getNumber(WHEEL_MONK_QUEST_BONUS));
 	msg.addByte(hasCompletedMonkQuest() ? static_cast<uint8_t>(std::min<int32_t>(monkQuestBonus, 0xFF)) : 0); // The Way of the Monk quest bonus
+	msg.add<uint16_t>(0); // extraPointsFromHuntingTaskShop (GameTaskboard, 1521+)
 	addGems(msg);
 	addGradeModifiers(msg);
 

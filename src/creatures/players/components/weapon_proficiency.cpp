@@ -776,6 +776,7 @@ void WeaponProficiency::addExperience(uint32_t experience, uint16_t weaponId /* 
 		proficiency[weaponId].mastered = true;
 		proficiency[weaponId].experience = maxExperience;
 		m_player.sendWeaponProficiency(weaponId);
+		m_player.sendClientEventProficiency(weaponId, Item::items[weaponId].name);
 
 		return;
 	}
