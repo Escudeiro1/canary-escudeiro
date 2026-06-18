@@ -3890,7 +3890,7 @@ void ProtocolGame::sendCyclopediaCharacterGeneralStats() {
 
 	msg.add<uint64_t>(player->getExperience());
 	msg.add<uint16_t>(player->getLevel());
-	msg.addByte(player->getLevelPercent());
+	msg.add<uint16_t>(static_cast<uint16_t>(player->getLevelPercent()) * 100); // GameLevelPercentU16
 	msg.add<uint16_t>(player->getBaseXpGain()); // BaseXPGainRate
 	msg.add<uint16_t>(player->getDisplayGrindingXpBoost()); // LowLevelBonus
 	msg.add<uint16_t>(player->getDisplayXpBoostPercent()); // XPBoost
@@ -4221,6 +4221,7 @@ void ProtocolGame::sendCyclopediaCharacterStoreSummary() {
 	msg.addByte(preySlotsUnlocked); // getPreySlotById + getTaskHuntingSlotById
 
 	msg.addByte(cyclopediaSummary.m_preyWildcards); // getPreyCardsObtained
+	msg.addByte(0x00); // hasPermanentWeeklyTaskExpansion (GameTaskboard, 1521+)
 	msg.addByte(cyclopediaSummary.m_instantRewards); // getRewardCollectionObtained
 	msg.addByte(player->hasCharmExpansion() ? 0x01 : 0x00);
 	msg.addByte(cyclopediaSummary.m_hirelings); // getHirelingsObtained
@@ -4704,6 +4705,12 @@ void ProtocolGame::sendCyclopediaCharacterOffenceStats() {
 		msg.addDouble(skillPercentage.spellHealing); // Percent Spell Healing Skill
 		msg.addDouble(std::round(playerSkill * skillPercentage.spellHealing)); // Applied Spell Healing Value
 	}
+
+	// 1521+: three new doubles + elemental pierce array
+	msg.addDouble(0.0); // damageHighHp: bonus vs targets above 95% HP
+	msg.addDouble(0.0); // damageLowHp: bonus vs targets below 30% HP
+	msg.addDouble(0.0); // armorPenetration
+	msg.addByte(0x00); // elemPierceBonuses count
 
 	writeToOutputBuffer(msg);
 }
