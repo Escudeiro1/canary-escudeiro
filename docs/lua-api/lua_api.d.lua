@@ -3855,6 +3855,17 @@ function Player:sendBosstiaryCooldownTimer() end
 ---@return boolean|nil
 function Player:sendChannelMessage(author, text, type, channelId) end
 
+---@param lookType number
+---@param skinName string
+---@param skinType number
+---@return boolean|nil
+function Player:sendClientEventCosmetic(lookType, skinName, skinType) end
+
+---@param questName string
+---@param isCompleted boolean
+---@return boolean|nil
+function Player:sendClientEventQuest(questName, isCompleted) end
+
 ---@param container Container
 ---@return boolean|nil
 function Player:sendContainer(container) end
@@ -3889,6 +3900,14 @@ function Player:sendLootStats(item, count) end
 ---@param id any
 ---@return boolean
 function Player:sendMusicSoundEffect(id) end
+
+---@param npcId number
+---@param buttons table|i
+---@return boolean|nil
+function Player:sendNpcWindow(npcId, buttons) end
+
+---@return boolean|nil
+function Player:sendNpcWindowClose() end
 
 ---@return boolean|nil
 function Player:sendOutfitWindow() end

@@ -4920,6 +4920,16 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 - Returns: `boolean|nil`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
+#### `Player:sendClientEventCosmetic(lookType: number, skinName: string, skinType: number)`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
+#### `Player:sendClientEventQuest(questName: string, isCompleted: boolean)`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
 #### `Player:sendContainer(container: Container)`
 
 - Returns: `boolean|nil`
@@ -4958,6 +4968,16 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 #### `Player:sendMusicSoundEffect(id: any)`
 
 - Returns: `boolean`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
+#### `Player:sendNpcWindow(npcId: number, buttons: table|i)`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
+#### `Player:sendNpcWindowClose()`
+
+- Returns: `boolean|nil`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
 #### `Player:sendOutfitWindow()`

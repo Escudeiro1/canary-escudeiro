@@ -492,6 +492,8 @@ void PlayerFunctions::init(lua_State* L) {
 	Lua::registerMethod(L, "Player", "takeScreenshot", PlayerFunctions::luaPlayerTakeScreenshot);
 	Lua::registerMethod(L, "Player", "sendClientEventQuest", PlayerFunctions::luaPlayerSendClientEventQuest);
 	Lua::registerMethod(L, "Player", "sendClientEventCosmetic", PlayerFunctions::luaPlayerSendClientEventCosmetic);
+	Lua::registerMethod(L, "Player", "sendNpcWindow", PlayerFunctions::luaPlayerSendNpcWindow);
+	Lua::registerMethod(L, "Player", "sendNpcWindowClose", PlayerFunctions::luaPlayerSendNpcWindowClose);
 	Lua::registerMethod(L, "Player", "sendIconBakragore", PlayerFunctions::luaPlayerSendIconBakragore);
 	Lua::registerMethod(L, "Player", "removeIconBakragore", PlayerFunctions::luaPlayerRemoveIconBakragore);
 	Lua::registerMethod(L, "Player", "sendCreatureAppear", PlayerFunctions::luaPlayerSendCreatureAppear);
@@ -5277,6 +5279,52 @@ int PlayerFunctions::luaPlayerSendClientEventCosmetic(lua_State* L) {
 	const std::string skinName = Lua::getString(L, 3);
 	const uint8_t skinType = Lua::getNumber<uint8_t>(L, 4, 0);
 	player->sendClientEventCosmetic(lookType, skinName, skinType);
+	Lua::pushBoolean(L, true);
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerSendNpcWindow(lua_State* L) {
+	// player:sendNpcWindow(npcId, buttons)
+	// buttons is a Lua array: { {id=1, text="Trade"}, {id=2, text="bye"} }
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+	const uint32_t npcId = Lua::getNumber<uint32_t>(L, 2);
+	std::vector<std::pair<uint8_t, std::string>> buttons;
+	if (lua_istable(L, 3)) {
+		const int len = static_cast<int>(lua_objlen(L, 3));
+		buttons.reserve(len);
+		for (int i = 1; i <= len; ++i) {
+			lua_rawgeti(L, 3, i);
+			if (lua_istable(L, -1)) {
+				lua_getfield(L, -1, "id");
+				const uint8_t btnId = Lua::getNumber<uint8_t>(L, -1, static_cast<uint8_t>(i));
+				lua_pop(L, 1);
+				lua_getfield(L, -1, "text");
+				const std::string btnText = Lua::getString(L, -1);
+				lua_pop(L, 1);
+				if (!btnText.empty()) {
+					buttons.emplace_back(btnId, btnText);
+				}
+			}
+			lua_pop(L, 1);
+		}
+	}
+	player->sendNpcWindowOpen(npcId, buttons);
+	Lua::pushBoolean(L, true);
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerSendNpcWindowClose(lua_State* L) {
+	// player:sendNpcWindowClose()
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+	player->sendNpcWindowClose();
 	Lua::pushBoolean(L, true);
 	return 1;
 }

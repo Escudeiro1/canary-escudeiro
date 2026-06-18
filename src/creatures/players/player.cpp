@@ -8688,6 +8688,18 @@ void Player::sendClientEventProficiency(uint16_t itemId, const std::string &mess
 	}
 }
 
+void Player::sendNpcWindowOpen(uint32_t npcId, const std::vector<std::pair<uint8_t, std::string>> &buttons) const {
+	if (client) {
+		client->sendNpcWindowOpen(npcId, buttons);
+	}
+}
+
+void Player::sendNpcWindowClose() const {
+	if (client) {
+		client->sendNpcWindowClose();
+	}
+}
+
 namespace {
 	bool hasVisiblePartyMember(Player &player) {
 		const auto &party = player.getParty();

@@ -10530,6 +10530,33 @@ void ProtocolGame::sendClientEventProficiency(uint16_t itemId, const std::string
 	writeToOutputBuffer(msg);
 }
 
+void ProtocolGame::sendNpcWindowOpen(uint32_t npcId, const std::vector<std::pair<uint8_t, std::string>> &buttons) {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x1C);
+	msg.addByte(0x00); // status: open
+	msg.addByte(1); // npcCount
+	msg.add<uint32_t>(npcId);
+	msg.addByte(static_cast<uint8_t>(buttons.size()));
+	for (const auto &[id, text] : buttons) {
+		msg.addByte(id);
+		msg.addString(text);
+	}
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendNpcWindowClose() {
+	if (!player || oldProtocol) {
+		return;
+	}
+	NetworkMessage msg;
+	msg.addByte(0x1C);
+	msg.addByte(0x01); // status: close
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendAttachedEffect(const std::shared_ptr<Creature> &creature, uint16_t effectId) {
 	if (!isOTCR) {
 		return;

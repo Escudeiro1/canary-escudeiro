@@ -627,6 +627,8 @@ private:
 	void sendClientEventQuest(const std::string &questName, bool isCompleted);
 	void sendClientEventCosmetic(uint16_t lookType, const std::string &skinName, uint8_t skinType);
 	void sendClientEventProficiency(uint16_t itemId, const std::string &message);
+	void sendNpcWindowOpen(uint32_t npcId, const std::vector<std::pair<uint8_t, std::string>> &buttons);
+	void sendNpcWindowClose();
 	void sendDisableLoginMusic();
 
 	uint8_t m_playerDeathTime = 0;

@@ -389,6 +389,7 @@ if NpcHandler == nil then
 				self:resetNpc(player)
 				msg = self:parseMessage(msg, parseInfo)
 				self:say(msg, npc, player)
+				player:sendNpcWindowClose()
 				self:removeInteraction(npc, player)
 			end
 		end
@@ -411,6 +412,19 @@ if NpcHandler == nil then
 			end
 		end
 		self:setInteraction(npc, player)
+		-- Button IDs match KeywordButtonIcon in the client's trader_const.lua
+		local buttons = {
+			{ id = 7, text = "yes" },
+			{ id = 8, text = "no" },
+			{ id = 9, text = "bye" },
+			{ id = 0, text = "trade" },
+		}
+		if self.isBank then
+			buttons[#buttons + 1] = { id = 4, text = "deposit all" }
+			buttons[#buttons + 1] = { id = 5, text = "withdraw" }
+			buttons[#buttons + 1] = { id = 6, text = "balance" }
+		end
+		player:sendNpcWindow(npc:getId(), buttons)
 	end
 
 	-- Handles onAppear events. If you with to handle this yourself, please use the CALLBACK_ON_APPEAR callback.
@@ -562,6 +576,9 @@ if NpcHandler == nil then
 					end
 				elseif message ~= "" then
 					npc:sayWithDelay(npc:getId(), message, TALKTYPE_SAY, self.talkDelay, self.eventDelayedSay)
+				end
+				if player then
+					player:sendNpcWindowClose()
 				end
 				self:resetNpc(player)
 				self:removeInteraction(npc, player)

@@ -26,6 +26,7 @@ npcConfig.voices = {
 
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
+npcHandler.isBank = true
 
 npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)

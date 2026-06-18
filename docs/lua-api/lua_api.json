@@ -7299,6 +7299,25 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "sendClientEventCosmetic",
+        "params": [
+          "lookType: number",
+          "skinName: string",
+          "skinType: number"
+        ],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
+        "name": "sendClientEventQuest",
+        "params": [
+          "questName: string",
+          "isCompleted: boolean"
+        ],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "sendContainer",
         "params": [
           "container: Container"
@@ -7362,6 +7381,21 @@
           "id: any"
         ],
         "return": "boolean",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
+        "name": "sendNpcWindow",
+        "params": [
+          "npcId: number",
+          "buttons: table|i"
+        ],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
+        "name": "sendNpcWindowClose",
+        "params": [],
+        "return": "boolean|nil",
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {

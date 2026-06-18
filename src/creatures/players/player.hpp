@@ -1176,6 +1176,8 @@ public:
 	void sendClientEventQuest(const std::string &questName, bool isCompleted) const;
 	void sendClientEventCosmetic(uint16_t lookType, const std::string &skinName, uint8_t skinType) const;
 	void sendClientEventProficiency(uint16_t itemId, const std::string &message) const;
+	void sendNpcWindowOpen(uint32_t npcId, const std::vector<std::pair<uint8_t, std::string>> &buttons) const;
+	void sendNpcWindowClose() const;
 
 	void onThink(uint32_t interval) override;
 
