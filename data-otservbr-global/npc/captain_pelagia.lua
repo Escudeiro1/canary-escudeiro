@@ -25,6 +25,7 @@ npcConfig.flags = {
 
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
+npcHandler.isSailor = true
 
 npcConfig.voices = {
 	interval = 15000,
@@ -34,6 +35,7 @@ npcConfig.voices = {
 
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
+npcHandler.isSailor = true
 
 npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)

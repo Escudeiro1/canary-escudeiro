@@ -424,6 +424,9 @@ if NpcHandler == nil then
 			buttons[#buttons + 1] = { id = 5, text = "withdraw" }
 			buttons[#buttons + 1] = { id = 6, text = "balance" }
 		end
+		if self.isSailor then
+			buttons[#buttons + 1] = { id = 3, text = "sail" }
+		end
 		player:sendNpcWindow(npc:getId(), buttons)
 	end
 

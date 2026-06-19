@@ -243,6 +243,7 @@ if Modules == nil then
 				end
 
 				player:kv():set("npc-exhaustion", os.time() + 3) -- 3 seconds
+				player:sendNpcWindowClose()
 				player:teleportTo(destination)
 				playerPosition:sendMagicEffect(CONST_ME_TELEPORT)
 				player:addAchievementProgress("Ship's Kobold", 1250)
@@ -551,6 +552,7 @@ if Modules == nil then
 				npcHandler:removeInteraction(npc, player)
 
 				local position = player:getPosition()
+				player:sendNpcWindowClose()
 				player:teleportTo(destination)
 
 				position:sendMagicEffect(CONST_ME_TELEPORT)
@@ -591,6 +593,7 @@ if Modules == nil then
 		if player:isPremium() or not parameters.premium then
 			if player:removeMoneyBank(cost) then
 				local position = player:getPosition()
+				player:sendNpcWindowClose()
 				player:teleportTo(destination)
 
 				position:sendMagicEffect(CONST_ME_TELEPORT)
