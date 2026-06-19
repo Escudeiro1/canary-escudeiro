@@ -1,2 +1,9 @@
 <?xml version="1.0"?>
-<zones />
+<zones>
+	<zone name="venore-city"    zoneid="5000" />
+	<zone name="thais-city"     zoneid="5001" />
+	<zone name="carlin-city"    zoneid="5002" />
+	<zone name="edron-city"     zoneid="5003" />
+	<zone name="kazordoon-city" zoneid="5004" />
+	<zone name="port-hope-city" zoneid="5005" />
+</zones>

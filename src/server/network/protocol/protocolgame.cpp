@@ -10304,6 +10304,7 @@ void ProtocolGame::sendAmbientSoundEffect(const SoundAmbientEffect_t id) {
 		return;
 	}
 
+	g_logger().debug("[sound-ambient] sendAmbientSoundEffect: id={} player={}", static_cast<uint16_t>(id), player ? player->getName() : "unknown");
 	NetworkMessage msg;
 	msg.addByte(0x85);
 	msg.addByte(0x00);
