@@ -13,6 +13,7 @@
 #include "creatures/monsters/monsters.hpp"
 #include "creatures/players/player.hpp"
 #include "game/game.hpp"
+#include "items/item.hpp"
 #include "lib/di/container.hpp"
 #include "lib/metrics/metrics.hpp"
 #include "server/network/message/networkmessage.hpp"
@@ -602,6 +603,9 @@ void IOPrey::initializeTaskHuntOptions() {
 		msg.add<uint16_t>(option->secondReward);
 	});
 	m_baseDataMessage = msg;
+
+	initBountyPools();
+	initShopOffers();
 }
 
 NetworkMessage IOPrey::getTaskHuntingBaseDate() const {
@@ -636,4 +640,628 @@ const std::unique_ptr<TaskHuntingOption> &IOPrey::getTaskRewardOption(const std:
 	}
 
 	return TaskHuntingOptionNull;
+}
+
+// ── Bounty Task system ────────────────────────────────────────────────────────
+
+static const std::vector<std::string_view> s_beginnerCreatures = {
+	"Abyssal Calamary", "Adventurer", "Amazon", "Assassin", "Azure Frog",
+	"Bandit", "Barbarian Brutetamer", "Barbarian Headsplitter", "Barbarian Skullhunter",
+	"Bear", "Blood Crab", "Boar", "Bonelord", "Calamary", "Carrion Worm", "Centipede",
+	"Chakoya Toolshaper", "Chakoya Tribewarden", "Chakoya Windcaller", "Cobra",
+	"Coral Frog", "Corym Charlatan", "Crab", "Crazed Beggar", "Crimson Frog", "Crocodile",
+	"Crypt Shambler", "Cyclops", "Damaged Crystal Golem", "Damaged Worker Golem",
+	"Dark Apprentice", "Dark Magician", "Dark Monk", "Deepling Worker", "Deepsea Blood Crab",
+	"Dwarf", "Dwarf Guard", "Dwarf Soldier", "Dworc Fleshhunter", "Dworc Venomsniper",
+	"Dworc Voodoomaster", "Elephant", "Elf", "Elf Arcanist", "Elf Scout",
+	"Emerald Damselfly", "Filth Toad", "Fire Devil", "Frost Giant", "Frost Giantess",
+	"Furious Troll", "Gang Member", "Gargoyle", "Gazer", "Ghost", "Ghoul", "Gladiator",
+	"Gloom Wolf", "Gnarlhound", "Goblin Assassin", "Goblin Scavenger", "Gozzler",
+	"Hunter", "Hyaena", "Infernoid Blob", "Infernoid Hound", "Infernoid Soul",
+	"Infernoid Spiritual", "Insect Swarm", "Jellyfish", "Killer Rabbit", "Kongra",
+	"Larva", "Leaf Golem", "Lion", "Little Corym Charlatan", "Lizard Executioner",
+	"Lizard Henchman", "Lizard Magician", "Lizard Sentinel", "Lizard Swordmaster",
+	"Lizard Templar", "Mad Scientist", "Mammoth", "Marsh Stalker", "Mercury Blob",
+	"Merlkin", "Minotaur", "Minotaur Archer", "Minotaur Guard", "Minotaur Mage",
+	"Mole", "Mummy", "Nomad", "Novice of the Cult", "Orc", "Orc Rider",
+	"Orc Shaman", "Orc Spearman", "Orc Warrior", "Orchid Frog", "Panda",
+	"Pirate Cook", "Pirate Ghost", "Pirate Gunner", "Pirate Marauder", "Pirate Navigator",
+	"Pirate Quartermaster", "Pirate Skeleton", "Poacher", "Polar Bear",
+	"Quara Mantassin Scout", "Rabid Wolf", "Ragged Rabid Wolf", "Rorc", "Rotworm",
+	"Salamander", "Scarab", "Scorpion", "Sibang", "Skeleton", "Skeleton Warrior",
+	"Slime", "Slug", "Smuggler", "Spit Nettle", "Stalker", "Stone Golem",
+	"Swamp Troll", "Swampling", "Tarantula", "Terror Bird", "Thornback Tortoise",
+	"Tiger", "Toad", "Tortoise", "Troll Champion", "Undead Mine Worker",
+	"Undead Prospector", "Valkyrie", "War Wolf", "White Tiger", "Wild Warrior", "Witch"
+};
+
+static const std::vector<std::string_view> s_adeptCreatures = {
+	"Acid Blob", "Acolyte of the Cult", "Adept of the Cult", "Amazon", "Ancient Scarab",
+	"Animated Snowman", "Arctic Faun", "Assassin", "Askarak Demon", "Askarak Lord",
+	"Askarak Prince", "Azure Frog", "Baleful Bunny", "Bandit", "Banshee",
+	"Barbarian Bloodwalker", "Barbarian Brutetamer", "Barbarian Headsplitter",
+	"Barbarian Skullhunter", "Barkless Devotee", "Barkless Fanatic", "Bear", "Behemoth",
+	"Bellicose Orger", "Berserker Chicken", "Betrayed Wraith", "Blood Beast", "Blood Crab",
+	"Blood Hand", "Blood Priest", "Blue Djinn", "Bog Raider", "Bonebeast", "Bonelord",
+	"Boogy", "Braindeath", "Brimstone Bug", "Broken Shaper", "Carniphila",
+	"Carrion Worm", "Centipede", "Chakoya Toolshaper", "Chakoya Tribewarden",
+	"Chakoya Windcaller", "Clay Guardian", "Clomp", "Cobra", "Coral Frog",
+	"Corym Charlatan", "Corym Skirmisher", "Corym Vanguard", "Crab", "Crawler",
+	"Crazed Beggar", "Crimson Frog", "Crocodile", "Crypt Defiler", "Crypt Shambler",
+	"Crystal Spider", "Crystalcrusher", "Cult Believer", "Cult Enforcer", "Cult Scholar",
+	"Cursed Ape", "Cyclops", "Cyclops Drone", "Cyclops Smith", "Damaged Crystal Golem",
+	"Damaged Worker Golem", "Dark Apprentice", "Dark Faun", "Dark Magician", "Dark Monk",
+	"Death Blob", "Death Priest", "Deepling Brawler", "Deepling Elite", "Deepling Guard",
+	"Deepling Master Librarian", "Deepling Scout", "Deepling Spellsinger",
+	"Deepling Warrior", "Deepling Worker", "Deepsea Blood Crab", "Demon Parrot",
+	"Demon Skeleton", "Destroyer", "Devourer", "Diabolic Imp", "Diamond Servant Replica",
+	"Dragon", "Dragon Hatchling", "Dragon Lord", "Dragon Lord Hatchling", "Dragonling",
+	"Draken Warmaster", "Drillworm", "Dwarf", "Dwarf Geomancer", "Dwarf Guard",
+	"Dwarf Henchman", "Dwarf Soldier", "Dworc Fleshhunter", "Dworc Venomsniper",
+	"Dworc Voodoomaster", "Earth Elemental", "Efreet", "Elder Bonelord", "Elder Forest Fury",
+	"Elder Mummy", "Elephant", "Elf", "Elf Arcanist", "Elf Scout", "Emerald Damselfly",
+	"Energy Elemental", "Enfeebled Silencer", "Enlightened of the Cult",
+	"Enraged Crystal Golem", "Enslaved Dwarf", "Eternal Guardian", "Evil Sheep",
+	"Evil Sheep Lord", "Execowtioner", "Exotic Bat", "Exotic Cave Spider",
+	"Filth Toad", "Fire Devil", "Fire Elemental", "Foam Stalker", "Forest Fury",
+	"Frazzlemaw", "Frost Giant", "Frost Giantess", "Gargoyle", "Ghost", "Ghoul",
+	"Giant Spider", "Gladiator", "Gloom Wolf", "Glooth Anemone", "Glooth Bandit",
+	"Glooth Blob", "Glooth Brigand", "Glooth Golem", "Goblin Assassin", "Goblin Scavenger",
+	"Gozzler", "Gravedigger", "Green Djinn", "Grim Reaper", "Grimeleech",
+	"Hand of Cursed Fate", "Hellfire Fighter", "Hellhound", "Hellspawn", "Hero",
+	"High Voltage Elemental", "Hive Overseer", "Hunter", "Hydra", "Ice Golem",
+	"Ice Witch", "Infernalist", "Iron Servant Replica", "Killer Rabbit", "Kongra",
+	"Lancer Beetle", "Lava Golem", "Lich", "Lion", "Lizard Chosen",
+	"Lizard Dragon Priest", "Lizard High Guard", "Lizard Legionnaire", "Lizard Magistratus",
+	"Lizard Noble", "Lizard Sentinel", "Lizard Swordmaster", "Lizard Templar",
+	"Magma Crawler", "Mammoth", "Marid", "Metal Gargoyle", "Minotaur",
+	"Minotaur Amazon", "Minotaur Archer", "Minotaur Guard", "Minotaur Mage",
+	"Mole", "Mummy", "Mutated Bat", "Mutated Human", "Mutated Rat", "Mutated Tiger",
+	"Necromancer", "Nightmare", "Nightmare Scion", "Nightstalker", "Nomad",
+	"Novice of the Cult", "Nymph", "Orc", "Orc Berserker", "Orc Leader",
+	"Orc Marauder", "Orc Rider", "Orc Shaman", "Orc Warlord", "Orger",
+	"Pirate Buccaneer", "Pirate Cook", "Pirate Corsair", "Pirate Cutthroat", "Pirate Ghost",
+	"Plaguesmith", "Quara Constrictor", "Quara Constrictor Scout", "Quara Hydromancer",
+	"Quara Hydromancer Scout", "Quara Mantassin", "Quara Mantassin Scout",
+	"Quara Pincher", "Quara Pincher Scout", "Quara Predator", "Quara Predator Scout",
+	"Rotworm", "Scarab", "Sea Serpent", "Serpent Spawn", "Shark",
+	"Silencer", "Skeleton Elite Warrior", "Slime", "Son of Verminor", "Spectre",
+	"Stone Golem", "Swamp Troll", "Tarantula", "Terror Bird", "Tiger",
+	"Troll Legionnaire", "Undead Dragon", "Undead Elite Gladiator", "Undead Gladiator",
+	"Vampire", "Vampire Bride", "Vexclaw", "Walker", "War Golem", "Warlock",
+	"Water Elemental", "Werewolf", "Worker Golem", "Wyrm", "Wyvern"
+};
+
+static const std::vector<std::string_view> s_expertCreatures = {
+	"Acid Blob", "Acolyte of the Cult", "Adept of the Cult", "Adult Goanna",
+	"Afflicted Strider", "Ancient Scarab", "Animated Feather", "Animated Snowman",
+	"Arachnophobica", "Arctic Faun", "Armadile", "Askarak Demon", "Askarak Lord",
+	"Askarak Prince", "Baleful Bunny", "Banshee", "Barbarian Bloodwalker",
+	"Barkless Devotee", "Barkless Fanatic", "Bashmu", "Behemoth", "Bellicose Orger",
+	"Berserker Chicken", "Betrayed Wraith", "Biting Book", "Black Sphinx Acolyte",
+	"Blemished Spawn", "Blightwalker", "Blood Beast", "Blood Hand", "Blood Priest",
+	"Blue Djinn", "Bog Raider", "Bonebeast", "Boogy", "Brain Squid", "Braindeath",
+	"Bramble Wyrmling", "Breach Brood", "Brimstone Bug", "Brinebrute Inferniarch",
+	"Broken Shaper", "Broodrider Inferniarch", "Bulltaur Alchemist", "Bulltaur Brute",
+	"Bulltaur Forgepriest", "Burning Book", "Burning Gladiator", "Burster Spectre",
+	"Candy Floss Elemental", "Candy Horror", "Carniphila", "Carnivostrich",
+	"Cave Chimera", "Cave Devourer", "Chasm Spawn", "Choking Fear", "Cinder Wyrmling",
+	"Cliff Strider", "Cobra Assassin", "Cobra Scout", "Cobra Vizier",
+	"Corym Skirmisher", "Corym Vanguard", "Crape Man", "Crawler",
+	"Crazed Summer Rearguard", "Crazed Summer Vanguard", "Crazed Winter Rearguard",
+	"Crazed Winter Vanguard", "Crusader", "Crypt Mage", "Crypt Warden", "Crypt Warrior",
+	"Crystal Spider", "Crystalcrusher", "Cult Believer", "Cult Enforcer", "Cult Scholar",
+	"Cunning Werepanther", "Cursed Ape", "Cursed Book", "Cursed Prospector",
+	"Cyclops Drone", "Cyclops Smith", "Cyclursus", "Dark Carnisylvan", "Dark Faun",
+	"Dark Torturer", "Dawnfire Asura", "Death Blob", "Death Priest",
+	"Deathling Scout", "Deathling Spellsinger", "Deepling Brawler", "Deepling Elite",
+	"Deepling Guard", "Deepling Master Librarian", "Deepling Scout", "Deepling Spellsinger",
+	"Deepling Tyrant", "Deepling Warrior", "Deepworm", "Defiler", "Demon",
+	"Demon Outcast", "Demon Parrot", "Demon Skeleton", "Destroyer", "Devourer",
+	"Diabolic Imp", "Diamond Servant Replica", "Diremaw", "Dragon", "Dragon Hatchling",
+	"Dragon Lord", "Dragon Lord Hatchling", "Dragonling", "Draken Abomination",
+	"Draken Elite", "Draken Spellweaver", "Draken Warmaster", "Dread Intruder",
+	"Drillworm", "Dwarf Geomancer", "Dwarf Henchman", "Dworc Shadowstalker",
+	"Earth Elemental", "Efreet", "Elder Bonelord", "Elder Forest Fury", "Elder Mummy",
+	"Elder Wyrm", "Energetic Book", "Energuardian of Tales", "Energy Elemental",
+	"Enfeebled Silencer", "Enlightened of the Cult", "Enraged Crystal Golem",
+	"Enslaved Dwarf", "Eternal Guardian", "Evil Prospector", "Evil Sheep", "Evil Sheep Lord",
+	"Execowtioner", "Exotic Bat", "Exotic Cave Spider", "Eyeless Devourer",
+	"Falcon Knight", "Falcon Paladin", "Faun", "Feral Sphinx", "Feral Werecrocodile",
+	"Feversleep", "Fire Elemental", "Flimsy Lost Soul", "Floating Savant",
+	"Flying Book", "Foam Stalker", "Forest Fury", "Frazzlemaw", "Freakish Lost Soul",
+	"Frost Dragon", "Frost Dragon Hatchling", "Frost Flower Asura",
+	"Furious Fire Elemental", "Fury", "Gazer Spectre", "Ghastly Dragon",
+	"Ghoulish Hyaena", "Giant Spider", "Girtablilu Warrior", "Gloom Maw",
+	"Glooth Anemone", "Glooth Bandit", "Glooth Blob", "Glooth Brigand", "Glooth Golem",
+	"Golden Servant Replica", "Goldhanded Cultist", "Gorger Inferniarch",
+	"Grave Guard", "Gravedigger", "Green Djinn", "Grim Reaper", "Grimeleech",
+	"Gryphon", "Guardian of Tales", "Guzzlemaw", "Hand of Cursed Fate", "Harpy",
+	"Haunted Dragon", "Headwalker", "Hellfire Fighter", "Hellflayer", "Hellhound",
+	"Hellhunter Inferniarch", "Hellspawn", "Hero", "Hibernal Moth", "Hideous Fungus",
+	"Hive Overseer", "Honey Elemental", "Hulking Carnisylvan", "Humongous Fungus",
+	"Hydra", "Ice Dragon", "Ice Golem", "Ice Witch", "Icecold Book",
+	"Infected Weeper", "Infernal Frog", "Infernalist", "Ink Blob",
+	"Insane Siren", "Instable Breach Brood", "Ironblight", "Juggernaut",
+	"Juvenile Bashmu", "Killer Caiman", "Knowledge Elemental", "Kollos",
+	"Lancer Beetle", "Lamassu", "Lava Golem", "Lava Lurker", "Lavafungus",
+	"Lavaworm", "Lich", "Liodile", "Lion Hydra", "Lizard Chosen",
+	"Lizard Dragon Priest", "Lizard High Guard", "Lizard Noble", "Lost Basher",
+	"Lost Berserker", "Lost Exile", "Lost Husher", "Lost Soul", "Lost Thrower",
+	"Magma Crawler", "Makara", "Manticore", "Marid",
+	"Massive Earth Elemental", "Massive Energy Elemental", "Massive Fire Elemental",
+	"Massive Water Elemental", "Medusa", "Mega Dragon", "Metal Gargoyle",
+	"Midnight Asura", "Minotaur Amazon", "Minotaur Cult Follower",
+	"Minotaur Cult Prophet", "Minotaur Cult Zealot", "Minotaur Hunter",
+	"Minotaur Invader", "Mutated Bat", "Mutated Human", "Naga Archer", "Naga Warrior",
+	"Necromancer", "Nibblemaw", "Night Harpy", "Nightmare", "Nightmare Scion",
+	"Nightstalker", "Noble Lion", "Ogre Brute", "Ogre Rowdy", "Ogre Ruffian",
+	"Ogre Sage", "Ogre Savage", "Ogre Shaman", "Orc Berserker", "Orc Leader",
+	"Orc Marauder", "Orc Warlord", "Orclops Bloodbreaker", "Orclops Doomhauler",
+	"Orclops Ravager", "Orger", "Phantasm", "Pirate Buccaneer", "Pirate Corsair",
+	"Pirate Cutthroat", "Plaguesmith", "Priestess", "Priestess of the Wild Sun",
+	"Putrid Mummy", "Quara Constrictor", "Quara Constrictor Scout",
+	"Quara Hydromancer", "Quara Hydromancer Scout", "Quara Looter", "Quara Mantassin",
+	"Quara Pincher", "Quara Pincher Scout", "Quara Plunderer", "Quara Predator",
+	"Quara Predator Scout", "Quara Raider", "Rage Squid",
+	"Raubritter Chastener", "Raubritter Marksman", "Raubritter Skirmisher",
+	"Ravenous Lava Lurker", "Reality Reaver", "Renegade Knight",
+	"Renegade Quara Constrictor", "Renegade Quara Hydromancer",
+	"Renegade Quara Mantassin", "Renegade Quara Pincher", "Renegade Quara Predator",
+	"Retching Horror", "Rhindeer", "Ripper Spectre", "Rot Elemental", "Rustheap Golem",
+	"Sacred Spider", "Sandstone Scorpion", "Sea Serpent", "Seacrest Serpent",
+	"Serpent Spawn", "Shaburak Demon", "Shaburak Lord", "Shaburak Prince",
+	"Shark", "Shock Head", "Sight of Surrender", "Silencer",
+	"Sineater Inferniarch", "Skeleton Elite Warrior", "Son of Verminor",
+	"Souleater", "Sparkion", "Spectre", "Spellreaper Inferniarch", "Sphinx",
+	"Spidris", "Spidris Elite", "Spitter", "Squid Warden",
+	"Stampor", "Stone Devourer", "Stone Rhino", "Streaked Devourer", "Swan Maiden",
+	"Swarmer", "Terrorsleep", "Thanatursus", "Tomb Servant", "Tremendous Tyrant",
+	"Troll Legionnaire", "True Dawnfire Asura", "True Frost Flower Asura",
+	"True Midnight Asura", "Tunnel Tyrant", "Undead Dragon", "Undead Elite Gladiator",
+	"Undead Gladiator", "Usurper Archer", "Usurper Knight", "Usurper Warlock",
+	"Vampire", "Vampire Bride", "Vampire Pig", "Vampire Viscount", "Varg",
+	"Varnished Diremaw", "Venerable Girtablilu", "Vexclaw", "Vile Grandmaster",
+	"Vulcongra", "Walker", "War Golem", "Wardragon", "Warlock", "Water Elemental",
+	"Weakened Frazzlemaw", "Weeper", "Werebadger", "Werebear", "Wereboar",
+	"Werecrocodile", "Werefox", "Werehyaena", "Werehyaena Shaman", "Werelion",
+	"Werelioness", "Werepanther", "Weretiger", "Werewolf", "White Lion",
+	"White Weretiger", "Worm Priestess", "Wyrm", "Wyvern", "Zombie"
+};
+
+static const std::vector<std::string_view> s_masterCreatures = {
+	"Adult Goanna", "Afflicted Strider", "Animated Feather", "Arachnophobica",
+	"Armadile", "Bashmu", "Biting Book", "Black Sphinx Acolyte", "Blemished Spawn",
+	"Blightwalker", "Bluebeak", "Brain Squid", "Bramble Wyrmling", "Breach Brood",
+	"Brinebrute Inferniarch", "Broodrider Inferniarch", "Bulltaur Alchemist",
+	"Bulltaur Brute", "Bulltaur Forgepriest", "Burning Book", "Burning Gladiator",
+	"Burster Spectre", "Candy Floss Elemental", "Candy Horror", "Carnivostrich",
+	"Cave Chimera", "Cave Devourer", "Chasm Spawn", "Choking Fear", "Cinder Wyrmling",
+	"Cliff Strider", "Cobra Assassin", "Cobra Scout", "Cobra Vizier", "Crape Man",
+	"Crazed Summer Rearguard", "Crazed Summer Vanguard", "Crazed Winter Rearguard",
+	"Crazed Winter Vanguard", "Crusader", "Crypt Mage", "Crypt Warden", "Crypt Warrior",
+	"Cunning Werepanther", "Cursed Book", "Cursed Prospector", "Cyclursus",
+	"Dark Carnisylvan", "Dark Torturer", "Dawnfire Asura", "Deathling Scout",
+	"Deathling Spellsinger", "Deepling Tyrant", "Deepworm", "Defiler", "Demon",
+	"Demon Outcast", "Diremaw", "Dragolisk", "Draken Abomination", "Draken Elite",
+	"Draken Spellweaver", "Dread Intruder", "Dworc Shadowstalker", "Elder Wyrm",
+	"Energetic Book", "Energuardian of Tales", "Evil Prospector", "Eyeless Devourer",
+	"Falcon Knight", "Falcon Paladin", "Feral Sphinx", "Feral Werecrocodile",
+	"Flimsy Lost Soul", "Floating Savant", "Foam Stalker", "Frazzlemaw",
+	"Freakish Lost Soul", "Fury", "Gazer Spectre", "Ghastly Dragon",
+	"Girtablilu Warrior", "Gloom Maw", "Grim Reaper", "Grimeleech",
+	"Guardian of Tales", "Guzzlemaw", "Hand of Cursed Fate", "Harpy",
+	"Haunted Dragon", "Headwalker", "Hellfire Fighter", "Hellflayer", "Hellhound",
+	"Hellhunter Inferniarch", "Hideous Fungus", "Hive Overseer", "Hulking Carnisylvan",
+	"Humongous Fungus", "Icecold Book", "Infected Weeper", "Infernal Demon",
+	"Infernal Phantom", "Infernalist", "Ink Blob", "Insane Siren", "Ironblight",
+	"Juggernaut", "Juvenile Bashmu", "Knowledge Elemental", "Lamassu", "Lava Golem",
+	"Lava Lurker", "Lavafungus", "Lavaworm", "Liodile", "Lion Hydra", "Lizard Noble",
+	"Lost Berserker", "Magma Crawler", "Makara", "Manticore", "Medusa", "Mega Dragon",
+	"Minotaur Amazon", "Mitmah Scout", "Mitmah Seer", "Naga Archer", "Naga Warrior",
+	"Nibblemaw", "Night Harpy", "Norcferatu Heartless", "Norcferatu Nightweaver",
+	"Ogre Rowdy", "Ogre Ruffian", "Ogre Sage", "Orclops Bloodbreaker", "Orewalker",
+	"Phantasm", "Poisonous Carnisylvan", "Priestess of the Wild Sun",
+	"Quara Looter", "Quara Plunderer", "Quara Raider", "Rage Squid",
+	"Raubritter Chastener", "Raubritter Marksman", "Raubritter Skirmisher",
+	"Reality Reaver", "Retching Horror", "Rhindeer", "Ripper Spectre",
+	"Rootthing Amber Shaper", "Rootthing Bug Tracker", "Rootthing Nutshell",
+	"Seacrest Serpent", "Shock Head", "Sight of Surrender",
+	"Sineater Inferniarch", "Skeleton Elite Warrior", "Son of Verminor",
+	"Sparkion", "Spellreaper Inferniarch", "Sphinx", "Spiky Carnivor",
+	"Squid Warden", "Stone Devourer", "Streaked Devourer", "Terrorsleep",
+	"Thanatursus", "Tremendous Tyrant", "True Dawnfire Asura", "True Frost Flower Asura",
+	"True Midnight Asura", "Tunnel Tyrant", "Undead Dragon", "Undead Elite Gladiator",
+	"Usurper Archer", "Usurper Knight", "Usurper Warlock", "Varg",
+	"Varnished Diremaw", "Venerable Girtablilu", "Vexclaw", "Vulcongra",
+	"Wardragon", "Weeper", "Werecrocodile", "Werelion", "Werelioness",
+	"Werepanther", "Weretiger", "White Lion", "White Weretiger", "Young Goanna"
+};
+
+void IOPrey::initBountyPools() {
+	const std::array<const std::vector<std::string_view> *, 4> nameLists = {
+		&s_beginnerCreatures, &s_adeptCreatures, &s_expertCreatures, &s_masterCreatures
+	};
+
+	// Build a reverse lookup: display name → raceId
+	std::map<std::string, uint16_t> nameToRaceId;
+	for (const auto &[raceId, name] : g_game().getBestiaryList()) {
+		nameToRaceId[name] = raceId;
+	}
+
+	for (uint8_t tier = 0; tier < 4; ++tier) {
+		m_bountyPools[tier].clear();
+		for (const auto &sv : *nameLists[tier]) {
+			auto it = nameToRaceId.find(std::string(sv));
+			if (it != nameToRaceId.end()) {
+				m_bountyPools[tier].push_back(it->second);
+			}
+		}
+		if (m_bountyPools[tier].empty()) {
+			g_logger().warn("[IOPrey::initBountyPools] Bounty pool for tier {} is empty.", tier);
+		}
+	}
+}
+
+const std::vector<uint16_t> &IOPrey::getBountyPool(BountyDifficulty_t difficulty) const {
+	return m_bountyPools[static_cast<uint8_t>(difficulty)];
+}
+
+std::array<uint16_t, BOUNTY_OPTION_COUNT> IOPrey::generateBountyOptions(BountyDifficulty_t difficulty, const std::vector<uint16_t> &blackList) const {
+	const auto &pool = getBountyPool(difficulty);
+	std::array<uint16_t, BOUNTY_OPTION_COUNT> result = {};
+	if (pool.empty()) {
+		return result;
+	}
+
+	std::vector<uint16_t> available;
+	available.reserve(pool.size());
+	for (uint16_t raceId : pool) {
+		if (std::find(blackList.begin(), blackList.end(), raceId) == blackList.end()) {
+			available.push_back(raceId);
+		}
+	}
+	if (available.empty()) {
+		// Fallback: ignore blacklist
+		available = pool;
+	}
+
+	for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
+		if (available.empty()) break;
+		uint32_t idx = uniform_random(0, static_cast<int32_t>(available.size()) - 1);
+		result[i] = available[idx];
+		available.erase(available.begin() + idx);
+	}
+	return result;
+}
+
+uint16_t IOPrey::getBountyKillTarget(BountyDifficulty_t difficulty) const {
+	// Beginner 50-100, Adept 100-200, Expert 200-400, Master 300-600
+	static constexpr std::array<uint16_t, 4> minKills = {50, 100, 200, 300};
+	static constexpr std::array<uint16_t, 4> maxKills = {100, 200, 400, 600};
+	const uint8_t d = static_cast<uint8_t>(difficulty);
+	return static_cast<uint16_t>(uniform_random(minKills[d], maxKills[d]));
+}
+
+uint32_t IOPrey::getBountyExpReward(BountyDifficulty_t difficulty, uint32_t level, uint8_t rarity) const {
+	// Level-scaled exp, multiplied by difficulty and rarity
+	static constexpr std::array<uint32_t, 4> diffMult = {1, 2, 4, 8};
+	uint32_t base;
+	if (level <= 82) {
+		base = 25 * level * level - 75 * level + 100;
+	} else if (level < 1000) {
+		base = static_cast<uint32_t>(std::round(1994.008 * level));
+	} else {
+		base = 2 * level * level - 6 * level + 8;
+	}
+	// Scale down for bounty (it's not a weekly task, more frequent)
+	base = base / 8;
+	base *= diffMult[static_cast<uint8_t>(difficulty)];
+	if (rarity == 1) base *= 2; // silver
+	if (rarity == 2) base *= 4; // gold
+	return base;
+}
+
+uint8_t IOPrey::getBountyPointReward(BountyDifficulty_t difficulty, uint8_t rarity) const {
+	static constexpr std::array<uint8_t, 4> basePoints = {3, 7, 16, 27};
+	uint8_t pts = basePoints[static_cast<uint8_t>(difficulty)];
+	if (rarity == 1) pts = static_cast<uint8_t>(pts * 2);
+	if (rarity == 2) pts = static_cast<uint8_t>(pts * 4);
+	return pts;
+}
+
+uint16_t IOPrey::getTalismanUpgradeCost(uint8_t currentLevel) const {
+	return static_cast<uint16_t>(5 + currentLevel * 12);
+}
+
+void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value) const {
+	if (!player) return;
+
+	BountySlot &slot = player->getBountySlot();
+
+	switch (option) {
+		case 0: // OPEN_BOUNTY — generate options if needed and send data
+		{
+			if (!slot.hasOptions() && slot.state == 0) {
+				slot.options = generateBountyOptions(slot.difficulty, {});
+			}
+			player->sendBountyData();
+			break;
+		}
+		case 2: // CHANGE_DIFFICULTY
+		{
+			if (value > 3) break;
+			slot.difficulty = static_cast<BountyDifficulty_t>(value);
+			if (slot.state == 0) {
+				slot.options = generateBountyOptions(slot.difficulty, {});
+			}
+			player->sendBountyData();
+			break;
+		}
+		case 3: // REROLL
+		{
+			if (slot.state != 0) break; // can't reroll while task is active
+			if (slot.rerollTokens > 0) {
+				--slot.rerollTokens;
+			} else {
+				// Gold cost: level × 200 (same as old task hunting reroll price)
+				const uint64_t cost = static_cast<uint64_t>(player->getLevel()) * 200;
+				if (!g_game().removeMoney(player, cost, 0, true)) {
+					player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You do not have enough gold coins.");
+					break;
+				}
+			}
+			slot.options = generateBountyOptions(slot.difficulty, {});
+			player->sendBountyData();
+			break;
+		}
+		case 4: // CLAIM_DAILY_REROLL
+		{
+			const int64_t now = OTSYS_TIME(true);
+			if (now - slot.dailyRerollTimestamp >= BOUNTY_DAILY_REROLL_COOLDOWN) {
+				if (slot.rerollTokens < BOUNTY_MAX_REROLL_TOKENS) {
+					++slot.rerollTokens;
+					slot.dailyRerollTimestamp = now;
+				}
+			}
+			player->sendBountyData();
+			break;
+		}
+		case 5: // SELECT_TASK — value is index 0-2
+		{
+			if (slot.state != 0) break;
+			if (value >= BOUNTY_OPTION_COUNT) break;
+			uint16_t raceId = slot.options[value];
+			if (raceId == 0) break;
+
+			// Roll rarity
+			int32_t roll = uniform_random(0, 99);
+			slot.rarity = (roll < 5) ? 2 : (roll < 30) ? 1 : 0; // 5% gold, 25% silver, 70% normal
+
+			slot.activeRaceId = raceId;
+			slot.totalKills = getBountyKillTarget(slot.difficulty);
+			slot.currentKills = 0;
+			slot.rewardXp = getBountyExpReward(slot.difficulty, player->getLevel(), slot.rarity);
+			slot.rewardPoints = getBountyPointReward(slot.difficulty, slot.rarity);
+			slot.state = 1; // active
+			player->sendBountyData();
+			break;
+		}
+		case 6: // CLAIM_REWARD
+		{
+			if (slot.state != 2) break; // must be claimable
+
+			// Grant rewards
+			player->addBountyExpReward(slot.rewardXp);
+			player->addBountyPoints(slot.rewardPoints);
+			if (slot.rerollTokens < BOUNTY_MAX_REROLL_TOKENS) {
+				++slot.rerollTokens; // 1 reroll token per completed task
+			}
+
+			// Reset slot, generate new options
+			slot.activeRaceId = 0;
+			slot.currentKills = 0;
+			slot.totalKills = 0;
+			slot.rewardXp = 0;
+			slot.rewardPoints = 0;
+			slot.rarity = 0;
+			slot.state = 0;
+			slot.options = generateBountyOptions(slot.difficulty, {});
+			player->sendBountyData();
+			break;
+		}
+		case 7: // TALISMAN_UPGRADE — stub (Phase 2c)
+		case 12: // PREFERRED_UNLOCK
+		case 13: // PREFERRED_CLEAR
+		case 14: // UNWANTED_CLEAR
+		case 15: // PREFERRED_ASSIGN
+		case 16: // UNWANTED_ASSIGN
+			player->sendBountyData(); // echo back current state
+			break;
+		default:
+			break;
+	}
+}
+
+// ── Weekly Task system ────────────────────────────────────────────────────────
+
+uint32_t IOPrey::computeNextMondayTimestamp() {
+	// Compute next Monday 00:00:00 UTC without <ctime>
+	// Unix epoch (Jan 1 1970) was a Thursday = weekday 4 (0=Sun)
+	const int64_t nowSec = OTSYS_TIME(true) / 1000;
+	const int64_t dayIndex = nowSec / 86400;        // days since epoch
+	const int wday = static_cast<int>((dayIndex + 4) % 7); // 0=Sun,1=Mon,...,6=Sat
+	int daysUntilMonday = (wday == 1) ? 7 : ((8 - wday) % 7);
+	if (daysUntilMonday == 0) daysUntilMonday = 7;
+	const int64_t nextMondayDay = dayIndex + daysUntilMonday;
+	return static_cast<uint32_t>(nextMondayDay * 86400);
+}
+
+uint16_t IOPrey::getWeeklyKillTarget(BountyDifficulty_t difficulty) const {
+	static constexpr std::array<uint16_t, 4> minK = {100, 250, 500, 800};
+	static constexpr std::array<uint16_t, 4> maxK = {250, 500, 1000, 1500};
+	const uint8_t d = static_cast<uint8_t>(difficulty);
+	return static_cast<uint16_t>(uniform_random(minK[d], maxK[d]));
+}
+
+uint16_t IOPrey::getWeeklyAnyCreatureTarget(BountyDifficulty_t difficulty) const {
+	static constexpr std::array<uint16_t, 4> targets = {500, 1000, 2000, 3500};
+	return targets[static_cast<uint8_t>(difficulty)];
+}
+
+uint32_t IOPrey::getWeeklyExpReward(BountyDifficulty_t difficulty, uint32_t level) const {
+	uint64_t base;
+	if (level <= 82) {
+		base = 25ull * level * level - 75ull * level + 100;
+	} else if (level < 1000) {
+		base = static_cast<uint64_t>(std::round(1994.008 * level));
+	} else {
+		base = 2ull * level * level - 6ull * level + 8;
+	}
+
+	static constexpr std::array<uint64_t, 4> caps = {200000, 800000, 3000000, UINT64_MAX};
+	if (base > caps[static_cast<uint8_t>(difficulty)]) {
+		base = caps[static_cast<uint8_t>(difficulty)];
+	}
+	return static_cast<uint32_t>(base);
+}
+
+uint32_t IOPrey::getWeeklyPointsReward(BountyDifficulty_t difficulty) const {
+	static constexpr std::array<uint32_t, 4> points = {50, 150, 400, 1000};
+	return points[static_cast<uint8_t>(difficulty)];
+}
+
+void IOPrey::generateWeeklyTasks(WeeklySlot &slot, uint32_t playerLevel) const {
+	slot.reset();
+	slot.weeklyResetTimestamp = computeNextMondayTimestamp();
+
+	// Pick WEEKLY_KILL_TASK_COUNT specific creatures from the appropriate pool
+	const auto &pool = getBountyPool(slot.difficulty);
+	std::vector<uint16_t> available = pool;
+
+	slot.killTasks.clear();
+	slot.killTasks.reserve(WEEKLY_KILL_TASK_COUNT);
+
+	for (uint8_t i = 0; i < WEEKLY_KILL_TASK_COUNT && !available.empty(); ++i) {
+		const uint32_t idx = static_cast<uint32_t>(uniform_random(0, static_cast<int32_t>(available.size()) - 1));
+		WeeklyKillTask task;
+		task.raceId = available[idx];
+		task.totalKills = getWeeklyKillTarget(slot.difficulty);
+		task.currentKills = 0;
+		slot.killTasks.push_back(task);
+		available.erase(available.begin() + idx);
+	}
+
+	slot.anyCreatureTotalKills = getWeeklyAnyCreatureTarget(slot.difficulty);
+	slot.anyCreatureCurrentKills = 0;
+	(void)playerLevel; // reserved for future level-scaled kill counts
+}
+
+void IOPrey::parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t option, uint8_t value) const {
+	if (!player) return;
+
+	WeeklySlot &slot = player->getWeeklySlot();
+
+	// Always check for weekly reset first
+	if (slot.needsReset()) {
+		slot.reset();
+	}
+
+	switch (option) {
+		case 1: // OPEN_WEEKLY — send current state
+			player->sendWeeklyData();
+			break;
+
+		case 9: // SELECT_DIFFICULTY — pick difficulty and generate tasks
+		{
+			if (slot.isGenerated()) {
+				// Tasks already running — can't change difficulty mid-week
+				player->sendWeeklyData();
+				break;
+			}
+			if (value > 3) break;
+			const auto newDiff = static_cast<BountyDifficulty_t>(value);
+			// Can't select above unlocked difficulty
+			if (static_cast<uint8_t>(newDiff) > static_cast<uint8_t>(slot.unlockedDifficulty)) break;
+			slot.difficulty = newDiff;
+			generateWeeklyTasks(slot, player->getLevel());
+			player->sendWeeklyData();
+			break;
+		}
+
+		case 8: // WEEKLY_DELIVER — delivery task (Phase 3b stub)
+			player->sendWeeklyData();
+			break;
+
+		default:
+			break;
+	}
+}
+
+// ── Hunting Task Shop ─────────────────────────────────────────────────────────
+
+void IOPrey::initShopOffers() {
+	m_shopOffers.clear();
+
+	// Each offer: type, title, description, itemId, addons, price (HTP), itemCount
+	// Prices are in Hunting Task Points (HTP / taskHuntingPoints)
+
+	// Platinum bundle — 10 platinum coins for 25 HTP
+	m_shopOffers.push_back({
+		ShopOffer_Item,
+		"Platinum Bundle",
+		"Receive 10 Platinum Coins.",
+		238, 0, 25, 10
+	});
+
+	// Crystal Coin — 1 crystal coin for 50 HTP
+	m_shopOffers.push_back({
+		ShopOffer_Item,
+		"Crystal Coin",
+		"Receive 1 Crystal Coin.",
+		2160, 0, 50, 1
+	});
+
+	// Weekly Task Expansion — 3 extra weekly task slots, costs 500 HTP (one-time)
+	m_shopOffers.push_back({
+		ShopOffer_WeeklyExpansion,
+		"Weekly Task Expansion",
+		"Permanently unlock 3 extra Weekly Task slots (9 total).",
+		2160, 0, 500, 0
+	});
+}
+
+void IOPrey::parseShopAction(const std::shared_ptr<Player> &player, uint8_t offerIndex) const {
+	if (!player) return;
+	if (offerIndex >= m_shopOffers.size()) return;
+
+	const ShopOffer &offer = m_shopOffers[offerIndex];
+
+	// Validate: weekly expansion already bought?
+	if (offer.type == ShopOffer_WeeklyExpansion && player->getWeeklySlot().weeklyExpansion) {
+		player->sendShopData();
+		return;
+	}
+
+	// Deduct HTP
+	if (!player->useTaskHuntingPoints(offer.price)) {
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You do not have enough Hunting Task Points.");
+		return;
+	}
+
+	// Grant reward
+	if (offer.type == ShopOffer_WeeklyExpansion) {
+		player->getWeeklySlot().weeklyExpansion = 1;
+		player->sendWeeklyData(); // update weekly tab to show 9 slots
+	} else if (offer.type == ShopOffer_Item && offer.itemId > 0 && offer.itemCount > 0) {
+		const auto &item = Item::CreateItem(static_cast<uint16_t>(offer.itemId), offer.itemCount);
+		if (item) {
+			if (g_game().internalAddItem(player, item) != RETURNVALUE_NOERROR) {
+				g_game().internalAddItem(player->getTile(), item, INDEX_WHEREEVER, FLAG_NOLIMIT);
+			}
+		}
+	}
+
+	// Refresh shop display
+	player->sendShopData();
 }

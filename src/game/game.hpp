@@ -255,6 +255,9 @@ public:
 	void playerDebugAssert(uint32_t playerId, const std::string &assertLine, const std::string &date, const std::string &description, const std::string &comment);
 	void playerPreyAction(uint32_t playerId, uint8_t slot, uint8_t action, uint8_t option, int8_t index, uint16_t raceId);
 	void playerTaskHuntingAction(uint32_t playerId, uint8_t slot, uint8_t action, bool upgrade, uint16_t raceId);
+	void playerBountyAction(uint32_t playerId, uint8_t option, uint16_t value);
+	void playerWeeklyAction(uint32_t playerId, uint8_t option, uint8_t value);
+	void playerShopAction(uint32_t playerId, uint8_t offerIndex);
 	void playerNpcGreet(uint32_t playerId, uint32_t npcId);
 	void playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, uint8_t button, uint8_t choice);
 	void playerForgeFuseItems(

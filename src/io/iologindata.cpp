@@ -166,6 +166,10 @@ bool IOLoginData::loadPlayer(const std::shared_ptr<Player> &player, const DBResu
 		// Load task hunting class
 		IOLoginDataLoad::loadPlayerTaskHuntingClass(player, result);
 
+		// Load task board (bounty + weekly)
+		IOLoginDataLoad::loadPlayerBountyClass(player, result);
+		IOLoginDataLoad::loadPlayerWeeklyClass(player, result);
+
 		// Load instant spells list
 		IOLoginDataLoad::loadPlayerInstantSpellList(player, result);
 
@@ -257,6 +261,14 @@ bool IOLoginData::savePlayerGuard(const std::shared_ptr<Player> &player) {
 
 	if (!IOLoginDataSave::savePlayerTaskHuntingClass(player)) {
 		throw DatabaseException("[IOLoginDataSave::savePlayerTaskHuntingClass] - Failed to save player task hunting class: " + player->getName());
+	}
+
+	if (!IOLoginDataSave::savePlayerBountyClass(player)) {
+		throw DatabaseException("[IOLoginDataSave::savePlayerBountyClass] - Failed to save player bounty class: " + player->getName());
+	}
+
+	if (!IOLoginDataSave::savePlayerWeeklyClass(player)) {
+		throw DatabaseException("[IOLoginDataSave::savePlayerWeeklyClass] - Failed to save player weekly class: " + player->getName());
 	}
 
 	// Saves data components that are only valid if the player is online.

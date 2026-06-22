@@ -6595,6 +6595,101 @@ void Player::addHuntingTaskKill(const std::shared_ptr<MonsterType> &mType) {
 	}
 }
 
+void Player::addBountyKill(const std::shared_ptr<MonsterType> &mType) {
+	if (!mType || bountySlot.state != 1) return;
+	if (mType->info.raceid != bountySlot.activeRaceId) return;
+
+	bountySlot.currentKills += 1;
+	if (bountySlot.currentKills >= bountySlot.totalKills) {
+		bountySlot.state = 2; // claimable
+		sendTextMessage(MESSAGE_STATUS, "You have completed your bounty task! Claim your reward in the Task Board.");
+	}
+	sendBountyData();
+}
+
+void Player::addBountyPoints(uint64_t amount) {
+	bountyPoints += amount;
+	sendResourceBalance(RESOURCE_BOUNTY_POINTS, bountyPoints);
+}
+
+bool Player::removeBountyPoints(uint64_t amount) {
+	if (bountyPoints < amount) return false;
+	bountyPoints -= amount;
+	sendResourceBalance(RESOURCE_BOUNTY_POINTS, bountyPoints);
+	return true;
+}
+
+void Player::addBountyExpReward(uint64_t exp) {
+	addExperience(nullptr, exp, true);
+}
+
+void Player::sendBountyData() {
+	if (client) {
+		client->sendTaskBoardBountyData();
+	}
+}
+
+void Player::sendWeeklyData() {
+	if (client) {
+		client->sendTaskBoardWeeklyData();
+	}
+}
+
+void Player::sendShopData() {
+	if (client) {
+		client->sendTaskBoardShopData();
+	}
+}
+
+void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
+	if (!mType) return;
+
+	WeeklySlot &slot = weeklySlot;
+	if (!slot.isGenerated() || slot.weeklyProgressFinished) return;
+	if (slot.needsReset()) {
+		slot.reset();
+		sendWeeklyData();
+		return;
+	}
+
+	bool changed = false;
+
+	// Specific kill tasks
+	for (auto &task : slot.killTasks) {
+		if (task.raceId == mType->info.raceid && !task.isComplete()) {
+			task.currentKills++;
+			changed = true;
+			break;
+		}
+	}
+
+	// Any-creature counter
+	if (slot.anyCreatureTotalKills > 0 && slot.anyCreatureCurrentKills < slot.anyCreatureTotalKills) {
+		slot.anyCreatureCurrentKills++;
+		changed = true;
+	}
+
+	if (!changed) return;
+
+	// Check full completion
+	if (!slot.weeklyProgressFinished && slot.allKillTasksComplete()) {
+		slot.weeklyProgressFinished = 1;
+		const uint32_t expReward = g_ioprey().getWeeklyExpReward(slot.difficulty, getLevel());
+		addBountyExpReward(expReward);
+		const uint32_t htp = g_ioprey().getWeeklyPointsReward(slot.difficulty);
+		slot.pointsEarned = htp;
+		addTaskHuntingPoints(htp);
+		// Unlock next difficulty tier
+		if (static_cast<uint8_t>(slot.difficulty) >= static_cast<uint8_t>(slot.unlockedDifficulty)
+		    && slot.unlockedDifficulty != BountyDifficulty_Master) {
+			slot.unlockedDifficulty = static_cast<BountyDifficulty_t>(static_cast<uint8_t>(slot.unlockedDifficulty) + 1);
+		}
+		sendTextMessage(MESSAGE_STATUS, "You have completed all your weekly tasks! Rewards have been granted.");
+	}
+
+	sendWeeklyData();
+}
+
 void Player::addBestiaryKill(const std::shared_ptr<MonsterType> &mType) {
 	if (mType->isBoss()) {
 		return;
@@ -6647,6 +6742,8 @@ bool Player::onKilledMonster(const std::shared_ptr<Monster> &monster) {
 	}
 	if (!monster->getSoulPit()) {
 		addHuntingTaskKill(mType);
+		addBountyKill(mType);
+		addWeeklyKill(mType);
 		addBestiaryKill(mType);
 		addBosstiaryKill(mType);
 	}

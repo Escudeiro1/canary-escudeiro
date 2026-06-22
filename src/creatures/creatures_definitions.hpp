@@ -728,7 +728,9 @@ enum class GameFeature_t : uint8_t {
 	ItemCustomAttributes = 126,
 	AnimatedTextCustomFont = 127,
 
-	LastGameFeature = 130
+	GameTaskboard = 134,
+
+	LastGameFeature = 134
 };
 
 enum OperatingSystem_t : uint8_t {

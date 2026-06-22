@@ -1230,6 +1230,9 @@ void ProtocolGame::parsePacketFromDispatcher(NetworkMessage &msg, uint8_t recvby
 		case 0x38:
 			parsePlayerTyping(msg); // player are typing or not
 			break;
+		case 0x5F:
+			parseTaskBoardAction(msg);
+			break;
 		case 0x60:
 			parseInventoryImbuements(msg);
 			break;
@@ -2530,6 +2533,212 @@ void ProtocolGame::parseTaskHuntingAction(NetworkMessage &msg) {
 	}
 
 	g_game().playerTaskHuntingAction(player->getID(), slot, action, upgrade, raceId);
+}
+
+void ProtocolGame::parseTaskBoardAction(NetworkMessage &msg) {
+	uint8_t option = msg.getByte();
+	uint16_t value = 0;
+
+	switch (option) {
+		case 2:  // CHANGE_DIFFICULTY
+		case 5:  // SELECT_TASK
+		case 7:  // TALISMAN_UPGRADE
+		case 9:  // SELECT_DIFFICULTY (weekly)
+			value = msg.getByte();
+			break;
+		case 8:  // WEEKLY_DELIVER
+			value = msg.getByte();
+			break;
+		case 11: // BUY_OFFER
+			value = msg.getByte();
+			msg.getByte(); // extraValue — ignored for now
+			break;
+		case 12: // PREFERRED_UNLOCK
+		case 13: // PREFERRED_CLEAR
+		case 14: // UNWANTED_CLEAR
+			value = msg.get<uint16_t>();
+			break;
+		case 15: // PREFERRED_ASSIGN
+		case 16: // UNWANTED_ASSIGN
+			value = msg.get<uint16_t>();
+			msg.get<uint16_t>(); // raceId — full implementation in Phase 2c
+			break;
+		default: // OPEN_BOUNTY(0), OPEN_WEEKLY(1), REROLL(3), CLAIM_DAILY(4), CLAIM_REWARD(6), OPEN_SHOP(10)
+			break;
+	}
+
+	// Route actions to the appropriate subsystem
+	if (option == 1 || option == 8 || option == 9) {
+		g_game().playerWeeklyAction(player->getID(), option, static_cast<uint8_t>(value));
+	} else if (option == 10) {
+		player->sendShopData();
+	} else if (option == 11) {
+		g_game().playerShopAction(player->getID(), static_cast<uint8_t>(value));
+	} else {
+		g_game().playerBountyAction(player->getID(), option, value);
+	}
+}
+
+void ProtocolGame::sendTaskBoardBountyData() {
+	if (!player) return;
+
+	const BountySlot &slot = player->getBountySlot();
+
+	NetworkMessage msg;
+	msg.addByte(0x5B);          // GameServerTaskBoard
+	msg.addByte(0x00);          // subtype: BOUNTY
+
+	// Offer list
+	if (slot.state == 0) {
+		// Selection mode: send up to 3 options
+		uint8_t offerCount = 0;
+		for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
+			if (slot.options[i] != 0) offerCount++;
+		}
+		msg.addByte(offerCount);
+		for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
+			if (slot.options[i] == 0) continue;
+			msg.addByte(i);                              // taskIndex
+			msg.add<uint16_t>(slot.options[i]);          // raceId
+			msg.add<uint16_t>(g_ioprey().getBountyKillTarget(slot.difficulty)); // totalKills (preview)
+			msg.add<uint32_t>(g_ioprey().getBountyExpReward(slot.difficulty, player->getLevel(), 0)); // rewardXp
+			msg.addByte(g_ioprey().getBountyPointReward(slot.difficulty, 0)); // rewardPoints
+			msg.add<uint16_t>(0);                        // currentKills
+			msg.addByte(0);                              // bountyState: available
+			msg.addByte(0);                              // rarity: normal
+		}
+	} else {
+		// Active or claimable: send 1 entry
+		msg.addByte(1);
+		msg.addByte(0);                              // taskIndex
+		msg.add<uint16_t>(slot.activeRaceId);        // raceId
+		msg.add<uint16_t>(slot.totalKills);          // totalKills
+		msg.add<uint32_t>(slot.rewardXp);            // rewardXp
+		msg.addByte(slot.rewardPoints);              // rewardPoints
+		msg.add<uint16_t>(slot.currentKills);        // currentKills
+		msg.addByte(slot.state);                     // 1=active, 2=claimable
+		msg.addByte(slot.rarity);                    // 0=normal, 1=silver, 2=gold
+	}
+
+	// Header
+	msg.addByte(slot.rerollTokens);  // rerollPoints (token count)
+
+	// Reroll mode
+	const int64_t now = OTSYS_TIME(true);
+	uint8_t rerollMode;
+	if (slot.rerollTokens >= BOUNTY_MAX_REROLL_TOKENS) {
+		rerollMode = 2; // limit reached
+	} else if (now - slot.dailyRerollTimestamp >= BOUNTY_DAILY_REROLL_COOLDOWN) {
+		rerollMode = 0; // daily claimable
+	} else {
+		rerollMode = 1; // timer running
+	}
+	msg.addByte(rerollMode);
+	msg.addByte(static_cast<uint8_t>(slot.difficulty)); // 0-based
+
+	// 4 talismans (no count byte)
+	for (uint8_t i = 0; i < BOUNTY_TALISMAN_COUNT; ++i) {
+		msg.addByte(slot.talismans[i].level);             // currentLevel
+		msg.addByte(0);                                    // multiplier2 (unused)
+		msg.addByte(0);                                    // isActiveUpgrade
+		msg.add<uint16_t>(g_ioprey().getTalismanUpgradeCost(slot.talismans[i].level)); // upgradeCost
+	}
+
+	// Preferred slots
+	msg.addByte(BOUNTY_PREFERRED_SLOT_COUNT);
+	for (uint8_t i = 0; i < BOUNTY_PREFERRED_SLOT_COUNT; ++i) {
+		msg.addByte(slot.preferredSlots[i].unlocked ? 1 : 0); // 0=locked, non-zero=unlocked
+		msg.add<uint16_t>(slot.preferredSlots[i].preferredRaceId);
+		msg.add<uint16_t>(slot.preferredSlots[i].unwantedRaceId);
+	}
+
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendTaskBoardWeeklyData() {
+	if (!player) return;
+
+	const WeeklySlot &slot = player->getWeeklySlot();
+
+	NetworkMessage msg;
+	msg.addByte(0x5B);  // GameServerTaskBoard
+	msg.addByte(0x01);  // subtype: WEEKLY
+
+	// Generic any-creature kill task
+	msg.add<uint16_t>(slot.anyCreatureTotalKills);
+	msg.add<uint16_t>(slot.anyCreatureCurrentKills);
+
+	// Specific kill tasks
+	const uint8_t killCount = static_cast<uint8_t>(slot.killTasks.size());
+	msg.addByte(killCount);
+	for (const auto &task : slot.killTasks) {
+		msg.add<uint16_t>(task.raceId);
+		msg.add<uint16_t>(task.totalKills);
+		msg.add<uint16_t>(task.currentKills);
+	}
+
+	// Delivery tasks (Phase 3b — send 0 for now)
+	msg.addByte(0);
+
+	// Header
+	msg.addByte(static_cast<uint8_t>(slot.difficulty));    // difficultyMultiplier (0-based)
+	msg.add<uint32_t>(g_ioprey().getWeeklyExpReward(slot.difficulty, player->getLevel())); // maxExperience
+	msg.add<uint32_t>(0);                                   // maxDeliveryExperience
+	msg.addByte(slot.countCompletedKillTasks());            // completedKillTasks
+	msg.addByte(0);                                         // completedDeliveryTasks
+	msg.addByte(slot.weeklyProgressFinished);               // weeklyProgressFinished
+	msg.addByte(static_cast<uint8_t>(slot.unlockedDifficulty)); // unlockedDifficulty (0-based)
+	msg.add<uint32_t>(slot.weeklyResetTimestamp);           // resetTimestamp (Unix seconds)
+	msg.addByte(slot.weeklyExpansion);                      // weeklyTaskExpansion (0=6 slots, 1=9 slots)
+	msg.add<uint32_t>(slot.pointsEarned);
+	msg.add<uint32_t>(slot.soulsealsEarned);
+
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendTaskBoardShopData() {
+	if (!player) return;
+
+	const auto &offers = g_ioprey().getShopOffers();
+
+	NetworkMessage msg;
+	msg.addByte(0x5B);  // GameServerTaskBoard
+	msg.addByte(0x02);  // subtype: SHOP
+
+	msg.addByte(static_cast<uint8_t>(offers.size()));
+
+	for (const auto &offer : offers) {
+		msg.addByte(static_cast<uint8_t>(offer.type));
+
+		// Compute status
+		uint8_t status = 0; // AVAILABLE
+		if (offer.type == ShopOffer_WeeklyExpansion && player->getWeeklySlot().weeklyExpansion) {
+			status = 4; // BOUGHT
+		} else if (player->getTaskHuntingPoints() < offer.price) {
+			status = 2; // NOT_ENOUGH_POINTS
+		}
+
+		// BONUS_PROMOTION uses a different format
+		if (offer.type == ShopOffer_BonusPromotion) {
+			msg.add<uint16_t>(0);              // purchasedDisplayValue
+			msg.add<uint32_t>(offer.price);    // nextCost
+			msg.addByte(status);
+		} else {
+			msg.addString(offer.title);
+			msg.addString(offer.description);
+			msg.add<uint32_t>(offer.itemId);
+			if (offer.type == ShopOffer_Outfit) {
+				msg.addByte(offer.addons);
+			}
+			if (offer.type == ShopOffer_ItemDouble) {
+				msg.add<uint32_t>(0); // second itemId placeholder
+			}
+			msg.add<uint32_t>(offer.price);
+			msg.addByte(status);
+		}
+	}
+
+	writeToOutputBuffer(msg);
 }
 
 void ProtocolGame::sendHighscoresNoData() {
@@ -9366,6 +9575,7 @@ void ProtocolGame::sendFeatures() {
 	std::map<GameFeature_t, bool> features;
 	// Place for non-standard OTCv8 features
 	features[GameFeature_t::ExtendedOpcode] = true;
+	features[GameFeature_t::GameTaskboard] = true;
 
 	if (features.empty()) {
 		return;

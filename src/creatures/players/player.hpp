@@ -32,6 +32,7 @@
 #include "creatures/players/components/player_attached_effects.hpp"
 #include "creatures/players/components/weapon_proficiency.hpp"
 #include "utils/hash.hpp"
+#include "io/ioprey.hpp"
 
 class House;
 class NetworkMessage;
@@ -1359,6 +1360,26 @@ public:
 
 	std::vector<uint16_t> getTaskHuntingBlackList() const;
 
+	// Bounty Task system
+	void sendBountyData();
+	void addBountyKill(const std::shared_ptr<MonsterType> &mType);
+	void addBountyPoints(uint64_t amount);
+	bool removeBountyPoints(uint64_t amount);
+	void addBountyExpReward(uint64_t exp);
+	uint64_t getBountyPoints() const { return bountyPoints; }
+	void setBountyPoints(uint64_t amount) { bountyPoints = amount; }
+	BountySlot &getBountySlot() { return bountySlot; }
+	const BountySlot &getBountySlot() const { return bountySlot; }
+
+	// Weekly Task system
+	void sendWeeklyData();
+	void addWeeklyKill(const std::shared_ptr<MonsterType> &mType);
+	WeeklySlot &getWeeklySlot() { return weeklySlot; }
+	const WeeklySlot &getWeeklySlot() const { return weeklySlot; }
+
+	// Hunting Task Shop
+	void sendShopData();
+
 	void sendTaskHuntingData() const;
 
 	void addTaskHuntingPoints(uint64_t amount);
@@ -1656,6 +1677,8 @@ private:
 	void addHuntingTaskKill(const std::shared_ptr<MonsterType> &mType);
 	void addBestiaryKill(const std::shared_ptr<MonsterType> &mType);
 	void addBosstiaryKill(const std::shared_ptr<MonsterType> &mType);
+	BountySlot bountySlot;
+	WeeklySlot weeklySlot;
 
 	double_t getHarmonyBonus();
 
@@ -1730,6 +1753,7 @@ private:
 	uint64_t lastQuestlogUpdate = 0;
 	uint64_t preyCards = 0;
 	uint64_t taskHuntingPoints = 0;
+	uint64_t bountyPoints = 0;
 	uint32_t bossPoints = 0;
 	uint32_t bossIdSlotOne = 0;
 	uint32_t bossIdSlotTwo = 0;

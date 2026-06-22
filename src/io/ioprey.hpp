@@ -11,6 +11,7 @@
 
 // TODO: Remove circular includes (maybe shared_ptr?)
 #include "server/network/message/networkmessage.hpp"
+#include "utils/tools.hpp"
 
 class PreySlot;
 class TaskHuntingSlot;
@@ -215,6 +216,147 @@ static const std::unique_ptr<PreySlot> &PreySlotNull {};
 static const std::unique_ptr<TaskHuntingSlot> &TaskHuntingSlotNull {};
 static const std::unique_ptr<TaskHuntingOption> &TaskHuntingOptionNull {};
 
+// ── Bounty Task system (Task Board, Winter 2025) ─────────────────────────────
+constexpr uint8_t BOUNTY_TALISMAN_COUNT = 4;
+constexpr uint8_t BOUNTY_PREFERRED_SLOT_COUNT = 5;
+constexpr uint8_t BOUNTY_OPTION_COUNT = 3;
+constexpr uint8_t BOUNTY_MAX_REROLL_TOKENS = 10;
+constexpr int64_t BOUNTY_DAILY_REROLL_COOLDOWN = 86400000LL; // 24 hours in milliseconds (matches OTSYS_TIME)
+
+enum BountyDifficulty_t : uint8_t {
+	BountyDifficulty_Beginner = 0,
+	BountyDifficulty_Adept = 1,
+	BountyDifficulty_Expert = 2,
+	BountyDifficulty_Master = 3
+};
+
+enum BountyRerollMode_t : uint8_t {
+	BountyRerollMode_DailyClaimable = 0,
+	BountyRerollMode_TimerRunning = 1,
+	BountyRerollMode_LimitReached = 2
+};
+
+struct BountyTalisman {
+	uint8_t level = 0;
+};
+
+struct BountyPreferredSlot {
+	bool unlocked = false;
+	uint16_t preferredRaceId = 0;
+	uint16_t unwantedRaceId = 0;
+};
+
+struct BountySlot {
+	BountyDifficulty_t difficulty = BountyDifficulty_Beginner;
+	uint8_t state = 0; // 0=selection, 1=active, 2=claimable
+	uint8_t rarity = 0; // 0=normal, 1=silver, 2=gold
+	uint8_t rerollTokens = 1;
+	int64_t dailyRerollTimestamp = 0;
+
+	uint16_t activeRaceId = 0;
+	uint16_t currentKills = 0;
+	uint16_t totalKills = 0;
+	uint32_t rewardXp = 0;
+	uint8_t rewardPoints = 0;
+
+	std::array<uint16_t, BOUNTY_OPTION_COUNT> options = {};
+	std::array<BountyTalisman, BOUNTY_TALISMAN_COUNT> talismans;
+	std::array<BountyPreferredSlot, BOUNTY_PREFERRED_SLOT_COUNT> preferredSlots;
+
+	BountySlot() {
+		options.fill(0);
+		preferredSlots[0].unlocked = true;
+	}
+
+	bool hasOptions() const {
+		return options[0] != 0 || options[1] != 0 || options[2] != 0;
+	}
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Weekly Task system ────────────────────────────────────────────────────────
+constexpr uint8_t WEEKLY_KILL_TASK_COUNT = 5;
+
+struct WeeklyKillTask {
+	uint16_t raceId = 0;
+	uint16_t totalKills = 0;
+	uint16_t currentKills = 0;
+	bool isComplete() const { return totalKills > 0 && currentKills >= totalKills; }
+};
+
+struct WeeklySlot {
+	BountyDifficulty_t difficulty = BountyDifficulty_Beginner;
+	BountyDifficulty_t unlockedDifficulty = BountyDifficulty_Beginner;
+
+	uint16_t anyCreatureTotalKills = 0;
+	uint16_t anyCreatureCurrentKills = 0;
+
+	std::vector<WeeklyKillTask> killTasks;
+
+	uint8_t weeklyProgressFinished = 0;
+	uint8_t weeklyExpansion = 0; // 0 = 6 slots, 1 = 9 slots (purchased from shop)
+	uint32_t pointsEarned = 0;
+	uint32_t soulsealsEarned = 0;
+	uint32_t weeklyResetTimestamp = 0; // Unix seconds of next Monday 00:00 UTC
+
+	bool isGenerated() const { return weeklyResetTimestamp > 0 && !killTasks.empty(); }
+
+	bool needsReset() const {
+		if (weeklyResetTimestamp == 0) return false;
+		const int64_t nowSec = static_cast<int64_t>(OTSYS_TIME(true) / 1000);
+		return nowSec >= static_cast<int64_t>(weeklyResetTimestamp);
+	}
+
+	uint8_t countCompletedKillTasks() const {
+		uint8_t n = (anyCreatureTotalKills > 0 && anyCreatureCurrentKills >= anyCreatureTotalKills) ? 1 : 0;
+		for (const auto &t : killTasks) {
+			if (t.isComplete()) n++;
+		}
+		return n;
+	}
+
+	bool allKillTasksComplete() const {
+		if (!isGenerated()) return false;
+		if (anyCreatureTotalKills > 0 && anyCreatureCurrentKills < anyCreatureTotalKills) return false;
+		for (const auto &t : killTasks) {
+			if (!t.isComplete()) return false;
+		}
+		return true;
+	}
+
+	void reset() {
+		killTasks.clear();
+		anyCreatureTotalKills = 0;
+		anyCreatureCurrentKills = 0;
+		weeklyProgressFinished = 0;
+		pointsEarned = 0;
+		soulsealsEarned = 0;
+		weeklyResetTimestamp = 0;
+	}
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Hunting Task Shop ─────────────────────────────────────────────────────────
+enum ShopOfferType_t : uint8_t {
+	ShopOffer_Item = 0,
+	ShopOffer_Mount = 1,
+	ShopOffer_Outfit = 2,
+	ShopOffer_ItemDouble = 3,
+	ShopOffer_BonusPromotion = 4,
+	ShopOffer_WeeklyExpansion = 5
+};
+
+struct ShopOffer {
+	ShopOfferType_t type = ShopOffer_Item;
+	std::string title;
+	std::string description;
+	uint32_t itemId = 0;   // display item (or lookType for mount/outfit)
+	uint8_t addons = 0;    // outfit addons only
+	uint32_t price = 0;    // cost in Hunting Task Points
+	uint16_t itemCount = 1; // how many items to grant
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 class IOPrey {
 public:
 	IOPrey() = default;
@@ -235,8 +377,34 @@ public:
 
 	NetworkMessage getTaskHuntingBaseDate() const;
 
+	// Bounty Task system
+	void initBountyPools();
+	void parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value) const;
+	std::array<uint16_t, BOUNTY_OPTION_COUNT> generateBountyOptions(BountyDifficulty_t difficulty, const std::vector<uint16_t> &blackList) const;
+	uint16_t getBountyKillTarget(BountyDifficulty_t difficulty) const;
+	uint32_t getBountyExpReward(BountyDifficulty_t difficulty, uint32_t level, uint8_t rarity) const;
+	uint8_t getBountyPointReward(BountyDifficulty_t difficulty, uint8_t rarity) const;
+	uint16_t getTalismanUpgradeCost(uint8_t currentLevel) const;
+	const std::vector<uint16_t> &getBountyPool(BountyDifficulty_t difficulty) const;
+
+	// Weekly Task system
+	void parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t option, uint8_t value) const;
+	void generateWeeklyTasks(WeeklySlot &slot, uint32_t playerLevel) const;
+	uint32_t getWeeklyExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
+	uint32_t getWeeklyPointsReward(BountyDifficulty_t difficulty) const;
+	uint16_t getWeeklyKillTarget(BountyDifficulty_t difficulty) const;
+	uint16_t getWeeklyAnyCreatureTarget(BountyDifficulty_t difficulty) const;
+	static uint32_t computeNextMondayTimestamp();
+
+	// Hunting Task Shop
+	void initShopOffers();
+	void parseShopAction(const std::shared_ptr<Player> &player, uint8_t offerIndex) const;
+	const std::vector<ShopOffer> &getShopOffers() const { return m_shopOffers; }
+
 	NetworkMessage m_baseDataMessage;
 	std::vector<std::unique_ptr<TaskHuntingOption>> taskOption;
+	std::array<std::vector<uint16_t>, 4> m_bountyPools;
+	std::vector<ShopOffer> m_shopOffers;
 };
 
 constexpr auto g_ioprey = IOPrey::getInstance;

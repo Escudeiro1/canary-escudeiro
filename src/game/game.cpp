@@ -9939,6 +9939,24 @@ void Game::playerTaskHuntingAction(uint32_t playerId, uint8_t slot, uint8_t acti
 	g_ioprey().parseTaskHuntingAction(player, static_cast<PreySlot_t>(slot), static_cast<PreyTaskAction_t>(action), upgrade, raceId);
 }
 
+void Game::playerBountyAction(uint32_t playerId, uint8_t option, uint16_t value) {
+	const auto &player = getPlayerByID(playerId);
+	if (!player) return;
+	g_ioprey().parseBountyAction(player, option, value);
+}
+
+void Game::playerWeeklyAction(uint32_t playerId, uint8_t option, uint8_t value) {
+	const auto &player = getPlayerByID(playerId);
+	if (!player) return;
+	g_ioprey().parseWeeklyAction(player, option, value);
+}
+
+void Game::playerShopAction(uint32_t playerId, uint8_t offerIndex) {
+	const auto &player = getPlayerByID(playerId);
+	if (!player) return;
+	g_ioprey().parseShopAction(player, offerIndex);
+}
+
 void Game::playerNpcGreet(uint32_t playerId, uint32_t npcId) {
 	const auto &player = getPlayerByID(playerId);
 	if (!player) {

@@ -179,6 +179,10 @@ private:
 	void parseImbuementAction(NetworkMessage &msg);
 	void parseWeaponProficiency(NetworkMessage &msg);
 	void parseTaskHuntingAction(NetworkMessage &msg);
+	void parseTaskBoardAction(NetworkMessage &msg);
+	void sendTaskBoardBountyData();
+	void sendTaskBoardWeeklyData();
+	void sendTaskBoardShopData();
 	void sendHighscoresNoData();
 	void sendHighscores(const std::vector<HighscoreCharacter> &characters, uint8_t categoryId, uint32_t vocationId, uint16_t page, uint16_t pages, uint32_t updateTimer);
 

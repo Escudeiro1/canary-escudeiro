@@ -901,6 +901,92 @@ void IOLoginDataLoad::loadPlayerTaskHuntingClass(const std::shared_ptr<Player> &
 	}
 }
 
+void IOLoginDataLoad::loadPlayerBountyClass(const std::shared_ptr<Player> &player, DBResult_ptr result) {
+	if (!player) {
+		g_logger().warn("[{}] - Player nullptr", __FUNCTION__);
+		return;
+	}
+
+	std::ostringstream query;
+	query << "SELECT * FROM `player_bounty` WHERE `player_id` = " << player->getGUID();
+	if ((result = Database::getInstance().storeQuery(query.str()))) {
+		BountySlot &slot = player->getBountySlot();
+		slot.difficulty = static_cast<BountyDifficulty_t>(result->getNumber<uint8_t>("difficulty"));
+		slot.state = result->getNumber<uint8_t>("state");
+		slot.rarity = result->getNumber<uint8_t>("rarity");
+		slot.rerollTokens = result->getNumber<uint8_t>("reroll_tokens");
+		slot.dailyRerollTimestamp = result->getNumber<int64_t>("daily_reroll_ts");
+		slot.activeRaceId = result->getNumber<uint16_t>("active_race_id");
+		slot.currentKills = result->getNumber<uint16_t>("current_kills");
+		slot.totalKills = result->getNumber<uint16_t>("total_kills");
+		slot.rewardXp = result->getNumber<uint32_t>("reward_xp");
+		slot.rewardPoints = result->getNumber<uint8_t>("reward_points");
+		slot.options[0] = result->getNumber<uint16_t>("option_1");
+		slot.options[1] = result->getNumber<uint16_t>("option_2");
+		slot.options[2] = result->getNumber<uint16_t>("option_3");
+		slot.talismans[0].level = result->getNumber<uint8_t>("talisman_1");
+		slot.talismans[1].level = result->getNumber<uint8_t>("talisman_2");
+		slot.talismans[2].level = result->getNumber<uint8_t>("talisman_3");
+		slot.talismans[3].level = result->getNumber<uint8_t>("talisman_4");
+		slot.preferredSlots[0].unlocked = result->getNumber<uint8_t>("pref1_unlocked") != 0;
+		slot.preferredSlots[0].preferredRaceId = result->getNumber<uint16_t>("pref1_preferred");
+		slot.preferredSlots[0].unwantedRaceId = result->getNumber<uint16_t>("pref1_unwanted");
+		slot.preferredSlots[1].unlocked = result->getNumber<uint8_t>("pref2_unlocked") != 0;
+		slot.preferredSlots[1].preferredRaceId = result->getNumber<uint16_t>("pref2_preferred");
+		slot.preferredSlots[1].unwantedRaceId = result->getNumber<uint16_t>("pref2_unwanted");
+		slot.preferredSlots[2].unlocked = result->getNumber<uint8_t>("pref3_unlocked") != 0;
+		slot.preferredSlots[2].preferredRaceId = result->getNumber<uint16_t>("pref3_preferred");
+		slot.preferredSlots[2].unwantedRaceId = result->getNumber<uint16_t>("pref3_unwanted");
+		slot.preferredSlots[3].unlocked = result->getNumber<uint8_t>("pref4_unlocked") != 0;
+		slot.preferredSlots[3].preferredRaceId = result->getNumber<uint16_t>("pref4_preferred");
+		slot.preferredSlots[3].unwantedRaceId = result->getNumber<uint16_t>("pref4_unwanted");
+		slot.preferredSlots[4].unlocked = result->getNumber<uint8_t>("pref5_unlocked") != 0;
+		slot.preferredSlots[4].preferredRaceId = result->getNumber<uint16_t>("pref5_preferred");
+		slot.preferredSlots[4].unwantedRaceId = result->getNumber<uint16_t>("pref5_unwanted");
+		player->setBountyPoints(result->getNumber<uint64_t>("bounty_points"));
+	}
+}
+
+void IOLoginDataLoad::loadPlayerWeeklyClass(const std::shared_ptr<Player> &player, DBResult_ptr result) {
+	if (!player) {
+		g_logger().warn("[{}] - Player nullptr", __FUNCTION__);
+		return;
+	}
+
+	Database &db = Database::getInstance();
+	std::ostringstream query;
+
+	query << "SELECT * FROM `player_weekly` WHERE `player_id` = " << player->getGUID();
+	if ((result = db.storeQuery(query.str()))) {
+		WeeklySlot &slot = player->getWeeklySlot();
+		slot.difficulty = static_cast<BountyDifficulty_t>(result->getNumber<uint8_t>("difficulty"));
+		slot.unlockedDifficulty = static_cast<BountyDifficulty_t>(result->getNumber<uint8_t>("unlocked_difficulty"));
+		slot.anyCreatureTotalKills = result->getNumber<uint16_t>("any_creature_total");
+		slot.anyCreatureCurrentKills = result->getNumber<uint16_t>("any_creature_current");
+		slot.weeklyProgressFinished = result->getNumber<uint8_t>("progress_finished");
+		slot.weeklyExpansion = result->getNumber<uint8_t>("weekly_expansion");
+		slot.pointsEarned = result->getNumber<uint32_t>("points_earned");
+		slot.soulsealsEarned = result->getNumber<uint32_t>("soulseals_earned");
+		slot.weeklyResetTimestamp = result->getNumber<uint32_t>("reset_timestamp");
+
+		query.str("");
+		query << "SELECT * FROM `player_weekly_kills` WHERE `player_id` = " << player->getGUID() << " ORDER BY `task_index`";
+		if ((result = db.storeQuery(query.str()))) {
+			do {
+				WeeklyKillTask task;
+				task.raceId = result->getNumber<uint16_t>("race_id");
+				task.totalKills = result->getNumber<uint16_t>("total_kills");
+				task.currentKills = result->getNumber<uint16_t>("current_kills");
+				slot.killTasks.push_back(task);
+			} while (result->next());
+		}
+
+		if (slot.needsReset()) {
+			slot.reset();
+		}
+	}
+}
+
 void IOLoginDataLoad::loadPlayerForgeHistory(const std::shared_ptr<Player> &player) {
 	if (!player) {
 		g_logger().warn("[{}] - Player nullptr", __FUNCTION__);

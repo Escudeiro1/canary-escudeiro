@@ -773,6 +773,124 @@ bool IOLoginDataSave::savePlayerTaskHuntingClass(const std::shared_ptr<Player> &
 	return true;
 }
 
+bool IOLoginDataSave::savePlayerBountyClass(const std::shared_ptr<Player> &player) {
+	if (!player) {
+		g_logger().warn("[IOLoginData::savePlayer] - Player nullptr: {}", __FUNCTION__);
+		return false;
+	}
+
+	Database &db = Database::getInstance();
+	const uint32_t guid = player->getGUID();
+	const BountySlot &slot = player->getBountySlot();
+
+	const std::string query = fmt::format(
+		"INSERT INTO `player_bounty` "
+		"(`player_id`,`difficulty`,`state`,`rarity`,`reroll_tokens`,`daily_reroll_ts`,"
+		"`active_race_id`,`current_kills`,`total_kills`,`reward_xp`,`reward_points`,"
+		"`option_1`,`option_2`,`option_3`,"
+		"`talisman_1`,`talisman_2`,`talisman_3`,`talisman_4`,"
+		"`pref1_unlocked`,`pref1_preferred`,`pref1_unwanted`,"
+		"`pref2_unlocked`,`pref2_preferred`,`pref2_unwanted`,"
+		"`pref3_unlocked`,`pref3_preferred`,`pref3_unwanted`,"
+		"`pref4_unlocked`,`pref4_preferred`,`pref4_unwanted`,"
+		"`pref5_unlocked`,`pref5_preferred`,`pref5_unwanted`,"
+		"`bounty_points`) "
+		"VALUES ({},{},{},{},{},{},"
+		"{},{},{},{},{},"
+		"{},{},{},"
+		"{},{},{},{},"
+		"{},{},{},"
+		"{},{},{},"
+		"{},{},{},"
+		"{},{},{},"
+		"{},{},{},"
+		"{}) "
+		"ON DUPLICATE KEY UPDATE "
+		"`difficulty`=VALUES(`difficulty`),`state`=VALUES(`state`),`rarity`=VALUES(`rarity`),"
+		"`reroll_tokens`=VALUES(`reroll_tokens`),`daily_reroll_ts`=VALUES(`daily_reroll_ts`),"
+		"`active_race_id`=VALUES(`active_race_id`),`current_kills`=VALUES(`current_kills`),"
+		"`total_kills`=VALUES(`total_kills`),`reward_xp`=VALUES(`reward_xp`),"
+		"`reward_points`=VALUES(`reward_points`),"
+		"`option_1`=VALUES(`option_1`),`option_2`=VALUES(`option_2`),`option_3`=VALUES(`option_3`),"
+		"`talisman_1`=VALUES(`talisman_1`),`talisman_2`=VALUES(`talisman_2`),"
+		"`talisman_3`=VALUES(`talisman_3`),`talisman_4`=VALUES(`talisman_4`),"
+		"`pref1_unlocked`=VALUES(`pref1_unlocked`),`pref1_preferred`=VALUES(`pref1_preferred`),`pref1_unwanted`=VALUES(`pref1_unwanted`),"
+		"`pref2_unlocked`=VALUES(`pref2_unlocked`),`pref2_preferred`=VALUES(`pref2_preferred`),`pref2_unwanted`=VALUES(`pref2_unwanted`),"
+		"`pref3_unlocked`=VALUES(`pref3_unlocked`),`pref3_preferred`=VALUES(`pref3_preferred`),`pref3_unwanted`=VALUES(`pref3_unwanted`),"
+		"`pref4_unlocked`=VALUES(`pref4_unlocked`),`pref4_preferred`=VALUES(`pref4_preferred`),`pref4_unwanted`=VALUES(`pref4_unwanted`),"
+		"`pref5_unlocked`=VALUES(`pref5_unlocked`),`pref5_preferred`=VALUES(`pref5_preferred`),`pref5_unwanted`=VALUES(`pref5_unwanted`),"
+		"`bounty_points`=VALUES(`bounty_points`)",
+		guid,
+		static_cast<uint16_t>(slot.difficulty), slot.state, slot.rarity,
+		slot.rerollTokens, slot.dailyRerollTimestamp,
+		slot.activeRaceId, slot.currentKills, slot.totalKills, slot.rewardXp, slot.rewardPoints,
+		slot.options[0], slot.options[1], slot.options[2],
+		slot.talismans[0].level, slot.talismans[1].level, slot.talismans[2].level, slot.talismans[3].level,
+		slot.preferredSlots[0].unlocked ? 1 : 0, slot.preferredSlots[0].preferredRaceId, slot.preferredSlots[0].unwantedRaceId,
+		slot.preferredSlots[1].unlocked ? 1 : 0, slot.preferredSlots[1].preferredRaceId, slot.preferredSlots[1].unwantedRaceId,
+		slot.preferredSlots[2].unlocked ? 1 : 0, slot.preferredSlots[2].preferredRaceId, slot.preferredSlots[2].unwantedRaceId,
+		slot.preferredSlots[3].unlocked ? 1 : 0, slot.preferredSlots[3].preferredRaceId, slot.preferredSlots[3].unwantedRaceId,
+		slot.preferredSlots[4].unlocked ? 1 : 0, slot.preferredSlots[4].preferredRaceId, slot.preferredSlots[4].unwantedRaceId,
+		player->getBountyPoints()
+	);
+
+	if (!db.executeQuery(query)) {
+		g_logger().warn("[IOLoginData::savePlayer] - Error saving bounty slot for player: {}", player->getName());
+		return false;
+	}
+	return true;
+}
+
+bool IOLoginDataSave::savePlayerWeeklyClass(const std::shared_ptr<Player> &player) {
+	if (!player) {
+		g_logger().warn("[IOLoginData::savePlayer] - Player nullptr: {}", __FUNCTION__);
+		return false;
+	}
+
+	Database &db = Database::getInstance();
+	const uint32_t guid = player->getGUID();
+	const WeeklySlot &slot = player->getWeeklySlot();
+
+	const std::string headerQuery = fmt::format(
+		"INSERT INTO `player_weekly` "
+		"(`player_id`,`difficulty`,`unlocked_difficulty`,`any_creature_total`,`any_creature_current`,"
+		"`progress_finished`,`weekly_expansion`,`points_earned`,`soulseals_earned`,`reset_timestamp`) "
+		"VALUES ({},{},{},{},{},{},{},{},{},{}) "
+		"ON DUPLICATE KEY UPDATE "
+		"`difficulty`=VALUES(`difficulty`),`unlocked_difficulty`=VALUES(`unlocked_difficulty`),"
+		"`any_creature_total`=VALUES(`any_creature_total`),`any_creature_current`=VALUES(`any_creature_current`),"
+		"`progress_finished`=VALUES(`progress_finished`),`weekly_expansion`=VALUES(`weekly_expansion`),"
+		"`points_earned`=VALUES(`points_earned`),`soulseals_earned`=VALUES(`soulseals_earned`),"
+		"`reset_timestamp`=VALUES(`reset_timestamp`)",
+		guid,
+		static_cast<uint16_t>(slot.difficulty), static_cast<uint16_t>(slot.unlockedDifficulty),
+		slot.anyCreatureTotalKills, slot.anyCreatureCurrentKills,
+		slot.weeklyProgressFinished, slot.weeklyExpansion,
+		slot.pointsEarned, slot.soulsealsEarned, slot.weeklyResetTimestamp
+	);
+
+	if (!db.executeQuery(headerQuery)) {
+		g_logger().warn("[IOLoginData::savePlayer] - Error saving weekly header for player: {}", player->getName());
+		return false;
+	}
+
+	if (!db.executeQuery(fmt::format("DELETE FROM `player_weekly_kills` WHERE `player_id` = {}", guid))) {
+		return false;
+	}
+
+	for (uint8_t i = 0; i < static_cast<uint8_t>(slot.killTasks.size()); i++) {
+		const auto &task = slot.killTasks[i];
+		if (!db.executeQuery(fmt::format(
+			"INSERT INTO `player_weekly_kills` (`player_id`,`task_index`,`race_id`,`total_kills`,`current_kills`) "
+			"VALUES ({},{},{},{},{})",
+			guid, i, task.raceId, task.totalKills, task.currentKills))) {
+			g_logger().warn("[IOLoginData::savePlayer] - Error saving weekly kill task for player: {}", player->getName());
+			return false;
+		}
+	}
+	return true;
+}
+
 bool IOLoginDataSave::savePlayerForgeHistory(const std::shared_ptr<Player> &player) {
 	if (!player) {
 		g_logger().warn("[IOLoginDataSave::savePlayerForgeHistory] - Player nullptr");
