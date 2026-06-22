@@ -881,3 +881,70 @@ INSERT INTO `players`
 (5, 'Knight Sample', 1, 1, 8, 4, 185, 185, 4200, 113, 115, 95, 39, 129, 0, 90, 90, 0, 8, '', 470, 1, 10, 0, 10, 0, 10, 0, 10, 0),
 (6, 'Monk Sample', 1, 1, 8, 9, 185, 185, 4200, 113, 115, 95, 39, 129, 0, 90, 90, 0, 8, '', 470, 1, 10, 0, 10, 0, 10, 0, 10, 0),
 (7, 'GOD', 6, 1, 2, 0, 155, 155, 100, 113, 115, 95, 39, 75, 0, 60, 60, 0, 8, '', 410, 1, 10, 0, 10, 0, 10, 0, 10, 0);
+
+-- Table structure `player_bounty` (Task Board — Daily Bounty tab)
+CREATE TABLE IF NOT EXISTS `player_bounty` (
+  `player_id`              int(11) NOT NULL,
+  `difficulty`             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `state`                  TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `rarity`                 TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `reroll_tokens`          TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  `daily_reroll_ts`        BIGINT NOT NULL DEFAULT 0,
+  `active_race_id`         SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `current_kills`          SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `total_kills`            SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `reward_xp`              INT UNSIGNED NOT NULL DEFAULT 0,
+  `reward_points`          TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `option_1`               SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `option_2`               SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `option_3`               SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `talisman_1`             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `talisman_2`             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `talisman_3`             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `talisman_4`             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref1_unlocked`         TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  `pref1_preferred`        SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref1_unwanted`         SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref2_unlocked`         TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref2_preferred`        SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref2_unwanted`         SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref3_unlocked`         TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref3_preferred`        SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref3_unwanted`         SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref4_unlocked`         TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref4_preferred`        SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref4_unwanted`         SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref5_unlocked`         TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref5_preferred`        SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `pref5_unwanted`         SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `bounty_points`          BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (`player_id`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table structure `player_weekly` (Task Board — Weekly tab header)
+CREATE TABLE IF NOT EXISTS `player_weekly` (
+  `player_id`              int(11) NOT NULL,
+  `difficulty`             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `unlocked_difficulty`    TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `any_creature_total`     SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `any_creature_current`   SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `progress_finished`      TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `weekly_expansion`       TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `points_earned`          INT UNSIGNED NOT NULL DEFAULT 0,
+  `soulseals_earned`       INT UNSIGNED NOT NULL DEFAULT 0,
+  `reset_timestamp`        INT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (`player_id`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table structure `player_weekly_kills` (Task Board — Weekly kill tasks)
+CREATE TABLE IF NOT EXISTS `player_weekly_kills` (
+  `player_id`              int(11) NOT NULL,
+  `task_index`             TINYINT UNSIGNED NOT NULL,
+  `race_id`                SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `total_kills`            SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  `current_kills`          SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (`player_id`, `task_index`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
