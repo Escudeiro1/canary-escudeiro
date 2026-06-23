@@ -1376,6 +1376,7 @@ public:
 	void addWeeklyKill(const std::shared_ptr<MonsterType> &mType);
 	WeeklySlot &getWeeklySlot() { return weeklySlot; }
 	const WeeklySlot &getWeeklySlot() const { return weeklySlot; }
+	uint32_t getItemTypeCountForDelivery(uint16_t itemId) const { return getItemTypeCount(itemId); }
 
 	// Hunting Task Shop
 	void sendShopData();

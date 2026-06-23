@@ -2677,15 +2677,26 @@ void ProtocolGame::sendTaskBoardWeeklyData() {
 		msg.add<uint16_t>(task.currentKills);
 	}
 
-	// Delivery tasks (Phase 3b — send 0 for now)
-	msg.addByte(0);
+	// Delivery tasks
+	const uint8_t deliveryCount = static_cast<uint8_t>(slot.deliveryTasks.size());
+	msg.addByte(deliveryCount);
+	for (uint8_t i = 0; i < deliveryCount; ++i) {
+		const auto &dtask = slot.deliveryTasks[i];
+		msg.addByte(i);                           // slotIndex
+		msg.add<uint16_t>(dtask.itemId);
+		msg.addByte(0);                           // unknown1
+		msg.addByte(0);                           // unknown2
+		msg.add<uint32_t>(dtask.totalAmount);
+		msg.add<uint32_t>(dtask.currentAmount);
+		msg.addByte(dtask.claimed);
+	}
 
 	// Header
 	msg.addByte(static_cast<uint8_t>(slot.difficulty));    // difficultyMultiplier (0-based)
 	msg.add<uint32_t>(g_ioprey().getWeeklyExpReward(slot.difficulty, player->getLevel())); // maxExperience
-	msg.add<uint32_t>(0);                                   // maxDeliveryExperience
+	msg.add<uint32_t>(g_ioprey().getWeeklyDeliveryExpReward(slot.difficulty, player->getLevel())); // maxDeliveryExperience
 	msg.addByte(slot.countCompletedKillTasks());            // completedKillTasks
-	msg.addByte(0);                                         // completedDeliveryTasks
+	msg.addByte(slot.countCompletedDeliveryTasks());        // completedDeliveryTasks
 	msg.addByte(slot.weeklyProgressFinished);               // weeklyProgressFinished
 	msg.addByte(static_cast<uint8_t>(slot.unlockedDifficulty)); // unlockedDifficulty (0-based)
 	msg.add<uint32_t>(slot.weeklyResetTimestamp);           // resetTimestamp (Unix seconds)

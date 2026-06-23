@@ -981,6 +981,19 @@ void IOLoginDataLoad::loadPlayerWeeklyClass(const std::shared_ptr<Player> &playe
 			} while (result->next());
 		}
 
+		query.str("");
+		query << "SELECT * FROM `player_weekly_deliveries` WHERE `player_id` = " << player->getGUID() << " ORDER BY `task_index`";
+		if ((result = db.storeQuery(query.str()))) {
+			do {
+				WeeklyDeliveryTask dtask;
+				dtask.itemId = result->getNumber<uint16_t>("item_id");
+				dtask.totalAmount = result->getNumber<uint32_t>("total_amount");
+				dtask.currentAmount = result->getNumber<uint32_t>("current_amount");
+				dtask.claimed = result->getNumber<uint8_t>("claimed");
+				slot.deliveryTasks.push_back(dtask);
+			} while (result->next());
+		}
+
 		if (slot.needsReset()) {
 			slot.reset();
 		}

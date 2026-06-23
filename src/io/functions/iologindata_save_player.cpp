@@ -888,6 +888,21 @@ bool IOLoginDataSave::savePlayerWeeklyClass(const std::shared_ptr<Player> &playe
 			return false;
 		}
 	}
+
+	if (!db.executeQuery(fmt::format("DELETE FROM `player_weekly_deliveries` WHERE `player_id` = {}", guid))) {
+		return false;
+	}
+
+	for (uint8_t i = 0; i < static_cast<uint8_t>(slot.deliveryTasks.size()); i++) {
+		const auto &dtask = slot.deliveryTasks[i];
+		if (!db.executeQuery(fmt::format(
+			"INSERT INTO `player_weekly_deliveries` (`player_id`,`task_index`,`item_id`,`total_amount`,`current_amount`,`claimed`) "
+			"VALUES ({},{},{},{},{},{})",
+			guid, i, dtask.itemId, dtask.totalAmount, dtask.currentAmount, dtask.claimed))) {
+			g_logger().warn("[IOLoginData::savePlayer] - Error saving weekly delivery task for player: {}", player->getName());
+			return false;
+		}
+	}
 	return true;
 }
 

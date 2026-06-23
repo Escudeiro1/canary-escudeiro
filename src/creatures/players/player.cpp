@@ -6673,18 +6673,20 @@ void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 
 	// Check full completion
 	if (!slot.weeklyProgressFinished && slot.allKillTasksComplete()) {
-		slot.weeklyProgressFinished = 1;
 		const uint32_t expReward = g_ioprey().getWeeklyExpReward(slot.difficulty, getLevel());
 		addBountyExpReward(expReward);
-		const uint32_t htp = g_ioprey().getWeeklyPointsReward(slot.difficulty);
-		slot.pointsEarned = htp;
-		addTaskHuntingPoints(htp);
-		// Unlock next difficulty tier
-		if (static_cast<uint8_t>(slot.difficulty) >= static_cast<uint8_t>(slot.unlockedDifficulty)
-		    && slot.unlockedDifficulty != BountyDifficulty_Master) {
-			slot.unlockedDifficulty = static_cast<BountyDifficulty_t>(static_cast<uint8_t>(slot.unlockedDifficulty) + 1);
+		// Only grant HTP + mark finished when delivery tasks are also done (or absent)
+		if (slot.deliveryTasks.empty() || slot.allDeliveryTasksComplete()) {
+			const uint32_t htp = g_ioprey().getWeeklyPointsReward(slot.difficulty);
+			slot.pointsEarned = htp;
+			addTaskHuntingPoints(htp);
+			slot.weeklyProgressFinished = 1;
+			if (static_cast<uint8_t>(slot.difficulty) >= static_cast<uint8_t>(slot.unlockedDifficulty)
+			    && slot.unlockedDifficulty != BountyDifficulty_Master) {
+				slot.unlockedDifficulty = static_cast<BountyDifficulty_t>(static_cast<uint8_t>(slot.unlockedDifficulty) + 1);
+			}
+			sendTextMessage(MESSAGE_STATUS, "You have completed all your weekly tasks! Rewards have been granted.");
 		}
-		sendTextMessage(MESSAGE_STATUS, "You have completed all your weekly tasks! Rewards have been granted.");
 	}
 
 	sendWeeklyData();

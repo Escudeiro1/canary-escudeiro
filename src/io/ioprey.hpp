@@ -276,12 +276,21 @@ struct BountySlot {
 
 // ── Weekly Task system ────────────────────────────────────────────────────────
 constexpr uint8_t WEEKLY_KILL_TASK_COUNT = 5;
+constexpr uint8_t WEEKLY_DELIVERY_TASK_COUNT = 2;
 
 struct WeeklyKillTask {
 	uint16_t raceId = 0;
 	uint16_t totalKills = 0;
 	uint16_t currentKills = 0;
 	bool isComplete() const { return totalKills > 0 && currentKills >= totalKills; }
+};
+
+struct WeeklyDeliveryTask {
+	uint16_t itemId = 0;
+	uint32_t totalAmount = 0;
+	uint32_t currentAmount = 0;
+	uint8_t claimed = 0;
+	bool isComplete() const { return claimed != 0 || (totalAmount > 0 && currentAmount >= totalAmount); }
 };
 
 struct WeeklySlot {
@@ -292,6 +301,7 @@ struct WeeklySlot {
 	uint16_t anyCreatureCurrentKills = 0;
 
 	std::vector<WeeklyKillTask> killTasks;
+	std::vector<WeeklyDeliveryTask> deliveryTasks;
 
 	uint8_t weeklyProgressFinished = 0;
 	uint8_t weeklyExpansion = 0; // 0 = 6 slots, 1 = 9 slots (purchased from shop)
@@ -315,6 +325,14 @@ struct WeeklySlot {
 		return n;
 	}
 
+	uint8_t countCompletedDeliveryTasks() const {
+		uint8_t n = 0;
+		for (const auto &t : deliveryTasks) {
+			if (t.isComplete()) n++;
+		}
+		return n;
+	}
+
 	bool allKillTasksComplete() const {
 		if (!isGenerated()) return false;
 		if (anyCreatureTotalKills > 0 && anyCreatureCurrentKills < anyCreatureTotalKills) return false;
@@ -324,8 +342,20 @@ struct WeeklySlot {
 		return true;
 	}
 
+	bool allDeliveryTasksComplete() const {
+		for (const auto &t : deliveryTasks) {
+			if (!t.isComplete()) return false;
+		}
+		return true;
+	}
+
+	bool allTasksComplete() const {
+		return allKillTasksComplete() && allDeliveryTasksComplete();
+	}
+
 	void reset() {
 		killTasks.clear();
+		deliveryTasks.clear();
 		anyCreatureTotalKills = 0;
 		anyCreatureCurrentKills = 0;
 		weeklyProgressFinished = 0;
@@ -390,7 +420,9 @@ public:
 	// Weekly Task system
 	void parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t option, uint8_t value) const;
 	void generateWeeklyTasks(WeeklySlot &slot, uint32_t playerLevel) const;
+	void generateWeeklyDeliveryTasks(WeeklySlot &slot) const;
 	uint32_t getWeeklyExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
+	uint32_t getWeeklyDeliveryExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
 	uint32_t getWeeklyPointsReward(BountyDifficulty_t difficulty) const;
 	uint16_t getWeeklyKillTarget(BountyDifficulty_t difficulty) const;
 	uint16_t getWeeklyAnyCreatureTarget(BountyDifficulty_t difficulty) const;
