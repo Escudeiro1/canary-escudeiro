@@ -1850,42 +1850,22 @@ void ProtocolGame::parseAutoWalk(NetworkMessage &msg) {
 		return;
 	}
 
-	std::vector<Direction> path;
-	path.resize(numdirs, DIRECTION_NORTH);
-	for (size_t i = numdirs; --i < numdirs;) {
+	std::vector<Direction> path(numdirs, DIRECTION_NORTH);
+	for (uint8_t i = 0; i < numdirs; ++i) {
 		const uint8_t rawdir = msg.getByte();
+		Direction dir;
 		switch (rawdir) {
-			case 1:
-				path[i] = DIRECTION_EAST;
-				break;
-			case 2:
-				path[i] = DIRECTION_NORTHEAST;
-				break;
-			case 3:
-				path[i] = DIRECTION_NORTH;
-				break;
-			case 4:
-				path[i] = DIRECTION_NORTHWEST;
-				break;
-			case 5:
-				path[i] = DIRECTION_WEST;
-				break;
-			case 6:
-				path[i] = DIRECTION_SOUTHWEST;
-				break;
-			case 7:
-				path[i] = DIRECTION_SOUTH;
-				break;
-			case 8:
-				path[i] = DIRECTION_SOUTHEAST;
-				break;
-			default:
-				break;
+			case 1: dir = DIRECTION_EAST; break;
+			case 2: dir = DIRECTION_NORTHEAST; break;
+			case 3: dir = DIRECTION_NORTH; break;
+			case 4: dir = DIRECTION_NORTHWEST; break;
+			case 5: dir = DIRECTION_WEST; break;
+			case 6: dir = DIRECTION_SOUTHWEST; break;
+			case 7: dir = DIRECTION_SOUTH; break;
+			case 8: dir = DIRECTION_SOUTHEAST; break;
+			default: return;
 		}
-	}
-
-	if (path.empty()) {
-		return;
+		path[static_cast<size_t>(numdirs - i - 1)] = dir;
 	}
 
 	g_game().playerAutoWalk(player->getID(), path);
@@ -5013,7 +4993,7 @@ void ProtocolGame::sendCyclopediaCharacterMiscStats() {
 	msg.addDouble(0.00);
 
 	msg.addDouble(getForgeSkillStat(CONST_SLOT_LEGS));
-	msg.addDouble(getForgeSkillStat(CONST_SLOT_LEGS), false);
+	msg.addDouble(getForgeSkillStat(CONST_SLOT_LEGS, false));
 	msg.addDouble(getForgeSkillStat(CONST_SLOT_LEGS) - getForgeSkillStat(CONST_SLOT_LEGS, false));
 	msg.addDouble(0.09);
 
