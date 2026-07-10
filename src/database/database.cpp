@@ -252,7 +252,12 @@ bool Database::executeQuery(std::string_view query) {
 	measureLock.stop();
 
 	metrics::query_latency measure(query.substr(0, 50));
+	//Benchmark bm; THIS IS PART OF THE DB DEBUG.
 	bool success = retryQuery(query, 10);
+	//double elapsed = bm.duration(); THIS IS PART OF THE DB DEBUG.
+	//if (elapsed >= 5.0) { THIS IS PART OF THE DB DEBUG.
+	//	g_logger().info("[debug-dbcalls] executeQuery took {:.3f}ms: {}", elapsed, query.substr(0, 200)); THIS IS PART OF THE DB DEBUG.
+	//} THIS IS PART OF THE DB DEBUG.
 	mysql_free_result(mysql_store_result(handle));
 
 	return success;
@@ -270,6 +275,7 @@ DBResult_ptr Database::storeQuery(std::string_view query) {
 	measureLock.stop();
 
 	metrics::query_latency measure(query.substr(0, 50));
+	//Benchmark bm; THIS IS PART OF THE DB DEBUG.
 retry:
 	if (mysql_query(handle, query.data()) != 0) {
 		g_logger().error("Query: {}", query);
@@ -279,6 +285,12 @@ retry:
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		goto retry;
+	}
+	{
+		//double elapsed = bm.duration(); THIS IS PART OF THE DB DEBUG.
+		//if (elapsed >= 5.0) { THIS IS PART OF THE DB DEBUG.
+		//	g_logger().info("[debug-dbcalls] storeQuery took {:.3f}ms: {}", elapsed, query.substr(0, 200)); THIS IS PART OF THE DB DEBUG.
+		//} THIS IS PART OF THE DB DEBUG.
 	}
 
 	// Retrieving results of query

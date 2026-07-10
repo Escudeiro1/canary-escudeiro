@@ -1008,7 +1008,12 @@ void Creature::goToFollowCreature() {
 	}
 
 	if (listDir.empty()) {
+		//Benchmark bm; THIS IS PART OF THE PATHFINDING DEBUG.
 		hasFollowPath = getPathTo(followCreature->getPosition(), listDir, fpp);
+		//double elapsed = bm.duration(); THIS IS PART OF THE PATHFINDING DEBUG.
+		//if (elapsed >= 1.0) { THIS IS PART OF THE PATHFINDING DEBUG.
+		//	g_logger().info("[debug-creature] {} chasing {} pathfinding took {:.3f}ms", getName(), followCreature->getName(), elapsed); THIS IS PART OF THE PATHFINDING DEBUG.
+		//} THIS IS PART OF THE PATHFINDING DEBUG.
 	}
 
 	startAutoWalk(listDir);
