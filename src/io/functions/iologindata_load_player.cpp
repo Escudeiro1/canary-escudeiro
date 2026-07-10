@@ -912,6 +912,7 @@ void IOLoginDataLoad::loadPlayerBountyClass(const std::shared_ptr<Player> &playe
 	if ((result = Database::getInstance().storeQuery(query.str()))) {
 		BountySlot &slot = player->getBountySlot();
 		slot.difficulty = static_cast<BountyDifficulty_t>(result->getNumber<uint8_t>("difficulty"));
+		g_logger().info("[loadPlayerBountyClass] player '{}' loaded difficulty={} from DB", player->getName(), static_cast<uint8_t>(slot.difficulty));
 		slot.state = result->getNumber<uint8_t>("state");
 		slot.rarity = result->getNumber<uint8_t>("rarity");
 		slot.rerollTokens = result->getNumber<uint8_t>("reroll_tokens");

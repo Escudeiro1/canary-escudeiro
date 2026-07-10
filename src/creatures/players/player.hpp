@@ -1362,6 +1362,7 @@ public:
 
 	// Bounty Task system
 	void sendBountyData();
+	void sendBountyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted);
 	void addBountyKill(const std::shared_ptr<MonsterType> &mType);
 	void addBountyPoints(uint64_t amount);
 	bool removeBountyPoints(uint64_t amount);

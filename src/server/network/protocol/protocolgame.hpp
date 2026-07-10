@@ -181,6 +181,7 @@ private:
 	void parseTaskHuntingAction(NetworkMessage &msg);
 	void parseTaskBoardAction(NetworkMessage &msg);
 	void sendTaskBoardBountyData();
+	void sendTaskBoardBountyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted);
 	void sendTaskBoardWeeklyData();
 	void sendTaskBoardShopData();
 	void sendHighscoresNoData();

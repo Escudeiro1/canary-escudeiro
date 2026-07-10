@@ -2575,17 +2575,20 @@ void ProtocolGame::sendTaskBoardBountyData() {
 		for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 			if (slot.options[i] != 0) offerCount++;
 		}
+		if (offerCount == 0) {
+			g_logger().warn("[ProtocolGame::sendTaskBoardBountyData] No valid options for player '{}' (all raceIds are 0). Pool may be empty.", player->getName());
+		}
 		msg.addByte(offerCount);
 		for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 			if (slot.options[i] == 0) continue;
 			msg.addByte(i);                              // taskIndex
 			msg.add<uint16_t>(slot.options[i]);          // raceId
 			msg.add<uint16_t>(g_ioprey().getBountyKillTarget(slot.difficulty)); // totalKills (preview)
-			msg.add<uint32_t>(g_ioprey().getBountyExpReward(slot.difficulty, player->getLevel(), 0)); // rewardXp
-			msg.addByte(g_ioprey().getBountyPointReward(slot.difficulty, 0)); // rewardPoints
+			msg.add<uint32_t>(g_ioprey().getBountyExpReward(slot.difficulty, player->getLevel(), slot.optionRarities[i])); // rewardXp (rarity-adjusted preview)
+			msg.addByte(g_ioprey().getBountyPointReward(slot.difficulty, slot.optionRarities[i])); // rewardPoints (rarity-adjusted preview)
 			msg.add<uint16_t>(0);                        // currentKills
 			msg.addByte(0);                              // bountyState: available
-			msg.addByte(0);                              // rarity: normal
+			msg.addByte(slot.optionRarities[i]);         // rarity: pre-rolled per option
 		}
 	} else {
 		// Active or claimable: send 1 entry
@@ -2614,7 +2617,8 @@ void ProtocolGame::sendTaskBoardBountyData() {
 		rerollMode = 1; // timer running
 	}
 	msg.addByte(rerollMode);
-	msg.addByte(static_cast<uint8_t>(slot.difficulty)); // 0-based
+	g_logger().info("[sendTaskBoardBountyData] player '{}' slot.difficulty={} -> sending byte={}", player->getName(), static_cast<uint8_t>(slot.difficulty), static_cast<uint8_t>(slot.difficulty));
+	msg.addByte(static_cast<uint8_t>(slot.difficulty));
 
 	// 4 talismans (no count byte)
 	for (uint8_t i = 0; i < BOUNTY_TALISMAN_COUNT; ++i) {
@@ -2632,6 +2636,19 @@ void ProtocolGame::sendTaskBoardBountyData() {
 		msg.add<uint16_t>(slot.preferredSlots[i].unwantedRaceId);
 	}
 
+	sendResourceBalance(RESOURCE_BOUNTY_POINTS, player->getBountyPoints());
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendTaskBoardBountyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted) {
+	if (!player) return;
+	NetworkMessage msg;
+	msg.addByte(0x5B);
+	msg.addByte(0x03); // subtype: BOUNTY_KILL_UPDATE
+	msg.add<uint16_t>(raceId);
+	msg.add<uint16_t>(currentKills);
+	msg.add<uint16_t>(totalKills);
+	msg.addByte(isCompleted ? 1 : 0);
 	writeToOutputBuffer(msg);
 }
 
@@ -3679,6 +3696,8 @@ void ProtocolGame::parseSendResourceBalance() {
 		player->getMaxCharmPoints(),
 		player->getMaxMinorCharmEchoes()
 	);
+
+	sendResourceBalance(RESOURCE_BOUNTY_POINTS, player->getBountyPoints());
 }
 
 void ProtocolGame::parseInviteToParty(NetworkMessage &msg) {
@@ -5785,7 +5804,12 @@ void ProtocolGame::sendResourceBalance(Resource_t resourceType, uint64_t value) 
 	NetworkMessage msg;
 	msg.addByte(0xEE);
 	msg.addByte(resourceType);
-	msg.add<uint64_t>(value);
+	// 15.13+ protocol: BOUNTY_POINTS and SOULSEALS are uint32 on the client side
+	if (resourceType == RESOURCE_BOUNTY_POINTS || resourceType == RESOURCE_SOULSEALS) {
+		msg.add<uint32_t>(static_cast<uint32_t>(value));
+	} else {
+		msg.add<uint64_t>(value);
+	}
 	writeToOutputBuffer(msg);
 }
 
@@ -10467,7 +10491,9 @@ void ProtocolGame::sendSingleSoundEffect(const Position &pos, SoundEffect_t id, 
 	msg.addByte(static_cast<uint8_t>(source)); // Sound source type
 	msg.add<uint16_t>(static_cast<uint16_t>(id)); // Sound id
 	msg.addByte(0x00); // Breaking the effects loop
+	//Benchmark bm; THIS LINE IS USED TO DEBUG SOUND.
 	writeToOutputBuffer(msg);
+	//g_logger().info("[debug-sound] Player: {} sent single sound id={} pos={} took {:.3f}ms", player ? player->getName() : "?", static_cast<uint16_t>(id), pos.toString(), bm.duration()); THIS LINE IS USED TO DEBUG SOUND.
 }
 
 void ProtocolGame::sendDoubleSoundEffect(
@@ -10497,7 +10523,9 @@ void ProtocolGame::sendDoubleSoundEffect(
 	msg.add<uint16_t>(static_cast<uint16_t>(secondarySoundId)); // Sound id
 
 	msg.addByte(0x00); // Breaking the effects loop
+	//Benchmark bm; THIS LINE IS USED TO DEBUG SOUND.
 	writeToOutputBuffer(msg);
+	//g_logger().info("[debug-sound] Player: {} sent double sound main={} secondary={} pos={} took {:.3f}ms", player ? player->getName() : "?", static_cast<uint16_t>(mainSoundId), static_cast<uint16_t>(secondarySoundId), pos.toString(), bm.duration()); THIS LINE IS USED TO DEBUG SOUND.
 }
 
 void ProtocolGame::sendAmbientSoundEffect(const SoundAmbientEffect_t id) {
@@ -10505,12 +10533,13 @@ void ProtocolGame::sendAmbientSoundEffect(const SoundAmbientEffect_t id) {
 		return;
 	}
 
-	g_logger().debug("[sound-ambient] sendAmbientSoundEffect: id={} player={}", static_cast<uint16_t>(id), player ? player->getName() : "unknown");
 	NetworkMessage msg;
 	msg.addByte(0x85);
 	msg.addByte(0x00);
 	msg.add<uint16_t>(id);
+	//Benchmark bm; THIS LINE IS USED TO DEBUG SOUND.
 	writeToOutputBuffer(msg);
+	//g_logger().info("[debug-sound] Player: {} sent ambient id={} took {:.3f}ms", player ? player->getName() : "?", static_cast<uint16_t>(id), bm.duration()); THIS LINE IS USED TO DEBUG SOUND.
 }
 
 void ProtocolGame::sendMusicSoundEffect(const SoundMusicEffect_t id) {
@@ -10522,7 +10551,9 @@ void ProtocolGame::sendMusicSoundEffect(const SoundMusicEffect_t id) {
 	msg.addByte(0x85);
 	msg.addByte(0x01);
 	msg.add<uint16_t>(id);
+	//Benchmark bm; THIS LINE IS USED TO DEBUG SOUND.
 	writeToOutputBuffer(msg);
+	//g_logger().info("[debug-sound] Player: {} sent music id={} took {:.3f}ms", player ? player->getName() : "?", static_cast<uint16_t>(id), bm.duration()); THIS LINE IS USED TO DEBUG SOUND.
 }
 
 void ProtocolGame::parseOpenWheel(NetworkMessage &msg) {

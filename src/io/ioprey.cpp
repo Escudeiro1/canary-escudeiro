@@ -889,6 +889,7 @@ void IOPrey::initBountyPools() {
 		nameToRaceId[name] = raceId;
 	}
 
+	static constexpr std::array<std::string_view, 4> tierNames = {"Beginner", "Adept", "Expert", "Master"};
 	for (uint8_t tier = 0; tier < 4; ++tier) {
 		m_bountyPools[tier].clear();
 		for (const auto &sv : *nameLists[tier]) {
@@ -898,7 +899,9 @@ void IOPrey::initBountyPools() {
 			}
 		}
 		if (m_bountyPools[tier].empty()) {
-			g_logger().warn("[IOPrey::initBountyPools] Bounty pool for tier {} is empty.", tier);
+			g_logger().warn("[IOPrey::initBountyPools] Bounty pool for tier {} ({}) is empty.", tier, tierNames[tier]);
+		} else {
+			g_logger().info("[IOPrey::initBountyPools] {} pool: {}/{} creatures matched.", tierNames[tier], m_bountyPools[tier].size(), nameLists[tier]->size());
 		}
 	}
 }
@@ -984,7 +987,13 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		{
 			if (!slot.hasOptions() && slot.state == 0) {
 				slot.options = generateBountyOptions(slot.difficulty, {});
+				// Pre-roll rarity for each option so the UI can show silver/gold banners before selection
+				for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
+					int32_t r = uniform_random(0, 99);
+					slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
+				}
 			}
+			g_logger().info("[parseBountyAction] OPEN: player '{}' slot.difficulty={}", player->getName(), static_cast<uint8_t>(slot.difficulty));
 			player->sendBountyData();
 			break;
 		}
@@ -992,15 +1001,23 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		{
 			if (value > 3) break;
 			slot.difficulty = static_cast<BountyDifficulty_t>(value);
-			if (slot.state == 0) {
-				slot.options = generateBountyOptions(slot.difficulty, {});
-			}
-			player->sendBountyData();
+			g_logger().info("[parseBountyAction] CHANGE_DIFFICULTY: player '{}' received value={} -> slot.difficulty={}", player->getName(), value, static_cast<uint8_t>(slot.difficulty));
+			// Preference stored silently — display only updates on REROLL
 			break;
 		}
 		case 3: // REROLL
 		{
-			if (slot.state != 0) break; // can't reroll while task is active
+			// If task is active/claimable, cancel it first (client already confirmed with the player)
+			if (slot.state == 1 || slot.state == 2) {
+				slot.state = 0;
+				slot.activeRaceId = 0;
+				slot.currentKills = 0;
+				slot.totalKills = 0;
+				slot.rewardXp = 0;
+				slot.rewardPoints = 0;
+				slot.rarity = 0;
+			}
+			g_logger().info("[parseBountyAction] REROLL: player '{}' using slot.difficulty={}", player->getName(), static_cast<uint8_t>(slot.difficulty));
 			if (slot.rerollTokens > 0) {
 				--slot.rerollTokens;
 			} else {
@@ -1012,6 +1029,12 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 				}
 			}
 			slot.options = generateBountyOptions(slot.difficulty, {});
+			// Pre-roll rarity per option so the selection screen shows the correct silver/gold banner
+			for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
+				int32_t r = uniform_random(0, 99);
+				slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
+			}
+			g_logger().debug("[IOPrey::parseBountyAction] Reroll: player '{}' new options [{}, {}, {}] tokens_left={}", player->getName(), slot.options[0], slot.options[1], slot.options[2], slot.rerollTokens);
 			player->sendBountyData();
 			break;
 		}
@@ -1034,9 +1057,8 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			uint16_t raceId = slot.options[value];
 			if (raceId == 0) break;
 
-			// Roll rarity
-			int32_t roll = uniform_random(0, 99);
-			slot.rarity = (roll < 5) ? 2 : (roll < 30) ? 1 : 0; // 5% gold, 25% silver, 70% normal
+			// Use the rarity pre-rolled at option-generation time (already shown on the selection screen)
+			slot.rarity = slot.optionRarities[value];
 
 			slot.activeRaceId = raceId;
 			slot.totalKills = getBountyKillTarget(slot.difficulty);
@@ -1049,14 +1071,23 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		}
 		case 6: // CLAIM_REWARD
 		{
-			if (slot.state != 2) break; // must be claimable
+			g_logger().debug("[IOPrey::parseBountyAction] ClaimReward: player '{}' slot.state={}", player->getName(), slot.state);
+			if (slot.state != 2) {
+				player->sendBountyData();
+				break;
+			}
+
+			const uint32_t xp = slot.rewardXp;
+			const uint8_t pts = slot.rewardPoints;
 
 			// Grant rewards
-			player->addBountyExpReward(slot.rewardXp);
-			player->addBountyPoints(slot.rewardPoints);
+			player->addBountyExpReward(xp);
+			player->addBountyPoints(pts);
 			if (slot.rerollTokens < BOUNTY_MAX_REROLL_TOKENS) {
 				++slot.rerollTokens; // 1 reroll token per completed task
 			}
+
+			g_logger().info("[IOPrey::parseBountyAction] ClaimReward: player '{}' granted {} XP and {} Bounty Points.", player->getName(), xp, pts);
 
 			// Reset slot, generate new options
 			slot.activeRaceId = 0;
@@ -1310,12 +1341,20 @@ void IOPrey::parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t op
 				player->sendWeeklyData();
 				break;
 			}
-			if (value > 3) break;
+			if (value > 3) {
+				player->sendWeeklyData();
+				break;
+			}
 			const auto newDiff = static_cast<BountyDifficulty_t>(value);
-			// Can't select above unlocked difficulty
-			if (static_cast<uint8_t>(newDiff) > static_cast<uint8_t>(slot.unlockedDifficulty)) break;
+			if (static_cast<uint8_t>(newDiff) > static_cast<uint8_t>(slot.unlockedDifficulty)) {
+				// Difficulty not unlocked — send current state so modal reappears
+				player->sendWeeklyData();
+				break;
+			}
 			slot.difficulty = newDiff;
 			generateWeeklyTasks(slot, player->getLevel());
+			const uint8_t taskCount = static_cast<uint8_t>(slot.killTasks.size());
+			g_logger().debug("[IOPrey::parseWeeklyAction] Generated {} kill tasks and {} delivery tasks for player '{}' (difficulty {})", taskCount, slot.deliveryTasks.size(), player->getName(), static_cast<uint8_t>(newDiff));
 			player->sendWeeklyData();
 			break;
 		}

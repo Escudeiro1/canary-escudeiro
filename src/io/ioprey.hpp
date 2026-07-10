@@ -260,11 +260,13 @@ struct BountySlot {
 	uint8_t rewardPoints = 0;
 
 	std::array<uint16_t, BOUNTY_OPTION_COUNT> options = {};
+	std::array<uint8_t, BOUNTY_OPTION_COUNT> optionRarities = {}; // pre-rolled per option; 0=normal,1=silver,2=gold
 	std::array<BountyTalisman, BOUNTY_TALISMAN_COUNT> talismans;
 	std::array<BountyPreferredSlot, BOUNTY_PREFERRED_SLOT_COUNT> preferredSlots;
 
 	BountySlot() {
 		options.fill(0);
+		optionRarities.fill(0);
 		preferredSlots[0].unlocked = true;
 	}
 
@@ -295,7 +297,7 @@ struct WeeklyDeliveryTask {
 
 struct WeeklySlot {
 	BountyDifficulty_t difficulty = BountyDifficulty_Beginner;
-	BountyDifficulty_t unlockedDifficulty = BountyDifficulty_Beginner;
+	BountyDifficulty_t unlockedDifficulty = BountyDifficulty_Master; // unlock all difficulties by default
 
 	uint16_t anyCreatureTotalKills = 0;
 	uint16_t anyCreatureCurrentKills = 0;

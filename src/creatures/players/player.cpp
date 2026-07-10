@@ -6604,7 +6604,13 @@ void Player::addBountyKill(const std::shared_ptr<MonsterType> &mType) {
 		bountySlot.state = 2; // claimable
 		sendTextMessage(MESSAGE_STATUS, "You have completed your bounty task! Claim your reward in the Task Board.");
 	}
-	sendBountyData();
+	sendBountyKillUpdate(bountySlot.activeRaceId, bountySlot.currentKills, bountySlot.totalKills, bountySlot.state == 2);
+}
+
+void Player::sendBountyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted) {
+	if (client) {
+		client->sendTaskBoardBountyKillUpdate(raceId, currentKills, totalKills, isCompleted);
+	}
 }
 
 void Player::addBountyPoints(uint64_t amount) {
