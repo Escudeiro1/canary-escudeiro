@@ -97,6 +97,7 @@ local itemsTable = {
 		{ itemName = "bashmu feather", clientId = 36820, sell = 350 },
 		{ itemName = "bashmu tongue", clientId = 36820, sell = 400 },
 		{ itemName = "blue goanna scale", clientId = 31559, sell = 230 },
+		{ itemName = "bounty talisman", clientId = 51748, buy = 5000 },
 		{ itemName = "crystal ball", clientId = 3076, buy = 650 },
 		{ itemName = "fafnar symbol", clientId = 31443, sell = 950 },
 		{ itemName = "goanna claw", clientId = 31561, sell = 950 },

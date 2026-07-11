@@ -44,6 +44,7 @@ npcConfig.shop = {
 	{ itemName = "blue crystal shard", clientId = 16119, sell = 1500 },
 	{ itemName = "blue crystal splinter", clientId = 16124, sell = 400 },
 	{ itemName = "blue gem", clientId = 3041, sell = 5000 },
+	{ itemName = "bounty talisman", clientId = 51748, buy = 5000 },
 	{ itemName = "broken longbow", clientId = 34161, sell = 130 },
 	{ itemName = "broken ring of ending", clientId = 12737, sell = 4000 },
 	{ itemName = "broken visor", clientId = 20184, sell = 1900 },
