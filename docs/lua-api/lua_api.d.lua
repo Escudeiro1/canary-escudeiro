@@ -3257,6 +3257,13 @@ function Player:getBosstiaryKills(name) end
 ---@return number|nil
 function Player:getBosstiaryLevel(name) end
 
+---@return number
+function Player:getBountyActiveRaceId() end
+
+---@param index number
+---@return number
+function Player:getBountyTalismanBonus(index) end
+
 ---@return number|nil
 function Player:getCapacity() end
 

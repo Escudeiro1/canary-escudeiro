@@ -6127,6 +6127,20 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "getBountyActiveRaceId",
+        "params": [],
+        "return": "number",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
+        "name": "getBountyTalismanBonus",
+        "params": [
+          "index: number"
+        ],
+        "return": "number",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "getCapacity",
         "params": [],
         "return": "number|nil",

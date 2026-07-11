@@ -788,6 +788,8 @@ bool IOLoginDataSave::savePlayerBountyClass(const std::shared_ptr<Player> &playe
 		"(`player_id`,`difficulty`,`state`,`rarity`,`reroll_tokens`,`daily_reroll_ts`,"
 		"`active_race_id`,`current_kills`,`total_kills`,`reward_xp`,`reward_points`,"
 		"`option_1`,`option_2`,`option_3`,"
+		"`option_kill_1`,`option_kill_2`,`option_kill_3`,"
+		"`option_rarity_1`,`option_rarity_2`,`option_rarity_3`,"
 		"`talisman_1`,`talisman_2`,`talisman_3`,`talisman_4`,"
 		"`pref1_unlocked`,`pref1_preferred`,`pref1_unwanted`,"
 		"`pref2_unlocked`,`pref2_preferred`,`pref2_unwanted`,"
@@ -797,6 +799,8 @@ bool IOLoginDataSave::savePlayerBountyClass(const std::shared_ptr<Player> &playe
 		"`bounty_points`) "
 		"VALUES ({},{},{},{},{},{},"
 		"{},{},{},{},{},"
+		"{},{},{},"
+		"{},{},{},"
 		"{},{},{},"
 		"{},{},{},{},"
 		"{},{},{},"
@@ -812,6 +816,8 @@ bool IOLoginDataSave::savePlayerBountyClass(const std::shared_ptr<Player> &playe
 		"`total_kills`=VALUES(`total_kills`),`reward_xp`=VALUES(`reward_xp`),"
 		"`reward_points`=VALUES(`reward_points`),"
 		"`option_1`=VALUES(`option_1`),`option_2`=VALUES(`option_2`),`option_3`=VALUES(`option_3`),"
+		"`option_kill_1`=VALUES(`option_kill_1`),`option_kill_2`=VALUES(`option_kill_2`),`option_kill_3`=VALUES(`option_kill_3`),"
+		"`option_rarity_1`=VALUES(`option_rarity_1`),`option_rarity_2`=VALUES(`option_rarity_2`),`option_rarity_3`=VALUES(`option_rarity_3`),"
 		"`talisman_1`=VALUES(`talisman_1`),`talisman_2`=VALUES(`talisman_2`),"
 		"`talisman_3`=VALUES(`talisman_3`),`talisman_4`=VALUES(`talisman_4`),"
 		"`pref1_unlocked`=VALUES(`pref1_unlocked`),`pref1_preferred`=VALUES(`pref1_preferred`),`pref1_unwanted`=VALUES(`pref1_unwanted`),"
@@ -825,6 +831,8 @@ bool IOLoginDataSave::savePlayerBountyClass(const std::shared_ptr<Player> &playe
 		slot.rerollTokens, slot.dailyRerollTimestamp,
 		slot.activeRaceId, slot.currentKills, slot.totalKills, slot.rewardXp, slot.rewardPoints,
 		slot.options[0], slot.options[1], slot.options[2],
+		slot.optionKillTargets[0], slot.optionKillTargets[1], slot.optionKillTargets[2],
+		slot.optionRarities[0], slot.optionRarities[1], slot.optionRarities[2],
 		slot.talismans[0].level, slot.talismans[1].level, slot.talismans[2].level, slot.talismans[3].level,
 		slot.preferredSlots[0].unlocked ? 1 : 0, slot.preferredSlots[0].preferredRaceId, slot.preferredSlots[0].unwantedRaceId,
 		slot.preferredSlots[1].unlocked ? 1 : 0, slot.preferredSlots[1].preferredRaceId, slot.preferredSlots[1].unwantedRaceId,

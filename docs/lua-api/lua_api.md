@@ -4090,6 +4090,16 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 - Returns: `number|nil`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
+#### `Player:getBountyActiveRaceId()`
+
+- Returns: `number`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
+#### `Player:getBountyTalismanBonus(index: number)`
+
+- Returns: `number`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
 #### `Player:getCapacity()`
 
 - Returns: `number|nil`

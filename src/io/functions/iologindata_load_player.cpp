@@ -925,6 +925,12 @@ void IOLoginDataLoad::loadPlayerBountyClass(const std::shared_ptr<Player> &playe
 		slot.options[0] = result->getNumber<uint16_t>("option_1");
 		slot.options[1] = result->getNumber<uint16_t>("option_2");
 		slot.options[2] = result->getNumber<uint16_t>("option_3");
+		slot.optionKillTargets[0] = result->getNumber<uint16_t>("option_kill_1");
+		slot.optionKillTargets[1] = result->getNumber<uint16_t>("option_kill_2");
+		slot.optionKillTargets[2] = result->getNumber<uint16_t>("option_kill_3");
+		slot.optionRarities[0] = result->getNumber<uint8_t>("option_rarity_1");
+		slot.optionRarities[1] = result->getNumber<uint8_t>("option_rarity_2");
+		slot.optionRarities[2] = result->getNumber<uint8_t>("option_rarity_3");
 		slot.talismans[0].level = result->getNumber<uint16_t>("talisman_1");
 		slot.talismans[1].level = result->getNumber<uint16_t>("talisman_2");
 		slot.talismans[2].level = result->getNumber<uint16_t>("talisman_3");

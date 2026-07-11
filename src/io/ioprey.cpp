@@ -1002,7 +1002,6 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 					slot.optionKillTargets[i] = getBountyKillTarget(slot.difficulty);
 				}
 			}
-			g_logger().info("[parseBountyAction] OPEN: player '{}' slot.difficulty={}", player->getName(), static_cast<uint8_t>(slot.difficulty));
 			player->sendBountyData();
 			break;
 		}
@@ -1010,14 +1009,13 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		{
 			if (value > 3) break;
 			slot.difficulty = static_cast<BountyDifficulty_t>(value);
-			g_logger().info("[parseBountyAction] CHANGE_DIFFICULTY: player '{}' received value={} -> slot.difficulty={}", player->getName(), value, static_cast<uint8_t>(slot.difficulty));
 			// Preference stored silently — display only updates on REROLL
 			break;
 		}
 		case 3: // REROLL
 		{
 			// If task is active/claimable, cancel it first (client already confirmed with the player)
-			if (slot.state == 1 || slot.state == 2) {
+			if (slot.state == 1 || slot.state == 2 || slot.state == 3) {
 				slot.state = 0;
 				slot.activeRaceId = 0;
 				slot.currentKills = 0;
@@ -1026,7 +1024,6 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 				slot.rewardPoints = 0;
 				slot.rarity = 0;
 			}
-			g_logger().info("[parseBountyAction] REROLL: player '{}' using slot.difficulty={}", player->getName(), static_cast<uint8_t>(slot.difficulty));
 			if (slot.rerollTokens > 0) {
 				--slot.rerollTokens;
 			} else {
@@ -1092,21 +1089,11 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			// Grant rewards
 			player->addBountyExpReward(xp);
 			player->addBountyPoints(pts);
-			if (slot.rerollTokens < BOUNTY_MAX_REROLL_TOKENS) {
-				++slot.rerollTokens; // 1 reroll token per completed task
-			}
 
-			g_logger().info("[IOPrey::parseBountyAction] ClaimReward: player '{}' granted {} XP and {} Bounty Points.", player->getName(), xp, pts);
-
-			// Reset slot, generate new options
-			slot.activeRaceId = 0;
-			slot.currentKills = 0;
-			slot.totalKills = 0;
+			slot.currentKills = slot.totalKills;
 			slot.rewardXp = 0;
 			slot.rewardPoints = 0;
-			slot.rarity = 0;
-			slot.state = 0;
-			slot.options = generateBountyOptions(slot.difficulty, {});
+			slot.state = 3;
 			player->sendBountyData();
 			break;
 		}
@@ -1118,7 +1105,6 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			const uint64_t cost = getTalismanUpgradeCost(tal.level);
 			if (!player->removeBountyPoints(cost)) break;
 			++tal.level;
-			g_logger().info("[parseBountyAction] TalismanUpgrade: player '{}' path={} level={} cost={} bp_left={}", player->getName(), pathIndex, tal.level, cost, player->getBountyPoints());
 			player->sendBountyData();
 			break;
 		}

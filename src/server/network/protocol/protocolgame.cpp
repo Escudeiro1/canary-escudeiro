@@ -2617,7 +2617,6 @@ void ProtocolGame::sendTaskBoardBountyData() {
 		rerollMode = 1; // timer running
 	}
 	msg.addByte(rerollMode);
-	g_logger().info("[sendTaskBoardBountyData] player '{}' slot.difficulty={} -> sending byte={}", player->getName(), static_cast<uint8_t>(slot.difficulty), static_cast<uint8_t>(slot.difficulty));
 	msg.addByte(static_cast<uint8_t>(slot.difficulty));
 
 	// 4 talismans (no count byte); level is U16 (max 355 overflows U8)
