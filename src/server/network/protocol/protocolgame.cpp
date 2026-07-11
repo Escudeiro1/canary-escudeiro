@@ -2583,7 +2583,7 @@ void ProtocolGame::sendTaskBoardBountyData() {
 			if (slot.options[i] == 0) continue;
 			msg.addByte(i);                              // taskIndex
 			msg.add<uint16_t>(slot.options[i]);          // raceId
-			msg.add<uint16_t>(g_ioprey().getBountyKillTarget(slot.difficulty)); // totalKills (preview)
+			msg.add<uint16_t>(slot.optionKillTargets[i]); // totalKills (pre-rolled, stable)
 			msg.add<uint32_t>(g_ioprey().getBountyExpReward(slot.difficulty, player->getLevel(), slot.optionRarities[i])); // rewardXp (rarity-adjusted preview)
 			msg.addByte(g_ioprey().getBountyPointReward(slot.difficulty, slot.optionRarities[i])); // rewardPoints (rarity-adjusted preview)
 			msg.add<uint16_t>(0);                        // currentKills
@@ -2620,12 +2620,11 @@ void ProtocolGame::sendTaskBoardBountyData() {
 	g_logger().info("[sendTaskBoardBountyData] player '{}' slot.difficulty={} -> sending byte={}", player->getName(), static_cast<uint8_t>(slot.difficulty), static_cast<uint8_t>(slot.difficulty));
 	msg.addByte(static_cast<uint8_t>(slot.difficulty));
 
-	// 4 talismans (no count byte)
+	// 4 talismans (no count byte); level is U16 (max 355 overflows U8)
 	for (uint8_t i = 0; i < BOUNTY_TALISMAN_COUNT; ++i) {
-		msg.addByte(slot.talismans[i].level);             // currentLevel
-		msg.addByte(0);                                    // multiplier2 (unused)
-		msg.addByte(0);                                    // isActiveUpgrade
-		msg.add<uint16_t>(g_ioprey().getTalismanUpgradeCost(slot.talismans[i].level)); // upgradeCost
+		msg.add<uint16_t>(slot.talismans[i].level);
+		msg.addByte(0); // isActiveUpgrade (reserved)
+		msg.add<uint16_t>(g_ioprey().getTalismanUpgradeCost(slot.talismans[i].level));
 	}
 
 	// Preferred slots

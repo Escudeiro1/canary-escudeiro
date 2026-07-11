@@ -925,10 +925,10 @@ void IOLoginDataLoad::loadPlayerBountyClass(const std::shared_ptr<Player> &playe
 		slot.options[0] = result->getNumber<uint16_t>("option_1");
 		slot.options[1] = result->getNumber<uint16_t>("option_2");
 		slot.options[2] = result->getNumber<uint16_t>("option_3");
-		slot.talismans[0].level = result->getNumber<uint8_t>("talisman_1");
-		slot.talismans[1].level = result->getNumber<uint8_t>("talisman_2");
-		slot.talismans[2].level = result->getNumber<uint8_t>("talisman_3");
-		slot.talismans[3].level = result->getNumber<uint8_t>("talisman_4");
+		slot.talismans[0].level = result->getNumber<uint16_t>("talisman_1");
+		slot.talismans[1].level = result->getNumber<uint16_t>("talisman_2");
+		slot.talismans[2].level = result->getNumber<uint16_t>("talisman_3");
+		slot.talismans[3].level = result->getNumber<uint16_t>("talisman_4");
 		slot.preferredSlots[0].unlocked = result->getNumber<uint8_t>("pref1_unlocked") != 0;
 		slot.preferredSlots[0].preferredRaceId = result->getNumber<uint16_t>("pref1_preferred");
 		slot.preferredSlots[0].unwantedRaceId = result->getNumber<uint16_t>("pref1_unwanted");

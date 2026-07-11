@@ -973,8 +973,17 @@ uint8_t IOPrey::getBountyPointReward(BountyDifficulty_t difficulty, uint8_t rari
 	return pts;
 }
 
-uint16_t IOPrey::getTalismanUpgradeCost(uint8_t currentLevel) const {
-	return static_cast<uint16_t>(5 + currentLevel * 12);
+uint16_t IOPrey::getTalismanUpgradeCost(uint16_t currentLevel) const {
+	return static_cast<uint16_t>(5 + currentLevel);
+}
+
+uint16_t IOPrey::getTalismanBonusHundredths(uint16_t level) const {
+	if (level == 0) return 250;                         // 2.5% base
+	if (level <= 15) return 250 + level * 50;           // 3.0%–10.0% in 0.5% steps
+	if (level <= 55) return 1000 + (level - 15) * 25;  // 10.25%–20.0% in 0.25% steps
+	if (level <= BOUNTY_TALISMAN_MAX_LEVEL)
+		return 2000 + (level - 55) * 10;               // 20.1%–50.0% in 0.1% steps
+	return 5000;                                        // hard cap 50%
 }
 
 void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value) const {
@@ -987,10 +996,10 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		{
 			if (!slot.hasOptions() && slot.state == 0) {
 				slot.options = generateBountyOptions(slot.difficulty, {});
-				// Pre-roll rarity for each option so the UI can show silver/gold banners before selection
 				for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 					int32_t r = uniform_random(0, 99);
 					slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
+					slot.optionKillTargets[i] = getBountyKillTarget(slot.difficulty);
 				}
 			}
 			g_logger().info("[parseBountyAction] OPEN: player '{}' slot.difficulty={}", player->getName(), static_cast<uint8_t>(slot.difficulty));
@@ -1029,10 +1038,10 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 				}
 			}
 			slot.options = generateBountyOptions(slot.difficulty, {});
-			// Pre-roll rarity per option so the selection screen shows the correct silver/gold banner
 			for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 				int32_t r = uniform_random(0, 99);
 				slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
+				slot.optionKillTargets[i] = getBountyKillTarget(slot.difficulty);
 			}
 			g_logger().debug("[IOPrey::parseBountyAction] Reroll: player '{}' new options [{}, {}, {}] tokens_left={}", player->getName(), slot.options[0], slot.options[1], slot.options[2], slot.rerollTokens);
 			player->sendBountyData();
@@ -1101,7 +1110,18 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			player->sendBountyData();
 			break;
 		}
-		case 7: // TALISMAN_UPGRADE — stub (Phase 2c)
+		case 7: { // TALISMAN_UPGRADE
+			const auto pathIndex = static_cast<uint8_t>(value);
+			if (pathIndex >= BOUNTY_TALISMAN_COUNT) break;
+			auto &tal = slot.talismans[pathIndex];
+			if (tal.level >= BOUNTY_TALISMAN_MAX_LEVEL) break;
+			const uint64_t cost = getTalismanUpgradeCost(tal.level);
+			if (!player->removeBountyPoints(cost)) break;
+			++tal.level;
+			g_logger().info("[parseBountyAction] TalismanUpgrade: player '{}' path={} level={} cost={} bp_left={}", player->getName(), pathIndex, tal.level, cost, player->getBountyPoints());
+			player->sendBountyData();
+			break;
+		}
 		case 12: // PREFERRED_UNLOCK
 		case 13: // PREFERRED_CLEAR
 		case 14: // UNWANTED_CLEAR

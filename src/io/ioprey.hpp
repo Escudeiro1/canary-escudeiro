@@ -236,8 +236,10 @@ enum BountyRerollMode_t : uint8_t {
 	BountyRerollMode_LimitReached = 2
 };
 
+constexpr uint16_t BOUNTY_TALISMAN_MAX_LEVEL = 355;
+
 struct BountyTalisman {
-	uint8_t level = 0;
+	uint16_t level = 0;
 };
 
 struct BountyPreferredSlot {
@@ -260,13 +262,15 @@ struct BountySlot {
 	uint8_t rewardPoints = 0;
 
 	std::array<uint16_t, BOUNTY_OPTION_COUNT> options = {};
-	std::array<uint8_t, BOUNTY_OPTION_COUNT> optionRarities = {}; // pre-rolled per option; 0=normal,1=silver,2=gold
+	std::array<uint8_t, BOUNTY_OPTION_COUNT> optionRarities = {};     // pre-rolled per option; 0=normal,1=silver,2=gold
+	std::array<uint16_t, BOUNTY_OPTION_COUNT> optionKillTargets = {}; // pre-rolled kill count per option
 	std::array<BountyTalisman, BOUNTY_TALISMAN_COUNT> talismans;
 	std::array<BountyPreferredSlot, BOUNTY_PREFERRED_SLOT_COUNT> preferredSlots;
 
 	BountySlot() {
 		options.fill(0);
 		optionRarities.fill(0);
+		optionKillTargets.fill(0);
 		preferredSlots[0].unlocked = true;
 	}
 
@@ -416,7 +420,8 @@ public:
 	uint16_t getBountyKillTarget(BountyDifficulty_t difficulty) const;
 	uint32_t getBountyExpReward(BountyDifficulty_t difficulty, uint32_t level, uint8_t rarity) const;
 	uint8_t getBountyPointReward(BountyDifficulty_t difficulty, uint8_t rarity) const;
-	uint16_t getTalismanUpgradeCost(uint8_t currentLevel) const;
+	uint16_t getTalismanUpgradeCost(uint16_t currentLevel) const;
+	uint16_t getTalismanBonusHundredths(uint16_t level) const;
 	const std::vector<uint16_t> &getBountyPool(BountyDifficulty_t difficulty) const;
 
 	// Weekly Task system
