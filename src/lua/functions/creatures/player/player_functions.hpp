@@ -58,6 +58,9 @@ class PlayerFunctions {
 	static int luaPlayerGetTaskHuntingPoints(lua_State* L);
 	static int luaPlayerAddTaskHuntingPoints(lua_State* L);
 
+	static int luaPlayerGetBountyActiveRaceId(lua_State* L);
+	static int luaPlayerGetBountyTalismanBonus(lua_State* L);
+
 	static int luaPlayerGetCapacity(lua_State* L);
 	static int luaPlayerSetCapacity(lua_State* L);
 

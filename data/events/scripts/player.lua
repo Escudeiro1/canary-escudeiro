@@ -573,6 +573,7 @@ function Player:onGainExperience(target, exp, rawExp)
 		end
 	end
 
+
 	-- VIP Bonus Experience
 	if configManager.getBoolean(configKeys.VIP_SYSTEM_ENABLED) then
 		local vipBonusExp = configManager.getNumber(configKeys.VIP_BONUS_EXP)

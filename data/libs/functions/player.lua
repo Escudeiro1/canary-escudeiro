@@ -513,6 +513,18 @@ function Player:calculateLootFactor(monster)
 		suffix = string.format("vip bonus %d%%", math.floor(vipBoost * 100 + 0.5))
 	end
 
+	-- Bounty Talisman loot bonus (applies to the self player, not shared)
+	local talismanLootBonus = self:getStorageValue(290003)
+	if talismanLootBonus > 0 then
+		local activeRaceId = self:getBountyActiveRaceId()
+		if activeRaceId > 0 then
+			local mType = monster and monster:getType() or nil
+			if mType and mType:raceId() == activeRaceId then
+				factor = factor * (1 + talismanLootBonus / 10000)
+			end
+		end
+	end
+
 	return {
 		factor = factor,
 		msgSuffix = suffix,

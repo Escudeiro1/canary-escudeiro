@@ -6600,6 +6600,19 @@ void Player::addBountyKill(const std::shared_ptr<MonsterType> &mType) {
 	if (mType->info.raceid != bountySlot.activeRaceId) return;
 
 	bountySlot.currentKills += 1;
+
+	// Double kill chance (talisman[3], storage 290004)
+	constexpr int32_t BTALISMAN_DOUBLE_KEY = 290004;
+	const int32_t doubleChance = getStorageValue(BTALISMAN_DOUBLE_KEY);
+	if (doubleChance > 0) {
+		const int32_t roll = uniform_random(0, 9999);
+		if (roll < doubleChance) {
+			bountySlot.currentKills += 1;
+			g_logger().info("[debug-task] {} double-kill proc! kills now {}/{}",
+				getName(), bountySlot.currentKills, bountySlot.totalKills);
+		}
+	}
+
 	if (bountySlot.currentKills >= bountySlot.totalKills) {
 		bountySlot.state = 2; // claimable
 		sendTextMessage(MESSAGE_STATUS, "You have completed your bounty task! Claim your reward in the Task Board.");

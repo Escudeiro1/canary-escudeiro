@@ -85283,8 +85283,5 @@ Granted by TibiaGoals.com"/>
 		<attribute key="primarytype" value="amulets and necklaces"/>
 		<attribute key="description" value="A talisman imbued with the power of the Bounty Hunt."/>
 		<attribute key="weight" value="150"/>
-		<attribute key="script" value="moveevent">
-			<attribute key="slot" value="necklace"/>
-		</attribute>
 	</item>
 </items>

@@ -153,6 +153,9 @@ void PlayerFunctions::init(lua_State* L) {
 	Lua::registerMethod(L, "Player", "getTaskHuntingPoints", PlayerFunctions::luaPlayerGetTaskHuntingPoints);
 	Lua::registerMethod(L, "Player", "addTaskHuntingPoints", PlayerFunctions::luaPlayerAddTaskHuntingPoints);
 
+	Lua::registerMethod(L, "Player", "getBountyActiveRaceId", PlayerFunctions::luaPlayerGetBountyActiveRaceId);
+	Lua::registerMethod(L, "Player", "getBountyTalismanBonus", PlayerFunctions::luaPlayerGetBountyTalismanBonus);
+
 	Lua::registerMethod(L, "Player", "getCapacity", PlayerFunctions::luaPlayerGetCapacity);
 	Lua::registerMethod(L, "Player", "setCapacity", PlayerFunctions::luaPlayerSetCapacity);
 
@@ -1025,6 +1028,32 @@ int PlayerFunctions::luaPlayerGetPreyLootPercentage(lua_State* L) {
 		}
 	} else {
 		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerGetBountyActiveRaceId(lua_State* L) {
+	// player:getBountyActiveRaceId() → uint16_t (0 if no active bounty)
+	if (const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player")) {
+		lua_pushnumber(L, player->getBountySlot().activeRaceId);
+	} else {
+		lua_pushnumber(L, 0);
+	}
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerGetBountyTalismanBonus(lua_State* L) {
+	// player:getBountyTalismanBonus(index) → bonus in hundredths of a percent (e.g. 500 = 5.00%)
+	if (const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player")) {
+		const int idx = Lua::getNumber<int>(L, 2, 0);
+		if (idx < 0 || idx >= static_cast<int>(BOUNTY_TALISMAN_COUNT)) {
+			lua_pushnumber(L, 0);
+		} else {
+			const uint16_t level = player->getBountySlot().talismans[static_cast<size_t>(idx)].level;
+			lua_pushnumber(L, g_ioprey().getTalismanBonusHundredths(level));
+		}
+	} else {
+		lua_pushnumber(L, 0);
 	}
 	return 1;
 }
