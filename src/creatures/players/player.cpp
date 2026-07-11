@@ -6608,8 +6608,6 @@ void Player::addBountyKill(const std::shared_ptr<MonsterType> &mType) {
 		const int32_t roll = uniform_random(0, 9999);
 		if (roll < doubleChance) {
 			bountySlot.currentKills += 1;
-			g_logger().info("[debug-task] {} double-kill proc! kills now {}/{}",
-				getName(), bountySlot.currentKills, bountySlot.totalKills);
 		}
 	}
 

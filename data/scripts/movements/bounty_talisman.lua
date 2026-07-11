@@ -13,21 +13,15 @@ local BONUS_KEYS = {
 }
 
 local function applyBonus(player)
-	local vals = {}
 	for i, key in ipairs(BONUS_KEYS) do
-		local v = player:getBountyTalismanBonus(i - 1)
-		player:setStorageValue(key, v)
-		vals[i] = v
+		player:setStorageValue(key, player:getBountyTalismanBonus(i - 1))
 	end
-	logger.info("[debug-task] Bounty talisman EQUIPPED by {}, bonuses dmg={}h leech={}h loot={}h dkill={}h",
-		player:getName(), vals[1], vals[2], vals[3], vals[4])
 end
 
 local function removeBonus(player)
 	for _, key in ipairs(BONUS_KEYS) do
 		player:setStorageValue(key, -1)
 	end
-	logger.info("[debug-task] Bounty talisman UNEQUIPPED by {}", player:getName())
 end
 
 local equip = MoveEvent()
