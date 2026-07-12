@@ -1067,7 +1067,7 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			slot.rarity = slot.optionRarities[value];
 
 			slot.activeRaceId = raceId;
-			slot.totalKills = getBountyKillTarget(slot.difficulty);
+			slot.totalKills = slot.optionKillTargets[value];
 			slot.currentKills = 0;
 			slot.rewardXp = getBountyExpReward(slot.difficulty, player->getLevel(), slot.rarity);
 			slot.rewardPoints = getBountyPointReward(slot.difficulty, slot.rarity);

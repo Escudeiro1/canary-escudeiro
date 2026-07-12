@@ -6637,7 +6637,7 @@ bool Player::removeBountyPoints(uint64_t amount) {
 }
 
 void Player::addBountyExpReward(uint64_t exp) {
-	addExperience(nullptr, exp, true);
+	addExperience(nullptr, exp, false);
 }
 
 void Player::sendBountyData() {

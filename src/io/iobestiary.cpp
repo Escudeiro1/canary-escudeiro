@@ -385,14 +385,24 @@ void IOBestiary::addBestiaryKill(const std::shared_ptr<Player> &player, const st
 	if (raceid == 0 || !player || !mtype) {
 		return;
 	}
-	uint32_t curCount = player->getBestiaryKillCount(raceid);
-	std::ostringstream ss;
 
+	const uint32_t curCount = player->getBestiaryKillCount(raceid);
 	player->addBestiaryKillCount(raceid, amount);
-
 	const uint32_t newCount = curCount + amount;
+
+	const bool isFirstDiscover = (curCount == 0);
+
+	if (isFirstDiscover) {
+		std::ostringstream ss;
+		ss << "You discovered creature " << mtype->name << ".";
+		player->sendTextMessage(MESSAGE_STATUS, ss.str());
+		player->sendBestiaryEntryChanged(raceid);
+		player->sendClientEventBestiary(raceid, 0);
+	}
+
+	// Threshold crossings are checked independently — first discover does not consume stage 1
 	uint8_t bestiaryStage = 0;
-	if (curCount == 0 || (curCount < mtype->info.bestiaryFirstUnlock && newCount >= mtype->info.bestiaryFirstUnlock)) {
+	if (!isFirstDiscover && curCount < mtype->info.bestiaryFirstUnlock && newCount >= mtype->info.bestiaryFirstUnlock) {
 		bestiaryStage = 1;
 	} else if (curCount < mtype->info.bestiarySecondUnlock && newCount >= mtype->info.bestiarySecondUnlock) {
 		bestiaryStage = 2;
@@ -401,9 +411,12 @@ void IOBestiary::addBestiaryKill(const std::shared_ptr<Player> &player, const st
 	}
 
 	if (bestiaryStage > 0) {
-		ss << "You unlocked details for the creature '" << mtype->name << "'";
+		std::ostringstream ss;
+		ss << "New details unlocked for " << mtype->name << ".";
 		player->sendTextMessage(MESSAGE_STATUS, ss.str());
-		player->sendBestiaryEntryChanged(raceid);
+		if (!isFirstDiscover) {
+			player->sendBestiaryEntryChanged(raceid);
+		}
 		player->sendClientEventBestiary(raceid, bestiaryStage);
 
 		if (newCount >= mtype->info.bestiaryToUnlock) {
