@@ -1015,7 +1015,7 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		case 3: // REROLL
 		{
 			// If task is active/claimable, cancel it first (client already confirmed with the player)
-			if (slot.state == 1 || slot.state == 2 || slot.state == 3) {
+			if (slot.state == 1 || slot.state == 2) {
 				slot.state = 0;
 				slot.activeRaceId = 0;
 				slot.currentKills = 0;
@@ -1089,11 +1089,24 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			// Grant rewards
 			player->addBountyExpReward(xp);
 			player->addBountyPoints(pts);
+			if (slot.rerollTokens < BOUNTY_MAX_REROLL_TOKENS) {
+				++slot.rerollTokens;
+			}
 
-			slot.currentKills = slot.totalKills;
+			// Reset slot and generate new options
+			slot.activeRaceId = 0;
+			slot.currentKills = 0;
+			slot.totalKills = 0;
 			slot.rewardXp = 0;
 			slot.rewardPoints = 0;
-			slot.state = 3;
+			slot.rarity = 0;
+			slot.state = 0;
+			slot.options = generateBountyOptions(slot.difficulty, {});
+			for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
+				int32_t r = uniform_random(0, 99);
+				slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
+				slot.optionKillTargets[i] = getBountyKillTarget(slot.difficulty);
+			}
 			player->sendBountyData();
 			break;
 		}
