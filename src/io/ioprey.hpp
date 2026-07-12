@@ -282,7 +282,7 @@ struct BountySlot {
 
 // ── Weekly Task system ────────────────────────────────────────────────────────
 constexpr uint8_t WEEKLY_KILL_TASK_COUNT = 5;
-constexpr uint8_t WEEKLY_DELIVERY_TASK_COUNT = 2;
+constexpr uint8_t WEEKLY_DELIVERY_TASK_COUNT = 6;
 
 struct WeeklyKillTask {
 	uint16_t raceId = 0;
@@ -427,7 +427,7 @@ public:
 	// Weekly Task system
 	void parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t option, uint8_t value) const;
 	void generateWeeklyTasks(WeeklySlot &slot, uint32_t playerLevel) const;
-	void generateWeeklyDeliveryTasks(WeeklySlot &slot) const;
+	void generateWeeklyDeliveryTasks(WeeklySlot &slot, uint8_t count) const;
 	uint32_t getWeeklyExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
 	uint32_t getWeeklyDeliveryExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
 	uint32_t getWeeklyPointsReward(BountyDifficulty_t difficulty) const;

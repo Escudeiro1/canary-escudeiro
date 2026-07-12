@@ -1206,7 +1206,8 @@ void IOPrey::generateWeeklyTasks(WeeklySlot &slot, uint32_t playerLevel) const {
 	slot.anyCreatureCurrentKills = 0;
 	(void)playerLevel;
 
-	generateWeeklyDeliveryTasks(slot);
+	const uint8_t deliveryCount = slot.weeklyExpansion ? 9 : WEEKLY_DELIVERY_TASK_COUNT;
+	generateWeeklyDeliveryTasks(slot, deliveryCount);
 }
 
 // ── Delivery item pool ────────────────────────────────────────────────────────
@@ -1316,13 +1317,13 @@ uint32_t IOPrey::getWeeklyDeliveryExpReward(BountyDifficulty_t difficulty, uint3
 	return getWeeklyExpReward(difficulty, level) / 2;
 }
 
-void IOPrey::generateWeeklyDeliveryTasks(WeeklySlot &slot) const {
+void IOPrey::generateWeeklyDeliveryTasks(WeeklySlot &slot, uint8_t count) const {
 	slot.deliveryTasks.clear();
 	if (s_deliveryItemCount == 0) return;
 
 	std::unordered_set<uint16_t> used;
 	uint32_t attempts = 0;
-	while (slot.deliveryTasks.size() < WEEKLY_DELIVERY_TASK_COUNT && attempts < 200) {
+	while (slot.deliveryTasks.size() < count && attempts < 200) {
 		++attempts;
 		const size_t idx = static_cast<size_t>(uniform_random(0, static_cast<int32_t>(s_deliveryItemCount) - 1));
 		const auto &entry = s_deliveryItems[idx];

@@ -2682,7 +2682,10 @@ void ProtocolGame::sendTaskBoardWeeklyData() {
 		msg.addByte(0);                           // unknown1
 		msg.addByte(0);                           // unknown2
 		msg.add<uint32_t>(dtask.totalAmount);
-		msg.add<uint32_t>(dtask.currentAmount);
+		const uint32_t playerHas = dtask.claimed
+			? dtask.totalAmount
+			: std::min(player->getItemTypeCountForDelivery(dtask.itemId), dtask.totalAmount);
+		msg.add<uint32_t>(playerHas);
 		msg.addByte(dtask.claimed);
 	}
 
