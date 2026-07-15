@@ -2518,6 +2518,7 @@ void ProtocolGame::parseTaskHuntingAction(NetworkMessage &msg) {
 void ProtocolGame::parseTaskBoardAction(NetworkMessage &msg) {
 	uint8_t option = msg.getByte();
 	uint16_t value = 0;
+	uint16_t extraValue = 0;
 
 	switch (option) {
 		case 2:  // CHANGE_DIFFICULTY
@@ -2541,7 +2542,7 @@ void ProtocolGame::parseTaskBoardAction(NetworkMessage &msg) {
 		case 15: // PREFERRED_ASSIGN
 		case 16: // UNWANTED_ASSIGN
 			value = msg.get<uint16_t>();
-			msg.get<uint16_t>(); // raceId — full implementation in Phase 2c
+			extraValue = msg.get<uint16_t>(); // raceId to assign
 			break;
 		default: // OPEN_BOUNTY(0), OPEN_WEEKLY(1), REROLL(3), CLAIM_DAILY(4), CLAIM_REWARD(6), OPEN_SHOP(10)
 			break;
@@ -2555,7 +2556,7 @@ void ProtocolGame::parseTaskBoardAction(NetworkMessage &msg) {
 	} else if (option == 11) {
 		g_game().playerShopAction(player->getID(), static_cast<uint8_t>(value));
 	} else {
-		g_game().playerBountyAction(player->getID(), option, value);
+		g_game().playerBountyAction(player->getID(), option, value, extraValue);
 	}
 }
 
@@ -2635,6 +2636,15 @@ void ProtocolGame::sendTaskBoardBountyData() {
 	}
 
 	sendResourceBalance(RESOURCE_BOUNTY_POINTS, player->getBountyPoints());
+
+	// Send the union of all bounty pool race IDs so the client picker only
+	// shows creatures that can actually appear as bounty options.
+	const auto& poolIds = g_ioprey().getAllBountyRaceIds();
+	msg.add<uint16_t>(static_cast<uint16_t>(poolIds.size()));
+	for (uint16_t id : poolIds) {
+		msg.add<uint16_t>(id);
+	}
+
 	writeToOutputBuffer(msg);
 }
 
@@ -2699,10 +2709,14 @@ void ProtocolGame::sendTaskBoardWeeklyData() {
 	msg.addByte(static_cast<uint8_t>(slot.unlockedDifficulty)); // unlockedDifficulty (0-based)
 	msg.add<uint32_t>(slot.weeklyResetTimestamp);           // resetTimestamp (Unix seconds)
 	msg.addByte(slot.weeklyExpansion);                      // weeklyTaskExpansion (0=6 slots, 1=9 slots)
-	msg.add<uint32_t>(slot.pointsEarned);
+	const uint32_t pointsDisplay = slot.weeklyProgressFinished
+		? slot.pointsEarned
+		: g_ioprey().computeWeeklyPointsForSlot(slot);
+	msg.add<uint32_t>(pointsDisplay);
 	msg.add<uint32_t>(slot.soulsealsEarned);
 
 	writeToOutputBuffer(msg);
+	sendResourceBalance(RESOURCE_SOULSEALS, slot.soulsealsEarned);
 }
 
 void ProtocolGame::sendTaskBoardShopData() {

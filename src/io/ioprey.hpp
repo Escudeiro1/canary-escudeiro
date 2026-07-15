@@ -238,6 +238,10 @@ enum BountyRerollMode_t : uint8_t {
 
 constexpr uint16_t BOUNTY_TALISMAN_MAX_LEVEL = 355;
 
+// Slot 0 = slot 1 (always free); slots 1-4 = slots 2-5 (paid unlock)
+constexpr std::array<uint16_t, BOUNTY_PREFERRED_SLOT_COUNT> BOUNTY_PREFERRED_UNLOCK_COSTS = {0, 300, 600, 900, 1200};
+constexpr uint16_t BOUNTY_PREFERRED_ASSIGN_COST = 10;
+
 struct BountyTalisman {
 	uint16_t level = 0;
 };
@@ -415,8 +419,9 @@ public:
 
 	// Bounty Task system
 	void initBountyPools();
-	void parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value) const;
-	std::array<uint16_t, BOUNTY_OPTION_COUNT> generateBountyOptions(BountyDifficulty_t difficulty, const std::vector<uint16_t> &blackList) const;
+	void parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value, uint16_t extraValue = 0) const;
+	std::array<uint16_t, BOUNTY_OPTION_COUNT> generateBountyOptions(BountyDifficulty_t difficulty, const std::vector<uint16_t> &blackList, const std::vector<uint16_t> &preferredList = {}) const;
+	std::vector<uint16_t> getAllBountyRaceIds() const;
 	uint16_t getBountyKillTarget(BountyDifficulty_t difficulty) const;
 	uint32_t getBountyExpReward(BountyDifficulty_t difficulty, uint32_t level, uint8_t rarity) const;
 	uint8_t getBountyPointReward(BountyDifficulty_t difficulty, uint8_t rarity) const;
@@ -431,6 +436,7 @@ public:
 	uint32_t getWeeklyExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
 	uint32_t getWeeklyDeliveryExpReward(BountyDifficulty_t difficulty, uint32_t level) const;
 	uint32_t getWeeklyPointsReward(BountyDifficulty_t difficulty) const;
+	uint32_t computeWeeklyPointsForSlot(const WeeklySlot &slot) const;
 	uint16_t getWeeklyKillTarget(BountyDifficulty_t difficulty) const;
 	uint16_t getWeeklyAnyCreatureTarget(BountyDifficulty_t difficulty) const;
 	static uint32_t computeNextMondayTimestamp();

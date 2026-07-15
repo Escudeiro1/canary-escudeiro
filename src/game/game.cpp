@@ -9939,10 +9939,10 @@ void Game::playerTaskHuntingAction(uint32_t playerId, uint8_t slot, uint8_t acti
 	g_ioprey().parseTaskHuntingAction(player, static_cast<PreySlot_t>(slot), static_cast<PreyTaskAction_t>(action), upgrade, raceId);
 }
 
-void Game::playerBountyAction(uint32_t playerId, uint8_t option, uint16_t value) {
+void Game::playerBountyAction(uint32_t playerId, uint8_t option, uint16_t value, uint16_t extraValue) {
 	const auto &player = getPlayerByID(playerId);
 	if (!player) return;
-	g_ioprey().parseBountyAction(player, option, value);
+	g_ioprey().parseBountyAction(player, option, value, extraValue);
 }
 
 void Game::playerWeeklyAction(uint32_t playerId, uint8_t option, uint8_t value) {

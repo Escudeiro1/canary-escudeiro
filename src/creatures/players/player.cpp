@@ -6676,6 +6676,11 @@ void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 		if (task.raceId == mType->info.raceid && !task.isComplete()) {
 			task.currentKills++;
 			changed = true;
+			if (task.isComplete()) {
+				slot.soulsealsEarned++;
+				sendResourceBalance(RESOURCE_SOULSEALS, slot.soulsealsEarned);
+				std::cout << "[Weekly] kill task complete, soulsealsEarned=" << slot.soulsealsEarned << " player=" << getName() << std::endl;
+			}
 			break;
 		}
 	}
@@ -6694,9 +6699,12 @@ void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 		addBountyExpReward(expReward);
 		// Only grant HTP + mark finished when delivery tasks are also done (or absent)
 		if (slot.deliveryTasks.empty() || slot.allDeliveryTasksComplete()) {
-			const uint32_t htp = g_ioprey().getWeeklyPointsReward(slot.difficulty);
+			const uint32_t htp = g_ioprey().computeWeeklyPointsForSlot(slot);
 			slot.pointsEarned = htp;
 			addTaskHuntingPoints(htp);
+			const uint32_t seals = slot.countCompletedKillTasks() + slot.countCompletedDeliveryTasks();
+			slot.soulsealsEarned = seals;
+			sendResourceBalance(RESOURCE_SOULSEALS, seals);
 			slot.weeklyProgressFinished = 1;
 			if (static_cast<uint8_t>(slot.difficulty) >= static_cast<uint8_t>(slot.unlockedDifficulty)
 			    && slot.unlockedDifficulty != BountyDifficulty_Master) {

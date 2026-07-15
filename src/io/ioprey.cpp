@@ -910,7 +910,7 @@ const std::vector<uint16_t> &IOPrey::getBountyPool(BountyDifficulty_t difficulty
 	return m_bountyPools[static_cast<uint8_t>(difficulty)];
 }
 
-std::array<uint16_t, BOUNTY_OPTION_COUNT> IOPrey::generateBountyOptions(BountyDifficulty_t difficulty, const std::vector<uint16_t> &blackList) const {
+std::array<uint16_t, BOUNTY_OPTION_COUNT> IOPrey::generateBountyOptions(BountyDifficulty_t difficulty, const std::vector<uint16_t> &blackList, const std::vector<uint16_t> &preferredList) const {
 	const auto &pool = getBountyPool(difficulty);
 	std::array<uint16_t, BOUNTY_OPTION_COUNT> result = {};
 	if (pool.empty()) {
@@ -929,11 +929,26 @@ std::array<uint16_t, BOUNTY_OPTION_COUNT> IOPrey::generateBountyOptions(BountyDi
 		available = pool;
 	}
 
+	// Boost preferred creatures to 5× weight by adding 4 extra copies each.
+	// The pick loop uses remove-all-copies erase, so a boosted creature can
+	// still only appear once across the 3 options.
+	for (uint16_t prefId : preferredList) {
+		if (prefId == 0) continue;
+		if (std::find(available.begin(), available.end(), prefId) != available.end()) {
+			for (int i = 0; i < 4; ++i) {
+				available.push_back(prefId);
+			}
+		}
+	}
+
 	for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 		if (available.empty()) break;
 		uint32_t idx = uniform_random(0, static_cast<int32_t>(available.size()) - 1);
-		result[i] = available[idx];
-		available.erase(available.begin() + idx);
+		uint16_t picked = available[idx];
+		result[i] = picked;
+		// Erase ALL copies (including the 4 boosted duplicates) so the same
+		// creature cannot appear more than once across the 3 options.
+		available.erase(std::remove(available.begin(), available.end(), picked), available.end());
 	}
 	return result;
 }
@@ -986,7 +1001,31 @@ uint16_t IOPrey::getTalismanBonusHundredths(uint16_t level) const {
 	return 5000;                                        // hard cap 50%
 }
 
-void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value) const {
+std::vector<uint16_t> IOPrey::getAllBountyRaceIds() const {
+	std::unordered_set<uint16_t> seen;
+	std::vector<uint16_t> result;
+	for (uint8_t d = 0; d <= static_cast<uint8_t>(BountyDifficulty_Master); ++d) {
+		for (uint16_t id : getBountyPool(static_cast<BountyDifficulty_t>(d))) {
+			if (seen.insert(id).second) {
+				result.push_back(id);
+			}
+		}
+	}
+	return result;
+}
+
+// Build unwanted blacklist and preferred list from the player's unlocked slots.
+static void buildBountyLists(const BountySlot &slot, std::vector<uint16_t> &blackList, std::vector<uint16_t> &preferredList) {
+	blackList.clear();
+	preferredList.clear();
+	for (const auto &ps : slot.preferredSlots) {
+		if (!ps.unlocked) continue;
+		if (ps.unwantedRaceId != 0) blackList.push_back(ps.unwantedRaceId);
+		if (ps.preferredRaceId != 0) preferredList.push_back(ps.preferredRaceId);
+	}
+}
+
+void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t option, uint16_t value, uint16_t extraValue) const {
 	if (!player) return;
 
 	BountySlot &slot = player->getBountySlot();
@@ -995,7 +1034,7 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 		case 0: // OPEN_BOUNTY — generate options if needed and send data
 		{
 			if (!slot.hasOptions() && slot.state == 0) {
-				slot.options = generateBountyOptions(slot.difficulty, {});
+				{ std::vector<uint16_t> bl, pl; buildBountyLists(slot, bl, pl); slot.options = generateBountyOptions(slot.difficulty, bl, pl); }
 				for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 					int32_t r = uniform_random(0, 99);
 					slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
@@ -1034,7 +1073,7 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 					break;
 				}
 			}
-			slot.options = generateBountyOptions(slot.difficulty, {});
+			{ std::vector<uint16_t> bl, pl; buildBountyLists(slot, bl, pl); slot.options = generateBountyOptions(slot.difficulty, bl, pl); }
 			for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 				int32_t r = uniform_random(0, 99);
 				slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
@@ -1101,7 +1140,7 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			slot.rewardPoints = 0;
 			slot.rarity = 0;
 			slot.state = 0;
-			slot.options = generateBountyOptions(slot.difficulty, {});
+			{ std::vector<uint16_t> bl, pl; buildBountyLists(slot, bl, pl); slot.options = generateBountyOptions(slot.difficulty, bl, pl); }
 			for (uint8_t i = 0; i < BOUNTY_OPTION_COUNT; ++i) {
 				int32_t r = uniform_random(0, 99);
 				slot.optionRarities[i] = (r < 5) ? 2 : (r < 30) ? 1 : 0;
@@ -1121,13 +1160,78 @@ void IOPrey::parseBountyAction(const std::shared_ptr<Player> &player, uint8_t op
 			player->sendBountyData();
 			break;
 		}
-		case 12: // PREFERRED_UNLOCK
-		case 13: // PREFERRED_CLEAR
-		case 14: // UNWANTED_CLEAR
-		case 15: // PREFERRED_ASSIGN
-		case 16: // UNWANTED_ASSIGN
-			player->sendBountyData(); // echo back current state
+		case 12: { // PREFERRED_UNLOCK
+			const uint8_t si = static_cast<uint8_t>(value) - 1; // 1-based → 0-based
+			if (si == 0 || si >= BOUNTY_PREFERRED_SLOT_COUNT) break; // slot 1 always unlocked
+			auto &ps = slot.preferredSlots[si];
+			if (ps.unlocked) break;
+			if (!player->removeBountyPoints(BOUNTY_PREFERRED_UNLOCK_COSTS[si])) break;
+			ps.unlocked = true;
+			player->sendBountyData();
 			break;
+		}
+		case 13: { // PREFERRED_CLEAR
+			const uint8_t si = static_cast<uint8_t>(value) - 1;
+			if (si >= BOUNTY_PREFERRED_SLOT_COUNT) break;
+			auto &ps = slot.preferredSlots[si];
+			if (!ps.unlocked || ps.preferredRaceId == 0) break;
+			if (!player->removeBountyPoints(BOUNTY_PREFERRED_ASSIGN_COST)) break;
+			ps.preferredRaceId = 0;
+			player->sendBountyData();
+			break;
+		}
+		case 14: { // UNWANTED_CLEAR
+			const uint8_t si = static_cast<uint8_t>(value) - 1;
+			if (si >= BOUNTY_PREFERRED_SLOT_COUNT) break;
+			auto &ps = slot.preferredSlots[si];
+			if (!ps.unlocked || ps.unwantedRaceId == 0) break;
+			if (!player->removeBountyPoints(BOUNTY_PREFERRED_ASSIGN_COST)) break;
+			ps.unwantedRaceId = 0;
+			player->sendBountyData();
+			break;
+		}
+		case 15: { // PREFERRED_ASSIGN
+			const uint8_t si = static_cast<uint8_t>(value) - 1;
+			if (si >= BOUNTY_PREFERRED_SLOT_COUNT || extraValue == 0) break;
+			auto &ps = slot.preferredSlots[si];
+			if (!ps.unlocked) break;
+			// Reject if raceId is already used in any other slot
+			bool alreadyUsed = false;
+			for (uint8_t j = 0; j < BOUNTY_PREFERRED_SLOT_COUNT; ++j) {
+				if (j == si) continue;
+				if (slot.preferredSlots[j].preferredRaceId == extraValue ||
+				    slot.preferredSlots[j].unwantedRaceId == extraValue) {
+					alreadyUsed = true;
+					break;
+				}
+			}
+			if (alreadyUsed) break;
+			if (!player->removeBountyPoints(BOUNTY_PREFERRED_ASSIGN_COST)) break;
+			ps.preferredRaceId = extraValue;
+			player->sendBountyData();
+			break;
+		}
+		case 16: { // UNWANTED_ASSIGN
+			const uint8_t si = static_cast<uint8_t>(value) - 1;
+			if (si >= BOUNTY_PREFERRED_SLOT_COUNT || extraValue == 0) break;
+			auto &ps = slot.preferredSlots[si];
+			if (!ps.unlocked) break;
+			// Reject if raceId is already used in any other slot
+			bool alreadyUsed = false;
+			for (uint8_t j = 0; j < BOUNTY_PREFERRED_SLOT_COUNT; ++j) {
+				if (j == si) continue;
+				if (slot.preferredSlots[j].preferredRaceId == extraValue ||
+				    slot.preferredSlots[j].unwantedRaceId == extraValue) {
+					alreadyUsed = true;
+					break;
+				}
+			}
+			if (alreadyUsed) break;
+			if (!player->removeBountyPoints(BOUNTY_PREFERRED_ASSIGN_COST)) break;
+			ps.unwantedRaceId = extraValue;
+			player->sendBountyData();
+			break;
+		}
 		default:
 			break;
 	}
@@ -1179,6 +1283,29 @@ uint32_t IOPrey::getWeeklyExpReward(BountyDifficulty_t difficulty, uint32_t leve
 uint32_t IOPrey::getWeeklyPointsReward(BountyDifficulty_t difficulty) const {
 	static constexpr std::array<uint32_t, 4> points = {50, 150, 400, 1000};
 	return points[static_cast<uint8_t>(difficulty)];
+}
+
+uint32_t IOPrey::computeWeeklyPointsForSlot(const WeeklySlot &slot) const {
+	static constexpr std::array<uint32_t, 4> killPts = {25, 50, 100, 110};
+	static constexpr uint32_t deliveryPts = 75;
+	static constexpr std::array<uint32_t, 5> multipliers = {1, 2, 3, 5, 8};
+	static constexpr std::array<uint8_t, 5> thresholds = {0, 4, 8, 12, 16};
+
+	const uint8_t diffIdx = static_cast<uint8_t>(slot.difficulty);
+	const uint32_t kPts = (diffIdx < 4) ? killPts[diffIdx] : 0;
+	const uint8_t completedKill = slot.countCompletedKillTasks();
+	const uint8_t completedDelivery = slot.countCompletedDeliveryTasks();
+	const uint32_t base = completedKill * kPts + completedDelivery * deliveryPts;
+	const uint8_t total = completedKill + completedDelivery;
+
+	uint32_t mult = 1;
+	for (int i = 4; i >= 0; --i) {
+		if (total >= thresholds[i]) {
+			mult = multipliers[i];
+			break;
+		}
+	}
+	return base * mult;
 }
 
 void IOPrey::generateWeeklyTasks(WeeklySlot &slot, uint32_t playerLevel) const {
@@ -1404,9 +1531,14 @@ void IOPrey::parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t op
 			const uint32_t deliveryExp = g_ioprey().getWeeklyDeliveryExpReward(slot.difficulty, static_cast<uint32_t>(player->getLevel()))
 				/ std::max<uint8_t>(1, static_cast<uint8_t>(slot.deliveryTasks.size()));
 			player->addBountyExpReward(deliveryExp);
+			// Grant 1 soulseal for this delivery task
+			slot.soulsealsEarned++;
+			player->sendResourceBalance(RESOURCE_SOULSEALS, slot.soulsealsEarned);
+			std::cout << "[Weekly] delivery task claimed, soulsealsEarned=" << slot.soulsealsEarned << " player=" << player->getName() << std::endl;
 			// If all tasks now complete, grant HTP + mark finished
 			if (slot.allTasksComplete() && !slot.weeklyProgressFinished) {
-				const uint32_t points = g_ioprey().getWeeklyPointsReward(slot.difficulty);
+				const uint32_t points = g_ioprey().computeWeeklyPointsForSlot(slot);
+				slot.pointsEarned = points;
 				player->addTaskHuntingPoints(points);
 				slot.weeklyProgressFinished = 1;
 			}
