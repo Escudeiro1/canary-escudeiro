@@ -9341,6 +9341,17 @@ void Game::checkPlayersRecord() {
 	}
 }
 
+// AoE death batching: returns the sequential index of this death within the
+// current burst (resets each dispatcher cycle). Used by Creature::changeHealth
+// to stagger death events and prevent dispatcher stutter on mass kills.
+uint32_t Game::getAndIncrementBurstDeathCount(uint64_t currentCycle) {
+	if (m_lastDeathBurstCycle != currentCycle) {
+		m_burstDeathCount = 0;
+		m_lastDeathBurstCycle = currentCycle;
+	}
+	return m_burstDeathCount++;
+}
+
 void Game::updatePlayersRecord() const {
 	Database &db = Database::getInstance();
 

@@ -526,6 +526,11 @@ public:
 		motdNum++;
 	}
 
+	// AoE death batching: returns the sequential index of this death within the
+	// current dispatcher burst. Used by Creature::changeHealth to stagger death
+	// events and prevent dispatcher stutter when many creatures die at once.
+	uint32_t getAndIncrementBurstDeathCount(uint64_t currentCycle);
+
 	void sendOfflineTrainingDialog(const std::shared_ptr<Player> &player);
 
 	const std::map<uint16_t, std::map<uint8_t, uint64_t>> &getItemsPrice() const {
@@ -900,6 +905,11 @@ private:
 
 	std::string motdHash;
 	uint32_t motdNum = 0;
+
+	// AoE death batching: tracks how many deaths have been queued in the current
+	// dispatcher burst to spread them across ticks and avoid stutter.
+	uint32_t m_burstDeathCount = 0;
+	uint64_t m_lastDeathBurstCycle = 0;
 
 	std::map<uint16_t, std::map<uint8_t, uint64_t>> itemsPriceMap;
 

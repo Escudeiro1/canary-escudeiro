@@ -782,13 +782,31 @@ void Creature::changeHealth(int32_t healthChange, bool sendHealthChange /* = tru
 		g_game().addCreatureHealth(static_self_cast<Creature>());
 	}
 	if (health <= 0) {
-		g_dispatcher().addEvent([self = std::weak_ptr<Creature>(getCreature())] {
+		// AoE death batching: spread death events across dispatcher slots to avoid
+		// stutter when many creatures die at once (e.g. Ultimate Explosion hitting 50+).
+		// Deaths are grouped in batches of BATCH_SIZE; each batch is delayed by an
+		// additional BATCH_DELAY_MS, so the dispatcher never processes more than
+		// BATCH_SIZE deaths per slot. All deaths from the same AoE share the same
+		// dispatcherCycle value, which is used to detect and count the burst.
+		const uint64_t currentCycle = g_dispatcher().getDispatcherCycle();
+		const uint32_t deathIndex = g_game().getAndIncrementBurstDeathCount(currentCycle);
+		constexpr uint32_t BATCH_SIZE = 15;
+		constexpr uint32_t BATCH_DELAY_MS = 50;
+		const uint32_t delay = (deathIndex / BATCH_SIZE) * BATCH_DELAY_MS;
+		auto deathTask = [self = std::weak_ptr<Creature>(getCreature())] {
 			if (const auto &creature = self.lock()) {
 				if (!creature->isRemoved()) {
 					g_game().afterCreatureZoneChange(creature, creature->getZones(), {});
 					creature->onDeath();
 				}
-			} }, "Game::executeDeath");
+			}
+		};
+
+		if (delay == 0) {
+			g_dispatcher().addEvent(std::move(deathTask), "Game::executeDeath");
+		} else {
+			g_dispatcher().scheduleEvent(delay, std::move(deathTask), "Game::executeDeath");
+		}
 	}
 }
 
