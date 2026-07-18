@@ -2660,6 +2660,18 @@ void ProtocolGame::sendTaskBoardBountyKillUpdate(uint16_t raceId, uint16_t curre
 	writeToOutputBuffer(msg);
 }
 
+void ProtocolGame::sendTaskBoardWeeklyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted) {
+	if (!player) return;
+	NetworkMessage msg;
+	msg.addByte(0x5B);
+	msg.addByte(0x04); // subtype: WEEKLY_KILL_UPDATE
+	msg.add<uint16_t>(raceId);
+	msg.add<uint16_t>(currentKills);
+	msg.add<uint16_t>(totalKills);
+	msg.addByte(isCompleted ? 1 : 0);
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendTaskBoardWeeklyData() {
 	if (!player) return;
 

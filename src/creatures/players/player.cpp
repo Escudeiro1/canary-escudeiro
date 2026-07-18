@@ -6624,6 +6624,12 @@ void Player::sendBountyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16
 	}
 }
 
+void Player::sendWeeklyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted) {
+	if (client) {
+		client->sendTaskBoardWeeklyKillUpdate(raceId, currentKills, totalKills, isCompleted);
+	}
+}
+
 void Player::addBountyPoints(uint64_t amount) {
 	bountyPoints += amount;
 	sendResourceBalance(RESOURCE_BOUNTY_POINTS, bountyPoints);
@@ -6679,8 +6685,8 @@ void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 			if (task.isComplete()) {
 				slot.soulsealsEarned++;
 				sendResourceBalance(RESOURCE_SOULSEALS, slot.soulsealsEarned);
-				std::cout << "[Weekly] kill task complete, soulsealsEarned=" << slot.soulsealsEarned << " player=" << getName() << std::endl;
 			}
+			sendWeeklyKillUpdate(task.raceId, task.currentKills, task.totalKills, task.isComplete());
 			break;
 		}
 	}
@@ -6689,6 +6695,8 @@ void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 	if (slot.anyCreatureTotalKills > 0 && slot.anyCreatureCurrentKills < slot.anyCreatureTotalKills) {
 		slot.anyCreatureCurrentKills++;
 		changed = true;
+		sendWeeklyKillUpdate(0, slot.anyCreatureCurrentKills, slot.anyCreatureTotalKills,
+			slot.anyCreatureCurrentKills >= slot.anyCreatureTotalKills);
 	}
 
 	if (!changed) return;
@@ -6711,10 +6719,9 @@ void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 				slot.unlockedDifficulty = static_cast<BountyDifficulty_t>(static_cast<uint8_t>(slot.unlockedDifficulty) + 1);
 			}
 			sendTextMessage(MESSAGE_STATUS, "You have completed all your weekly tasks! Rewards have been granted.");
+			sendWeeklyData();
 		}
 	}
-
-	sendWeeklyData();
 }
 
 void Player::addBestiaryKill(const std::shared_ptr<MonsterType> &mType) {
