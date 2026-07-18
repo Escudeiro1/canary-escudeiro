@@ -390,10 +390,11 @@ struct ShopOffer {
 	ShopOfferType_t type = ShopOffer_Item;
 	std::string title;
 	std::string description;
-	uint32_t itemId = 0;   // display item (or lookType for mount/outfit)
-	uint8_t addons = 0;    // outfit addons only
-	uint32_t price = 0;    // cost in Hunting Task Points
-	uint16_t itemCount = 1; // how many items to grant
+	uint32_t itemId = 0;        // item clientId, mount server-ID, or outfit lookType (male)
+	std::string outfitName;     // outfit type only: canonical outfit name for gender-aware lookup
+	uint8_t addons = 0;         // outfit addons only
+	uint32_t price = 0;         // cost in Hunting Task Points
+	uint16_t itemCount = 1;     // how many items to grant (item type only)
 };
 // ─────────────────────────────────────────────────────────────────────────────
 

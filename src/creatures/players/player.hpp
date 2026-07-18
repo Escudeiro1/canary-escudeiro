@@ -1382,6 +1382,7 @@ public:
 
 	// Hunting Task Shop
 	void sendShopData();
+	void sendTaskBoardShopResult(uint8_t result);
 
 	void sendTaskHuntingData() const;
 

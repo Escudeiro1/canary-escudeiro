@@ -2745,15 +2745,26 @@ void ProtocolGame::sendTaskBoardShopData() {
 	for (const auto &offer : offers) {
 		msg.addByte(static_cast<uint8_t>(offer.type));
 
-		// Compute status
+		// Compute bought/affordability status
 		uint8_t status = 0; // AVAILABLE
 		if (offer.type == ShopOffer_WeeklyExpansion && player->getWeeklySlot().weeklyExpansion) {
 			status = 4; // BOUGHT
-		} else if (player->getTaskHuntingPoints() < offer.price) {
+		} else if (offer.type == ShopOffer_Outfit && !offer.outfitName.empty()) {
+			const auto &gOutfit = Outfits::getInstance().getOutfitByName(player->getSex(), offer.outfitName);
+			if (gOutfit && player->canWear(gOutfit->lookType, offer.addons)) {
+				status = 4; // BOUGHT
+			}
+		} else if (offer.type == ShopOffer_Mount) {
+			const auto &mount = g_game().mounts->getMountByID(static_cast<uint8_t>(offer.itemId));
+			if (mount && player->hasMount(mount)) {
+				status = 4; // BOUGHT
+			}
+		}
+		if (status == 0 && player->getTaskHuntingPoints() < offer.price) {
 			status = 2; // NOT_ENOUGH_POINTS
 		}
 
-		// BONUS_PROMOTION uses a different format
+		// BONUS_PROMOTION uses a different wire format
 		if (offer.type == ShopOffer_BonusPromotion) {
 			msg.add<uint16_t>(0);              // purchasedDisplayValue
 			msg.add<uint32_t>(offer.price);    // nextCost
@@ -2761,7 +2772,13 @@ void ProtocolGame::sendTaskBoardShopData() {
 		} else {
 			msg.addString(offer.title);
 			msg.addString(offer.description);
-			msg.add<uint32_t>(offer.itemId);
+			// For mounts, send clientId (rendering id); for outfit/item send itemId directly
+			uint32_t wireId = offer.itemId;
+			if (offer.type == ShopOffer_Mount) {
+				const auto &mount = g_game().mounts->getMountByID(static_cast<uint8_t>(offer.itemId));
+				if (mount) wireId = mount->clientId;
+			}
+			msg.add<uint32_t>(wireId);
 			if (offer.type == ShopOffer_Outfit) {
 				msg.addByte(offer.addons);
 			}
@@ -2773,6 +2790,15 @@ void ProtocolGame::sendTaskBoardShopData() {
 		}
 	}
 
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendTaskBoardShopResult(uint8_t result) {
+	if (!player) return;
+	NetworkMessage msg;
+	msg.addByte(0x5B);  // GameServerTaskBoard
+	msg.addByte(0x05);  // subtype: SHOP_RESULT
+	msg.addByte(result);
 	writeToOutputBuffer(msg);
 }
 

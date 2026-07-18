@@ -10,6 +10,7 @@
 #include "io/ioprey.hpp"
 
 #include "config/configmanager.hpp"
+#include "creatures/appearance/mounts/mounts.hpp"
 #include "creatures/monsters/monsters.hpp"
 #include "creatures/players/player.hpp"
 #include "game/game.hpp"
@@ -1556,57 +1557,134 @@ void IOPrey::parseWeeklyAction(const std::shared_ptr<Player> &player, uint8_t op
 void IOPrey::initShopOffers() {
 	m_shopOffers.clear();
 
-	// Each offer: type, title, description, itemId, addons, price (HTP), itemCount
-	// Prices are in Hunting Task Points (HTP / taskHuntingPoints)
+	// ── Outfits ────────────────────────────────────────────────────────────────
+	// itemId = male lookType (client uses for creature preview)
+	// outfitName = canonical name shared by both gender variants
+	m_shopOffers.push_back({ ShopOffer_Outfit,
+		"Falconer Outfits", "Receive the Falconer Outfit.",
+		1283, "Falconer", 0, 100000, 0 });
+	m_shopOffers.push_back({ ShopOffer_Outfit,
+		"Falconer Outfits Addon 1", "Receive the first addon for the Falconer Outfit.",
+		1283, "Falconer", 1, 35000, 0 });
+	m_shopOffers.push_back({ ShopOffer_Outfit,
+		"Falconer Outfits Addon 2", "Receive the second addon for the Falconer Outfit.",
+		1283, "Falconer", 2, 35000, 0 });
 
-	// Platinum bundle — 10 platinum coins for 25 HTP
-	m_shopOffers.push_back({
-		ShopOffer_Item,
-		"Platinum Bundle",
-		"Receive 10 Platinum Coins.",
-		238, 0, 25, 10
-	});
+	// ── Mounts ─────────────────────────────────────────────────────────────────
+	// itemId = server mount ID (tameMount uses this); clientId resolved at send time
+	m_shopOffers.push_back({ ShopOffer_Mount,
+		"Antelope", "Receive the Antelope mount.",
+		163, "", 0, 145000, 0 });
 
-	// Crystal Coin — 1 crystal coin for 50 HTP
-	m_shopOffers.push_back({
-		ShopOffer_Item,
-		"Crystal Coin",
-		"Receive 1 Crystal Coin.",
-		2160, 0, 50, 1
-	});
+	// ── Pets / Companions ──────────────────────────────────────────────────────
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Falcon Pet", "Receive a Falcon Pet.",
+		36750, "", 0, 135000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Cerberus Champion Puppy", "Receive a Cerberus Champion Puppy.",
+		31464, "", 0, 75000, 1 });
 
-	// Weekly Task Expansion — 3 extra weekly task slots, costs 500 HTP (one-time)
-	m_shopOffers.push_back({
-		ShopOffer_WeeklyExpansion,
-		"Weekly Task Expansion",
-		"Permanently unlock 3 extra Weekly Task slots (9 total).",
-		2160, 0, 500, 0
-	});
+	// ── Trophies ───────────────────────────────────────────────────────────────
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Hellflayer Trophy", "Receive a Hellflayer Trophy.",
+		32753, "", 0, 80000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Gold Hunter Trophy", "Receive a Gold Hunter Trophy.",
+		32756, "", 0, 80000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Brachiodemon Trophy", "Receive a Brachiodemon Trophy.",
+		36748, "", 0, 80000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Many Faces Trophy", "Receive a Many Faces Trophy.",
+		36749, "", 0, 50000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Sea Serpent Trophy", "Receive a Sea Serpent Trophy.",
+		32752, "", 0, 15000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Silver Hunter Trophy", "Receive a Silver Hunter Trophy.",
+		32755, "", 0, 15000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Bronze Hunter Trophy", "Receive a Bronze Hunter Trophy.",
+		32754, "", 0, 3000, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Gozzler Trophy", "Receive a Gozzler Trophy.",
+		32751, "", 0, 3000, 1 });
+
+	// ── Dolls & Decoration ─────────────────────────────────────────────────────
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Demon Doll", "Receive a Demon Doll.",
+		32918, "", 0, 37500, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Vexclaw Doll", "Receive a Vexclaw Doll.",
+		32943, "", 0, 37500, 1 });
+	m_shopOffers.push_back({ ShopOffer_Item,
+		"Bone Bed", "Receive a Bone Bed.",
+		32799, "", 0, 35000, 1 });
+
+	// ── Upgrades ───────────────────────────────────────────────────────────────
+	// itemId = bounty talisman item (used as display icon for weekly expansion)
+	m_shopOffers.push_back({ ShopOffer_WeeklyExpansion,
+		"Weekly Task Expansion", "Permanently unlock 3 extra Weekly Task slots (9 total).",
+		51748, "", 0, 500, 0 });
 }
 
 void IOPrey::parseShopAction(const std::shared_ptr<Player> &player, uint8_t offerIndex) const {
 	if (!player) return;
-	if (offerIndex >= m_shopOffers.size()) return;
+	if (offerIndex >= m_shopOffers.size()) {
+		player->sendTaskBoardShopResult(1); // SHOP_ERR_NOT_FOUND
+		return;
+	}
 
 	const ShopOffer &offer = m_shopOffers[offerIndex];
 
-	// Validate: weekly expansion already bought?
+	// ── Pre-purchase validation ────────────────────────────────────────────────
+
 	if (offer.type == ShopOffer_WeeklyExpansion && player->getWeeklySlot().weeklyExpansion) {
-		player->sendShopData();
+		player->sendTaskBoardShopResult(2); // SHOP_ERR_ALREADY_BOUGHT
 		return;
 	}
 
-	// Deduct HTP
+	if (offer.type == ShopOffer_Outfit && !offer.outfitName.empty()) {
+		const auto &gOutfit = Outfits::getInstance().getOutfitByName(player->getSex(), offer.outfitName);
+		if (gOutfit && player->canWear(gOutfit->lookType, offer.addons)) {
+			player->sendTaskBoardShopResult(2); // SHOP_ERR_ALREADY_BOUGHT
+			return;
+		}
+		if (offer.addons > 0) {
+			if (!gOutfit || !player->canWear(gOutfit->lookType, 0)) {
+				player->sendTaskBoardShopResult(4); // SHOP_ERR_NEED_BASE
+				return;
+			}
+		}
+	}
+
+	if (offer.type == ShopOffer_Mount) {
+		const auto &mount = g_game().mounts->getMountByID(static_cast<uint8_t>(offer.itemId));
+		if (mount && player->hasMount(mount)) {
+			player->sendTaskBoardShopResult(2); // SHOP_ERR_ALREADY_BOUGHT
+			return;
+		}
+	}
+
+	// ── Deduct HTP ────────────────────────────────────────────────────────────
 	if (!player->useTaskHuntingPoints(offer.price)) {
-		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You do not have enough Hunting Task Points.");
+		player->sendTaskBoardShopResult(3); // SHOP_ERR_NO_POINTS
 		return;
 	}
 
-	// Grant reward
-	if (offer.type == ShopOffer_WeeklyExpansion) {
+	// ── Grant reward ──────────────────────────────────────────────────────────
+	if (offer.type == ShopOffer_Outfit && !offer.outfitName.empty()) {
+		const auto &gOutfit = Outfits::getInstance().getOutfitByName(player->getSex(), offer.outfitName);
+		if (gOutfit) {
+			player->addOutfit(gOutfit->lookType, offer.addons);
+		}
+	} else if (offer.type == ShopOffer_Mount) {
+		player->tameMount(static_cast<uint8_t>(offer.itemId));
+	} else if (offer.type == ShopOffer_WeeklyExpansion) {
 		player->getWeeklySlot().weeklyExpansion = 1;
-		player->sendWeeklyData(); // update weekly tab to show 9 slots
-	} else if (offer.type == ShopOffer_Item && offer.itemId > 0 && offer.itemCount > 0) {
+		player->sendWeeklyData();
+	} else if ((offer.type == ShopOffer_Item || offer.type == ShopOffer_ItemDouble)
+	           && offer.itemId > 0 && offer.itemCount > 0) {
 		const auto &item = Item::CreateItem(static_cast<uint16_t>(offer.itemId), offer.itemCount);
 		if (item) {
 			if (g_game().internalAddItem(player, item) != RETURNVALUE_NOERROR) {
@@ -1615,6 +1693,7 @@ void IOPrey::parseShopAction(const std::shared_ptr<Player> &player, uint8_t offe
 		}
 	}
 
-	// Refresh shop display
+	// ── Notify client ─────────────────────────────────────────────────────────
+	player->sendTaskBoardShopResult(0); // success
 	player->sendShopData();
 }

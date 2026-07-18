@@ -6664,6 +6664,12 @@ void Player::sendShopData() {
 	}
 }
 
+void Player::sendTaskBoardShopResult(uint8_t result) {
+	if (client) {
+		client->sendTaskBoardShopResult(result);
+	}
+}
+
 void Player::addWeeklyKill(const std::shared_ptr<MonsterType> &mType) {
 	if (!mType) return;
 

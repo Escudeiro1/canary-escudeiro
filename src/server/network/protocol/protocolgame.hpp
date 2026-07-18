@@ -185,6 +185,7 @@ private:
 	void sendTaskBoardWeeklyKillUpdate(uint16_t raceId, uint16_t currentKills, uint16_t totalKills, bool isCompleted);
 	void sendTaskBoardWeeklyData();
 	void sendTaskBoardShopData();
+	void sendTaskBoardShopResult(uint8_t result);
 	void sendHighscoresNoData();
 	void sendHighscores(const std::vector<HighscoreCharacter> &characters, uint8_t categoryId, uint32_t vocationId, uint16_t page, uint16_t pages, uint32_t updateTimer);
 
