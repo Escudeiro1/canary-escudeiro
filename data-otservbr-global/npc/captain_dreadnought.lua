@@ -38,6 +38,7 @@ npcConfig.moneyToNeedDonation = 500 --value in gold coins (ex: 500 = 500gp, 1000
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 npcHandler.isSailor = true
+npcConfig.speechBubble = SPEECHBUBBLE_SAILOR
 
 npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)

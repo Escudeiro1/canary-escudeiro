@@ -26,6 +26,7 @@ npcConfig.flags = {
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 npcHandler.isSailor = true
+npcConfig.speechBubble = SPEECHBUBBLE_SAILOR
 
 npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)
