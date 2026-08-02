@@ -58,9 +58,6 @@ bool PlayerTitle::manage(bool canAdd, uint8_t id, uint32_t timestamp /* = 0*/) {
 	m_titlesUnlocked.shrink_to_fit();
 	g_logger().debug("[{}] - Added title: {}", __FUNCTION__, title.m_maleName);
 
-	const std::string &titleName = m_player.getSex() == PLAYERSEX_FEMALE ? title.m_femaleName : title.m_maleName;
-	m_player.sendClientEventTitle(titleName);
-
 	return true;
 }
 
@@ -117,12 +114,6 @@ const std::string &PlayerTitle::getNameBySex(PlayerSex_t sex, const std::string 
 
 void PlayerTitle::checkAndUpdateNewTitles() {
 	Benchmark bm_checkTitles;
-
-	// Load previously unlocked titles first so isTitleUnlocked() returns correct
-	// results inside manage(). Without this, m_titlesUnlocked is empty during the
-	// loop and every qualifying title looks new, firing a popup on every login.
-	loadUnlockedTitles();
-
 	for (const auto &title : g_game().getTitles()) {
 		switch (title.m_type) {
 			case CyclopediaTitle_t::NOTHING:
@@ -162,6 +153,8 @@ void PlayerTitle::checkAndUpdateNewTitles() {
 	}
 
 	g_logger().debug("Checking and updating titles of player {} took {} milliseconds.", m_player.getName(), bm_checkTitles.duration());
+
+	loadUnlockedTitles();
 }
 
 void PlayerTitle::loadUnlockedTitles() {

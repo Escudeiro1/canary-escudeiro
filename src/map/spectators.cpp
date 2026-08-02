@@ -14,29 +14,64 @@
 
 phmap::flat_hash_map<Position, SpectatorsCache> Spectators::spectatorsCache;
 
+namespace {
+	void deduplicateCreatureSnapshot(CreatureVector &creatures) {
+		phmap::flat_hash_set<const Creature*> seenCreatures;
+		seenCreatures.reserve(creatures.size());
+
+		CreatureVector uniqueCreatures;
+		uniqueCreatures.reserve(creatures.size());
+
+		for (auto &creature : creatures) {
+			if (seenCreatures.emplace(creature.get()).second) {
+				uniqueCreatures.emplace_back(std::move(creature));
+			}
+		}
+
+		creatures = std::move(uniqueCreatures);
+	}
+}
+
 void Spectators::clearCache() {
 	spectatorsCache.clear();
 }
 
-Spectators Spectators::insert(const std::shared_ptr<Creature> &creature) {
+Spectators &Spectators::insert(const std::shared_ptr<Creature> &creature) {
 	if (creature) {
 		creatures.emplace_back(creature);
 	}
 	return *this;
 }
 
-Spectators Spectators::insertAll(const CreatureVector &list) {
+Spectators &Spectators::insertAll(const CreatureVector &list) {
 	if (!list.empty()) {
 		const bool hasValue = !creatures.empty();
 
+		creatures.reserve(creatures.size() + list.size());
 		creatures.insert(creatures.end(), list.begin(), list.end());
 
-		// Remove duplicate
 		if (hasValue) {
-			std::unordered_set uset(creatures.begin(), creatures.end());
-			creatures.clear();
-			creatures.insert(creatures.end(), uset.begin(), uset.end());
+			deduplicateCreatureSnapshot(creatures);
 		}
+	}
+	return *this;
+}
+
+Spectators &Spectators::insertAll(CreatureVector &&list) {
+	if (!list.empty()) {
+		const bool hasValue = !creatures.empty();
+
+		if (!hasValue) {
+			creatures = std::move(list);
+			return *this;
+		}
+
+		creatures.reserve(creatures.size() + list.size());
+		for (auto &creature : list) {
+			creatures.emplace_back(std::move(creature));
+		}
+
+		deduplicateCreatureSnapshot(creatures);
 	}
 	return *this;
 }
@@ -55,7 +90,7 @@ bool Spectators::checkCache(const SpectatorsCache::FloorData &specData, bool onl
 
 	if (checkDistance) {
 		CreatureVector spectators;
-		spectators.reserve(creatures.size());
+		spectators.reserve(list->size());
 		for (const auto &creature : *list) {
 			const auto &specPos = creature->getPosition();
 			if ((centerPos.x - specPos.x >= minRangeX
@@ -70,7 +105,7 @@ bool Spectators::checkCache(const SpectatorsCache::FloorData &specData, bool onl
 				spectators.emplace_back(creature);
 			}
 		}
-		insertAll(spectators);
+		insertAll(std::move(spectators));
 	} else {
 		insertAll(*list);
 	}

@@ -46,8 +46,8 @@ enum class WeaponProficiencyBonus_t : uint8_t {
 	SKILL_PERCENTAGE_SPELL_HEALING = 27, // a percentage of your current skill level as extra healing for spells - OK
 	ALPHA_STRIKE_EXTRA_DAMAGE = 28, // extra damage against creatures above the high-health threshold
 	OMEGA_STRIKE_EXTRA_DAMAGE = 29, // extra damage against creatures below the low-health threshold
-	ARMOR_PENETRATION = 30,         // physical armor penetration percentage
-	ELEMENTAL_PIERCE = 31,          // elemental resistance penetration percentage
+	ARMOR_PENETRATION = 30, // physical armor penetration percentage
+	ELEMENTAL_PIERCE = 31, // elemental resistance penetration percentage
 };
 
 enum class SkillPercentage_t : uint8_t {

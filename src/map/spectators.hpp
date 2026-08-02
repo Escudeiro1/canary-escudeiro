@@ -60,8 +60,9 @@ public:
 	Spectators excludeMaster() const;
 	Spectators excludePlayerMaster() const;
 
-	Spectators insert(const std::shared_ptr<Creature> &creature);
-	Spectators insertAll(const CreatureVector &list);
+	Spectators &insert(const std::shared_ptr<Creature> &creature);
+	Spectators &insertAll(const CreatureVector &list);
+	Spectators &insertAll(CreatureVector &&list);
 	Spectators join(const Spectators &anotherSpectators) {
 		return insertAll(anotherSpectators.creatures);
 	}

@@ -11,6 +11,11 @@
 
 #include "server/server_definitions.hpp"
 
+#ifndef USE_PRECOMPILED_HEADERS
+	#include <functional>
+	#include <string_view>
+#endif
+
 class OutputMessage;
 using OutputMessage_ptr = std::shared_ptr<OutputMessage>;
 class Connection;
@@ -36,6 +41,7 @@ public:
 	bool sendRecvMessageCallback(NetworkMessage &msg);
 	virtual void onRecvFirstMessage(NetworkMessage &msg) = 0;
 	virtual void sendLoginChallenge() { }
+	virtual void onConnectionAccepted();
 
 	bool isConnectionExpired() const;
 
@@ -51,6 +57,9 @@ public:
 	}
 
 	void send(OutputMessage_ptr msg) const;
+
+	bool dispatchProtocolTask(std::function<void()> &&task, std::string_view context, uint32_t expiresAfterMs = 0) const;
+	uint64_t scheduleProtocolTask(uint32_t delay, std::function<void()> &&task, std::string_view context) const;
 
 protected:
 	void disconnect() const;
@@ -105,4 +114,5 @@ private:
 	bool rawMessages = false;
 
 	friend class Connection;
+	friend class TransportCodec;
 };

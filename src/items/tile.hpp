@@ -256,18 +256,10 @@ public:
 	std::shared_ptr<Item> getGround() const {
 		return ground;
 	}
-	void setGround(const std::shared_ptr<Item> &item) {
-		if (ground) {
-			resetTileFlags(ground);
-		}
+	void setGround(const std::shared_ptr<Item> &item);
 
-		if ((ground = item)) {
-			setTileFlags(item);
-		}
-	}
-
-	// This method maintains safety in asynchronous calls, avoiding competition between threads.
-	void safeCall(std::function<void(void)> &&action) const;
+	// Returns false if the action was not accepted (async dispatcher rejected it).
+	bool safeCall(std::function<void(void)> &&action) const;
 
 private:
 	void onAddTileItem(const std::shared_ptr<Item> &item);

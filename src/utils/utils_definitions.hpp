@@ -821,7 +821,6 @@ enum Screenshot_t : uint8_t {
 };
 
 // 15.21+ client event system (opcode 0x75 repurposed from screenshot-only to full event system)
-// Values must match OTClient's Otc::ClientEventType_t exactly.
 enum ClientEventType_t : uint8_t {
 	CLIENT_EVENT_TYPE_SIMPLE      = 1,
 	CLIENT_EVENT_TYPE_ACHIEVEMENT = 2,
@@ -835,7 +834,6 @@ enum ClientEventType_t : uint8_t {
 	CLIENT_EVENT_TYPE_PROFICIENCY = 10,
 };
 
-// Values must match OTClient's Otc::ClientEvent_t exactly.
 enum ClientEvent_t : uint8_t {
 	CLIENT_EVENT_NONE            = 0,
 	CLIENT_EVENT_BOSSDEFEATED    = 1,
@@ -846,7 +844,6 @@ enum ClientEvent_t : uint8_t {
 	CLIENT_EVENT_PLAYERATTACKING = 6,
 	CLIENT_EVENT_TREASUREFOUND   = 7,
 	CLIENT_EVENT_GIFTOFLIFE      = 8,
-	// values >= 9 show UI popups instead of triggering screenshots
 	CLIENT_EVENT_ATTACKSTOPPED   = 9,
 	CLIENT_EVENT_CAPACITYLIMIT   = 10,
 	CLIENT_EVENT_OUTOFAMMO       = 11,

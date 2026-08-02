@@ -344,6 +344,9 @@ public:
 	void playerReceivePing(uint32_t playerId);
 	void playerReceivePingBack(uint32_t playerId);
 	void playerAutoWalk(uint32_t playerId, const std::vector<Direction> &listDir);
+	bool queuePlayerAutoWalk(uint32_t playerId, std::vector<Direction> listDir);
+	void queuePlayerAutoWalkAfterItemPickup(uint32_t playerId, const Position &walkToPos, int32_t maxTargetDistance, const std::shared_ptr<Cylinder> &fromCylinder, const std::shared_ptr<Item> &item, uint32_t count, std::function<void(const std::shared_ptr<Player> &, const Position &, uint8_t)> &&afterPickup);
+	bool queueMonsterPostThink(uint32_t monsterId, bool playerVisible);
 	void forcePlayerAutoWalk(uint32_t playerId, const std::vector<Direction> &listDir);
 	void playerStopAutoWalk(uint32_t playerId);
 	void playerUseItemEx(uint32_t playerId, const Position &fromPos, uint8_t fromStackPos, uint16_t fromItemId, const Position &toPos, uint8_t toStackPos, uint16_t toItemId);
