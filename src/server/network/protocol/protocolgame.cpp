@@ -2150,21 +2150,12 @@ void ProtocolGame::parseSay(NetworkMessage &msg) {
 }
 
 void ProtocolGame::parseFightModes(NetworkMessage &msg) {
-	uint8_t rawFightMode = msg.getByte(); // 1 - offensive, 2 - balanced, 3 - defensive
-	uint8_t rawChaseMode = msg.getByte(); // 0 - stand while fightning, 1 - chase opponent
+	msg.getByte(); // fight mode byte — ignored, server always locks to FIGHTMODE_ATTACK
+	uint8_t rawChaseMode = msg.getByte(); // 0 - stand while fighting, 1 - chase opponent
 	uint8_t rawSecureMode = msg.getByte(); // 0 - can't attack unmarked, 1 - can attack unmarked
-	uint8_t rawPvpMode = msg.getByte(); // pvp mode introduced in 10.0
+	uint8_t rawPvpMode = msg.getByte(); // pvp mode
 
-	FightMode_t fightMode;
-	if (rawFightMode == 1) {
-		fightMode = FIGHTMODE_ATTACK;
-	} else if (rawFightMode == 2) {
-		fightMode = FIGHTMODE_BALANCED;
-	} else {
-		fightMode = FIGHTMODE_DEFENSE;
-	}
-
-	g_game().playerSetFightModes(player->getID(), fightMode, rawChaseMode != 0, rawSecureMode != 0, rawPvpMode);
+	g_game().playerSetFightModes(player->getID(), FIGHTMODE_ATTACK, rawChaseMode != 0, rawSecureMode != 0, rawPvpMode);
 }
 
 void ProtocolGame::parseAttack(NetworkMessage &msg) {

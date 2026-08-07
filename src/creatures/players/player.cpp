@@ -734,25 +734,7 @@ float Player::getMitigation() const {
 }
 
 double Player::getCombatTacticsMitigation() const {
-	double fightFactor = 0.0;
-	switch (fightMode) {
-		case FIGHTMODE_ATTACK: {
-			fightFactor = 0.8f;
-			break;
-		}
-		case FIGHTMODE_BALANCED: {
-			fightFactor = 1.0f;
-			break;
-		}
-		case FIGHTMODE_DEFENSE: {
-			fightFactor = 1.2f;
-			break;
-		}
-		default:
-			break;
-	}
-
-	return fightFactor;
+	return 1.0;
 }
 
 int32_t Player::getDefense(bool sendToClient /* = false*/) const {
@@ -833,24 +815,7 @@ float Player::getAttackFactor() const {
 }
 
 float Player::getDefenseFactor(bool sendToClient /* = false*/) const {
-	switch (fightMode) {
-		case FIGHTMODE_ATTACK:
-			if (sendToClient) {
-				return 0.5f;
-			}
-
-			return (OTSYS_TIME() - lastAttack) < getAttackSpeed() ? 0.5f : 1.0f;
-		case FIGHTMODE_BALANCED:
-			if (sendToClient) {
-				return 0.75f;
-			}
-
-			return (OTSYS_TIME() - lastAttack) < getAttackSpeed() ? 0.75f : 1.0f;
-		case FIGHTMODE_DEFENSE:
-			return 1.0f;
-		default:
-			return 1.0f;
-	}
+	return 1.0f;
 }
 
 std::vector<double> Player::getDamageAccuracy(const ItemType &it) const {

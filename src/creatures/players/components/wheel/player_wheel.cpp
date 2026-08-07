@@ -4022,19 +4022,8 @@ float PlayerWheel::calculateMitigation() const {
 	float fightFactor = 1.0f;
 	float shieldFactor = 1.0f;
 	float distanceFactor = 1.0f;
+	// fightFactor locked to 1.0 — fight mode choice is ignored server-side
 	switch (m_player.fightMode) {
-		case FIGHTMODE_ATTACK: {
-			fightFactor = 0.8f;
-			break;
-		}
-		case FIGHTMODE_BALANCED: {
-			fightFactor = 1.0f;
-			break;
-		}
-		case FIGHTMODE_DEFENSE: {
-			fightFactor = 1.2f;
-			break;
-		}
 		default:
 			break;
 	}
