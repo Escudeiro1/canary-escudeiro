@@ -1,6 +1,7 @@
 target_sources(
     canary_ut
     PRIVATE condition_factory_test.cpp
+            dispatcher_policy_test.cpp
             events_scheduler_test.cpp
             highscores_test.cpp
             monster_spell_test.cpp
