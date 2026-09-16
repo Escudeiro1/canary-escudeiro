@@ -51,8 +51,23 @@ public:
 	void releaseConnection(const Connection_ptr &connection);
 	void closeAll();
 
+	// Total simultaneously open (not necessarily authenticated) connections, used to gate
+	// ServicePort::accept() against MAX_CONNECTIONS_GLOBAL. See SECURITY_AUDIT.md 3.4.2.
+	[[nodiscard]] size_t connectionCount() const {
+		return connections.size();
+	}
+
+	// Registers ip against MAX_CONNECTIONS_PER_IP; returns false (and does not count the
+	// connection) if that IP is already at its concurrent-connection limit. Every connection
+	// this returns true for must be paired with exactly one releaseConnection() call so the
+	// count is decremented - see Connection::ipRegisteredForConnectionCap.
+	bool registerIp(const Connection_ptr &connection, uint32_t ip);
+
 private:
+	void unregisterIp(uint32_t ip);
+
 	phmap::parallel_flat_hash_set_m<Connection_ptr> connections;
+	phmap::parallel_flat_hash_map_m<uint32_t, uint32_t> connectionsPerIp;
 };
 
 class Connection : public std::enable_shared_from_this<Connection> {
@@ -127,6 +142,9 @@ private:
 	std::time_t timeConnected = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	uint32_t packetsSent = 0;
 	uint32_t ip = 1;
+	// Set by ConnectionManager::registerIp() when this connection was counted against
+	// MAX_CONNECTIONS_PER_IP; tells releaseConnection() whether it owes a matching decrement.
+	bool ipRegisteredForConnectionCap = false;
 
 	std::underlying_type_t<ConnectionState_t> connectionState = CONNECTION_STATE_OPEN;
 	uint64_t protocolReleaseRetryAttempts = 0;

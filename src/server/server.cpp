@@ -87,6 +87,18 @@ void ServicePort::accept() {
 		return;
 	}
 
+	// Global cap on simultaneously open (pre-auth) connections - SECURITY_AUDIT.md 3.4.2.
+	// Deliberately checked before createConnection() so an attacker sitting at the cap doesn't
+	// keep forcing fresh 65.5KB NetworkMessage buffer allocations; pending TCP handshakes just
+	// wait in the OS accept backlog until accept() is retried.
+	const int32_t maxGlobalConnections = g_configManager().getNumber(MAX_CONNECTIONS_GLOBAL);
+	if (maxGlobalConnections > 0 && ConnectionManager::getInstance().connectionCount() >= static_cast<size_t>(maxGlobalConnections)) {
+		g_dispatcher().scheduleEvent(
+			200, [self = shared_from_this()] { self->accept(); }, "ServicePort::accept (connection cap retry)", DispatcherLane::Maintenance
+		);
+		return;
+	}
+
 	auto connection = ConnectionManager::getInstance().createConnection(io_service, shared_from_this());
 	acceptor->async_accept(connection->getSocket(), [self = shared_from_this(), connection](const std::error_code &error) { self->onAccept(connection, error); });
 }
@@ -97,8 +109,11 @@ void ServicePort::onAccept(const Connection_ptr &connection, const std::error_co
 			return;
 		}
 
+		// Per-IP cap - SECURITY_AUDIT.md 3.4.2. Checked alongside the Ban rate limiter; unlike
+		// the global cap above, this can only be enforced once the remote IP is known, so the
+		// Connection (and its buffer) already exists by this point for this one connection.
 		const auto remote_ip = connection->getIP();
-		if (remote_ip != 0 && inject<Ban>().acceptConnection(remote_ip)) {
+		if (remote_ip != 0 && inject<Ban>().acceptConnection(remote_ip) && ConnectionManager::getInstance().registerIp(connection, remote_ip)) {
 			const Service_ptr service = services.front();
 			if (service->is_single_socket()) {
 				connection->accept(service->make_protocol(connection));

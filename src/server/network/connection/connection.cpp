@@ -50,6 +50,47 @@ Connection_ptr ConnectionManager::createConnection(asio::io_service &io_service,
 
 void ConnectionManager::releaseConnection(const Connection_ptr &connection) {
 	connections.erase(connection);
+
+	if (connection->ipRegisteredForConnectionCap) {
+		connection->ipRegisteredForConnectionCap = false;
+		unregisterIp(connection->getIP());
+	}
+}
+
+bool ConnectionManager::registerIp(const Connection_ptr &connection, uint32_t ip) {
+	const int32_t maxPerIp = g_configManager().getNumber(MAX_CONNECTIONS_PER_IP);
+	if (maxPerIp <= 0) {
+		return true;
+	}
+
+	bool allowed = true;
+	connectionsPerIp.try_emplace_l(
+		ip,
+		[&](auto &entry) {
+			if (entry.second >= static_cast<uint32_t>(maxPerIp)) {
+				allowed = false;
+			} else {
+				++entry.second;
+			}
+		},
+		1u
+	);
+
+	if (allowed) {
+		connection->ipRegisteredForConnectionCap = true;
+	}
+	return allowed;
+}
+
+void ConnectionManager::unregisterIp(uint32_t ip) {
+	connectionsPerIp.modify_if(ip, [](auto &entry) {
+		if (entry.second > 0) {
+			--entry.second;
+		}
+	});
+	connectionsPerIp.erase_if(ip, [](const auto &entry) {
+		return entry.second == 0;
+	});
 }
 
 void ConnectionManager::closeAll() {
