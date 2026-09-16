@@ -376,6 +376,7 @@ tasks.json
 config.lua
 config_canary.lua
 client_assertions.txt
+key.pem
 .env
 data-otservbr-global/world/otservbr.otbm
 
