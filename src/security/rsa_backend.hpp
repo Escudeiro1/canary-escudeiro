@@ -11,10 +11,22 @@
 
 #ifndef USE_PRECOMPILED_HEADERS
 	#include <memory>
+	#include <stdexcept>
 	#include <string>
 #endif
 
 class Logger;
+
+// Thrown by RsaBackend::loadPEM when the file parses as a valid RSA private
+// key of the WRONG size, as opposed to being missing/corrupt/not-RSA. This
+// case must never be treated the same as "no key configured yet" - the
+// operator deliberately supplied a real key, and silently discarding it for
+// the public default (see key.pem / SECURITY_AUDIT.md 3.3.1) is exactly the
+// fail-open trap documented in SECURITY_AUDIT.md 3.3.2.
+class RsaKeySizeMismatch final : public std::runtime_error {
+public:
+	using std::runtime_error::runtime_error;
+};
 
 class RsaBackend {
 public:

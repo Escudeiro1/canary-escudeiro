@@ -229,8 +229,16 @@ namespace {
 				return false;
 			}
 
-			if (mbedtls_rsa_get_len(newRsa.get()) != RsaBlockSize) {
-				return false;
+			if (const size_t actualLen = mbedtls_rsa_get_len(newRsa.get()); actualLen != RsaBlockSize) {
+				// A real, validly-parsed RSA key of the wrong size is not the same
+				// failure as a missing/corrupt file: the operator deliberately
+				// configured a key here. Fail loudly instead of silently falling
+				// back to the public default (SECURITY_AUDIT.md 3.3.2).
+				throw RsaKeySizeMismatch(fmt::format(
+					"{} is a valid RSA private key, but it is {} bits. This protocol requires exactly {} bits "
+					"({} bytes) because the wire format hardcodes fixed-size RSA blocks. Generate a matching "
+					"key, e.g.: openssl genrsa -out {} {}",
+					filename, actualLen * 8, RsaBlockSize * 8, RsaBlockSize, filename, RsaBlockSize * 8));
 			}
 
 			try {

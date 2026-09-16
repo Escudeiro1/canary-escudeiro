@@ -9,6 +9,7 @@
 
 #include "security/rsa.hpp"
 
+#include "canary_server.hpp"
 #include "lib/di/container.hpp"
 #include "security/rsa_backend.hpp"
 
@@ -32,6 +33,10 @@ void RSAManager::start(const std::string &filename) {
 			logger.error("File {} not found or valid... Setting standard rsa key\n", filename);
 			setKey(p, q);
 		}
+	} catch (const RsaKeySizeMismatch &e) {
+		// Fail closed, not open: a real key of the wrong size must never
+		// silently fall back to the public default (SECURITY_AUDIT.md 3.3.2).
+		throw FailedToInitializeCanary(e.what());
 	} catch (const std::exception &e) {
 		logger.error("Loading RSA Key from {} failed with error: {}\n", filename, e.what());
 		logger.error("Switching to a default key...");
