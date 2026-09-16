@@ -92,8 +92,16 @@ function set.onSay(player, words, param)
 			return false
 		end
 	end
+	-- Audit trail: the value is evaluated via load(), i.e. arbitrary Lua, not a
+	-- plain literal parser (see SECURITY_AUDIT.md 3.1.2). Log the raw attempt
+	-- before executing it, so the record exists even if the payload itself
+	-- misbehaves. This talkaction is human-typed and rare, not a hot path -
+	-- negligible cost either way.
+	logger.info("[/setkv] account={} player={} ip={} target={} key={} rawValue={}", player:getAccountId(), player:getName(), Game.convertIpToString(player:getIP()), targetPlayer:getName(), key, value)
+
 	local success, parsedValue = pcall(load("return " .. value))
 	if not success then
+		logger.warn("[/setkv] account={} player={} rejected invalid value format, key={} rawValue={}", player:getAccountId(), player:getName(), key, value)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Invalid value format.")
 		return false
 	end
