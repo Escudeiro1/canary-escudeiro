@@ -30,18 +30,21 @@ bool Ban::acceptConnection(uint32_t clientIP) {
 		return false;
 	}
 
-	const int64_t timeDiff = currentTime - connectBlock.lastAttempt;
-	connectBlock.lastAttempt = currentTime;
-	if (timeDiff <= 5000) {
-		if (++connectBlock.count > 5) {
-			connectBlock.count = 0;
-			if (timeDiff <= 500) {
-				connectBlock.blockTime = currentTime + 3000;
-				return false;
-			}
-		}
-	} else {
+	// Count attempts against how long the CURRENT window has been open, not
+	// against the gap since the single previous attempt - that let an
+	// attacker reset the counter forever by pacing requests just over 500ms
+	// apart (SECURITY_AUDIT.md 3.3.5: sustained ~2/sec, unlimited).
+	if (currentTime - connectBlock.windowStart > 5000) {
+		connectBlock.windowStart = currentTime;
 		connectBlock.count = 1;
+		return true;
+	}
+
+	if (++connectBlock.count > 5) {
+		connectBlock.blockTime = currentTime + 3000;
+		connectBlock.windowStart = currentTime;
+		connectBlock.count = 0;
+		return false;
 	}
 	return true;
 }

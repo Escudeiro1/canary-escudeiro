@@ -16,10 +16,15 @@ struct BanInfo {
 };
 
 struct ConnectBlock {
-	constexpr ConnectBlock(uint64_t lastAttempt, uint64_t blockTime, uint32_t count) :
-		lastAttempt(lastAttempt), blockTime(blockTime), count(count) { }
+	constexpr ConnectBlock(uint64_t windowStart, uint64_t blockTime, uint32_t count) :
+		windowStart(windowStart), blockTime(blockTime), count(count) { }
 
-	uint64_t lastAttempt {};
+	// Start of the current 5-second counting window - NOT the timestamp of the
+	// previous individual attempt. Anchoring to the window start (rather than
+	// re-deriving it from the gap between the last two attempts) is what
+	// prevents an attacker from resetting the counter by pacing requests
+	// slightly slower than every 500ms. See SECURITY_AUDIT.md 3.3.5.
+	uint64_t windowStart {};
 	uint64_t blockTime {};
 	uint32_t count {};
 };
