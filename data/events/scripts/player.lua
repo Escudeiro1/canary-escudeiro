@@ -431,12 +431,20 @@ function Player:onMoveCreature(creature, fromPosition, toPosition)
 	return true
 end
 
+-- Character names build filesystem paths below (report folders/files) with no validation
+-- upstream of this repo (account creation is external, e.g. a web panel). Strip anything
+-- that isn't a safe filename character so a name can't smuggle a path-traversal component
+-- (e.g. "..") into these paths. See SECURITY_AUDIT.md 3.1.3.
+local function sanitizePathComponent(name)
+	return (name:gsub("%s+", "_"):gsub("[^%w_%-]", "_"))
+end
+
 local function hasPendingReport(playerGuid, targetName, reportType)
 	local player = Player(playerGuid)
 	if not player then
 		return false
 	end
-	local name = player:getName():gsub("%s+", "_")
+	local name = sanitizePathComponent(player:getName())
 	FS.mkdir_p(string.format("%s/reports/players/%s", CORE_DIRECTORY, name))
 	local file = io.open(string.format("%s/reports/players/%s-%s-%d.txt", CORE_DIRECTORY, name, targetName, reportType), "r")
 	if file then
@@ -447,7 +455,11 @@ local function hasPendingReport(playerGuid, targetName, reportType)
 end
 
 function Player:onReportRuleViolation(targetName, reportType, reportReason, comment, translation)
-	local name = self:getName()
+	-- This report type's opcode is currently disabled server-side (SECURITY_AUDIT.md 3.1.3
+	-- notes it's unreachable today), but targetName is otherwise fully free-form network
+	-- input reused below to build file paths - sanitize defensively in case it's ever re-enabled.
+	local name = sanitizePathComponent(self:getName())
+	targetName = sanitizePathComponent(targetName)
 	if hasPendingReport(self:getGuid(), targetName, reportType) then
 		self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your report is being processed.")
 		return
@@ -484,7 +496,7 @@ function Player:onReportRuleViolation(targetName, reportType, reportReason, comm
 end
 
 function Player:onReportBug(message, position, category)
-	local name = self:getName():gsub("%s+", "_")
+	local name = sanitizePathComponent(self:getName())
 	FS.mkdir_p(string.format("%s/reports/bugs/%s", CORE_DIRECTORY, name))
 	local file = io.open(string.format("%s/reports/bugs/%s/report.txt", CORE_DIRECTORY, name), "a")
 
