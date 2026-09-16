@@ -111,9 +111,15 @@ void ProtocolLogin::getCharacterList(const std::string &accountDescriptor, const
 
 		send(output);
 
-		if (protocolProfile) {
-			ProtocolSessionHintStore::getInstance().registerHint(getIP(), protocolProfile->id, sessionKey, characterNames);
-		}
+		// Disabled - SECURITY_AUDIT.md 3.3.10: this SHA-256-hashes and retains the plaintext
+		// session key (account+password, see 3.3.4) in memory for up to 24h, keyed only by IP,
+		// but nothing in the codebase ever reads it back (claimByIp/consumeIfMatches/
+		// consumeAndResolveProfile have zero callers) - pure cost with no benefit today. Left
+		// commented rather than deleted: re-enable if a future upstream sync finishes wiring up
+		// the read side, but re-review the retention window and IP-only keying first.
+		// if (protocolProfile) {
+		// 	ProtocolSessionHintStore::getInstance().registerHint(getIP(), protocolProfile->id, sessionKey, characterNames);
+		// }
 
 		disconnect();
 		return;
@@ -146,9 +152,11 @@ void ProtocolLogin::getCharacterList(const std::string &accountDescriptor, const
 
 	send(output);
 
-	if (protocolProfile) {
-		ProtocolSessionHintStore::getInstance().registerHint(getIP(), protocolProfile->id, sessionKey, characterNames);
-	}
+	// Disabled - see the matching comment above the other registerHint() call site in this
+	// file (SECURITY_AUDIT.md 3.3.10).
+	// if (protocolProfile) {
+	// 	ProtocolSessionHintStore::getInstance().registerHint(getIP(), protocolProfile->id, sessionKey, characterNames);
+	// }
 
 	disconnect();
 }
