@@ -4965,6 +4965,11 @@ C++ Lua binding handlers and registration lines can override inferred signatures
 - Returns: `boolean|nil`
 - Source: `src/lua/functions/creatures/player/player_functions.cpp`
 
+#### `Player:sendIcons()`
+
+- Returns: `boolean|nil`
+- Source: `src/lua/functions/creatures/player/player_functions.cpp`
+
 #### `Player:sendInventory()`
 
 - Returns: `boolean|nil`

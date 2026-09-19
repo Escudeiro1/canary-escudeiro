@@ -7375,6 +7375,12 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "sendIcons",
+        "params": [],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "sendInventory",
         "params": [],
         "return": "boolean|nil",

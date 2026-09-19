@@ -3897,6 +3897,9 @@ function Player:sendHouseWindow(house, listId) end
 function Player:sendIconBakragore(iconType) end
 
 ---@return boolean|nil
+function Player:sendIcons() end
+
+---@return boolean|nil
 function Player:sendInventory() end
 
 ---@param item Item
