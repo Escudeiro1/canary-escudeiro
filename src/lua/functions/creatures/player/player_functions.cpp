@@ -497,6 +497,7 @@ void PlayerFunctions::init(lua_State* L) {
 	Lua::registerMethod(L, "Player", "sendClientEventCosmetic", PlayerFunctions::luaPlayerSendClientEventCosmetic);
 	Lua::registerMethod(L, "Player", "sendNpcWindow", PlayerFunctions::luaPlayerSendNpcWindow);
 	Lua::registerMethod(L, "Player", "sendNpcWindowClose", PlayerFunctions::luaPlayerSendNpcWindowClose);
+	Lua::registerMethod(L, "Player", "sendIcons", PlayerFunctions::luaPlayerSendIcons);
 	Lua::registerMethod(L, "Player", "sendIconBakragore", PlayerFunctions::luaPlayerSendIconBakragore);
 	Lua::registerMethod(L, "Player", "removeIconBakragore", PlayerFunctions::luaPlayerRemoveIconBakragore);
 	Lua::registerMethod(L, "Player", "sendCreatureAppear", PlayerFunctions::luaPlayerSendCreatureAppear);
@@ -5354,6 +5355,19 @@ int PlayerFunctions::luaPlayerSendNpcWindowClose(lua_State* L) {
 		return 1;
 	}
 	player->sendNpcWindowClose();
+	Lua::pushBoolean(L, true);
+	return 1;
+}
+
+int PlayerFunctions::luaPlayerSendIcons(lua_State* L) {
+	// player:sendIcons()
+	const auto &player = Lua::getUserdataShared<Player>(L, 1, "Player");
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	player->sendIcons();
 	Lua::pushBoolean(L, true);
 	return 1;
 }

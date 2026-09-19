@@ -407,6 +407,7 @@ class PlayerFunctions {
 	static int luaPlayerSendClientEventCosmetic(lua_State* L);
 	static int luaPlayerSendNpcWindow(lua_State* L);
 	static int luaPlayerSendNpcWindowClose(lua_State* L);
+	static int luaPlayerSendIcons(lua_State* L);
 	static int luaPlayerSendIconBakragore(lua_State* L);
 	static int luaPlayerRemoveIconBakragore(lua_State* L);
 

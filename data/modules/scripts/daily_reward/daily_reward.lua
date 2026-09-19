@@ -266,6 +266,7 @@ DailyReward.pickedReward = function(playerId)
 	end
 
 	player:setStreakLevel(player:getStreakLevel() + 1)
+	player:sendIcons()
 	player:setStorageValue(DailyReward.storages.avoidDouble, GetDailyRewardLastServerSave())
 	player:setDailyReward(DAILY_REWARD_COLLECTED)
 	player:setNextRewardTime(GetDailyRewardLastServerSave() + DailyReward.serverTimeThreshold)
@@ -292,6 +293,16 @@ DailyReward.isRewardTaken = function(playerId)
 	return false
 end
 
+-- 0 = not expired, 1-3 = jokers needed to keep streak, 4 = ">3" unrecoverable
+-- (jokers cap at 3, so anything past 3 days missed can never be paid off).
+DailyReward.calculateDaysMissed = function(player)
+	if player:getNextRewardTime() >= GetDailyRewardLastServerSave() then
+		return 0
+	end
+	local daysMissed = math.ceil((GetDailyRewardLastServerSave() - player:getNextRewardTime()) / DailyReward.serverTimeThreshold)
+	return math.min(daysMissed, 4)
+end
+
 DailyReward.init = function(playerId)
 	local player = Player(playerId)
 
@@ -304,23 +315,11 @@ DailyReward.init = function(playerId)
 		player:setJokerTokens(player:getJokerTokens() + 1)
 	end
 
-	local timeMath = GetDailyRewardLastServerSave() - player:getNextRewardTime()
-	if player:getNextRewardTime() < GetDailyRewardLastServerSave() then
-		if player:getStorageValue(DailyReward.storages.notifyReset) ~= GetDailyRewardLastServerSave() then
-			player:setStorageValue(DailyReward.storages.notifyReset, GetDailyRewardLastServerSave())
-			timeMath = math.ceil(timeMath / DailyReward.serverTimeThreshold)
-			if player:getJokerTokens() >= timeMath then
-				player:setJokerTokens(player:getJokerTokens() - timeMath)
-				player:sendTextMessage(MESSAGE_LOGIN, "You lost " .. timeMath .. " joker tokens to prevent loosing your streak.")
-			else
-				player:setStreakLevel(0)
-				if player:getLastLoginSaved() > 0 then -- message wont appear at first character login
-					player:setJokerTokens(-(player:getJokerTokens()))
-					player:sendTextMessage(MESSAGE_LOGIN, "You just lost your daily reward streak.")
-				end
-			end
-		end
-	end
+	-- Missed-day resolution (joker spend / streak reset) is no longer decided here.
+	-- It happens on demand at the shrine (see DailyReward.sendOpenRewardWall for the
+	-- days-missed calculation shown to the player, and the collect flow below for the
+	-- actual joker-spend / streak-reset), so the wall can show accurate state instead
+	-- of the outcome having already been silently applied at login.
 
 	-- Daily reward golden icon
 	if DailyReward.isRewardTaken(player:getId()) then
@@ -334,12 +333,31 @@ DailyReward.init = function(playerId)
 end
 
 DailyReward.processReward = function(playerId, target)
+	local player = Player(playerId)
+	if not player then
+		return false
+	end
+
+	-- Resolve missed days here, at the moment of collection, recomputed fresh
+	-- server-side (never trust a client-echoed value). Jokers are spent
+	-- automatically to preserve the streak when affordable; otherwise the
+	-- streak (bonus level) is lost. The Reward Lane position (dayStreak) is
+	-- untouched either way, matching official "missing days doesn't move
+	-- your lane position" behavior.
+	local daysMissed = DailyReward.calculateDaysMissed(player)
+	if daysMissed > 0 then
+		if daysMissed <= 3 and player:getJokerTokens() >= daysMissed then
+			player:setJokerTokens(player:getJokerTokens() - daysMissed)
+			player:sendTextMessage(MESSAGE_LOGIN, "You spent " .. daysMissed .. " Daily Reward Joker(s) to keep your streak.")
+		else
+			player:setStreakLevel(0)
+			player:sendTextMessage(MESSAGE_LOGIN, "You lost your daily reward streak.")
+		end
+	end
+
 	DailyReward.pickedReward(playerId)
 	DailyReward.loadDailyReward(playerId, target)
-	local player = Player(playerId)
-	if player then
-		player:loadDailyRewardBonuses()
-	end
+	player:loadDailyRewardBonuses()
 	return true
 end
 
@@ -368,7 +386,7 @@ function Player.sendOpenRewardWall(self, shrine)
 		end
 	else
 		msg:addByte(0)
-		msg:addByte(2)
+		msg:addByte(DailyReward.calculateDaysMissed(self))
 		msg:addU32(GetDailyRewardLastServerSave() + DailyReward.serverTimeThreshold) --timeLeft to pickUp reward without loosing streak
 		msg:addU16(self:getJokerTokens())
 	end
