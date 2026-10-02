@@ -45,7 +45,13 @@ public:
 	WeaponShared_ptr getWeapon(const std::shared_ptr<Item> &item) const;
 
 	static int32_t getMaxMeleeDamage(int32_t attackSkill, int32_t attackValue);
-	static int32_t getMaxWeaponDamage(uint32_t level, int32_t attackSkill, int32_t attackValue, float attackFactor, bool isMelee);
+
+	// Real-Tibia level contribution ("flat") to the auto-attack roll.
+	static int32_t getLevelFlatDamage(uint32_t level);
+	// Real-Tibia skill+weapon contribution ("AV") to the auto-attack roll.
+	static double getSkillWeaponAttackValue(int32_t attackSkill, int32_t attackValue);
+	static int32_t getMinWeaponDamage(uint32_t level, int32_t attackSkill, int32_t attackValue, double attackIncrease = 1.0);
+	static int32_t getMaxWeaponDamage(uint32_t level, int32_t attackSkill, int32_t attackValue, double attackIncrease = 1.0);
 
 	bool registerLuaEvent(const WeaponShared_ptr &event, bool fromXML = false);
 	void clear(bool isFromXML = false);

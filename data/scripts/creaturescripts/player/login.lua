@@ -197,13 +197,6 @@ function playerLoginGlobal.onLogin(player)
 		end
 	end, QuestTrackerServerConfig.initialSyncWindow, playerId)
 
-	if vocation and vocation:getBaseId() == VOCATION.BASE_ID.MONK then
-		local kv = player:kv()
-		if (kv:get("monk-basic-atk-bonus") or 0) < 10 then
-			logger.info("Setting monk basic attack bonus 10 for player: {}.", player:getName())
-			kv:set("monk-basic-atk-bonus", 10)
-		end
-	end
 	return true
 end
 
