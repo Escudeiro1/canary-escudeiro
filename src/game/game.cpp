@@ -3823,7 +3823,7 @@ ReturnValue Game::processLootItems(const std::shared_ptr<Player> &player, std::s
 	return ret;
 }
 
-ReturnValue Game::internalCollectManagedItems(const std::shared_ptr<Player> &player, const std::shared_ptr<Item> &item, ObjectCategory_t category, bool isLootContainer /* = true*/) {
+ReturnValue Game::internalCollectManagedItems(const std::shared_ptr<Player> &player, const std::shared_ptr<Item> &item, ObjectCategory_t category, bool isLootContainer /* = true*/, bool bypassQuickLootFilter /* = false*/) {
 	if (!player || !item) {
 		return RETURNVALUE_NOTPOSSIBLE;
 	}
@@ -3852,7 +3852,7 @@ ReturnValue Game::internalCollectManagedItems(const std::shared_ptr<Player> &pla
 		}
 	}
 
-	if (!player->quickLootListItemIds.empty()) {
+	if (!bypassQuickLootFilter && !player->quickLootListItemIds.empty()) {
 		uint16_t itemId = item->getID();
 		bool isInList = std::ranges::find(player->quickLootListItemIds, itemId) != player->quickLootListItemIds.end();
 		if (player->quickLootFilter == QuickLootFilter_t::QUICKLOOTFILTER_ACCEPTEDLOOT && !isInList) {
@@ -6451,6 +6451,66 @@ void Game::playerQuickLoot(uint32_t playerId, const Position &pos, uint16_t item
 		}
 	} else {
 		corpse = item->getContainer();
+	}
+
+	// Manual quick-loot of a floor item that is not itself a container (e.g. a
+	// weapon or boots lying on the ground, as opposed to a corpse). Route it
+	// through the same managed-loot-container logic corpses use, but never let
+	// the accepted/skipped quick loot filter block an item the player clicked
+	// directly, and fall back to a plain move into the backpack (exactly like
+	// dragging it there) when no managed container is configured at all.
+	if (pos.x != 0xffff && !corpse) {
+		if (!item->isPickupable() || !item->isMovable() || item->hasAttribute(ItemAttribute_t::UNIQUEID) || item->hasAttribute(ItemAttribute_t::ACTIONID)) {
+			player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
+			return;
+		}
+
+		uint32_t worth = item->getWorth();
+		ObjectCategory_t category = getObjectCategory(item);
+		bool usedFallbackMove = false;
+		ReturnValue ret = internalCollectManagedItems(player, item, category, true, true);
+		if (ret == RETURNVALUE_NOTPOSSIBLE) {
+			const auto &backpackItem = player->getInventoryItem(CONST_SLOT_BACKPACK);
+			const auto &backpack = backpackItem ? backpackItem->getContainer() : nullptr;
+			if (!backpack) {
+				player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
+				return;
+			}
+
+			usedFallbackMove = true;
+			std::shared_ptr<Item> moveItem = nullptr;
+			ret = internalMoveItem(item->getParent(), backpack, INDEX_WHEREEVER, item, item->getItemCount(), &moveItem, 0, player, nullptr, false);
+		}
+
+		if (ret == RETURNVALUE_NOERROR) {
+			player->sendLootStats(item, item->getItemCount());
+			std::stringstream ss;
+			if (worth != 0) {
+				ss << "You looted " << worth << " gold.";
+			} else {
+				ss << "You looted 1 item.";
+			}
+			player->sendTextMessage(MESSAGE_LOOT, ss.str());
+			return;
+		}
+
+		std::stringstream ss;
+		if (ret == RETURNVALUE_NOTENOUGHCAPACITY) {
+			ss << "Attention! The loot you are trying to pick up is too heavy for you to carry.";
+		} else if (ret == RETURNVALUE_CONTAINERNOTENOUGHROOM && !usedFallbackMove) {
+			ss << "Attention! The container for " << getObjectCategoryName(category) << " is full.";
+		} else {
+			player->sendCancelMessage(ret);
+			return;
+		}
+
+		if (player->lastQuickLootNotification + 15000 < OTSYS_TIME()) {
+			player->sendTextMessage(MESSAGE_GAME_HIGHLIGHT, ss.str());
+		} else {
+			player->sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		}
+		player->lastQuickLootNotification = OTSYS_TIME();
+		return;
 	}
 
 	if (!corpse || corpse->hasAttribute(ItemAttribute_t::UNIQUEID) || corpse->hasAttribute(ItemAttribute_t::ACTIONID)) {

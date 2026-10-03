@@ -812,9 +812,10 @@ private:
 	 * @param player Pointer to the player object.
 	 * @param item Pointer to the item being collected.
 	 * @param category Category of the item (default is OBJECTCATEGORY_DEFAULT).
+	 * @param bypassQuickLootFilter Skip the accepted/skipped quick loot filter — used for a manual, player-clicked pickup where the filter shouldn't apply (default is false, corpse auto-loot keeps honoring the filter).
 	 * @return Return value indicating success or error.
 	 */
-	ReturnValue internalCollectManagedItems(const std::shared_ptr<Player> &player, const std::shared_ptr<Item> &item, ObjectCategory_t category, bool isLootContainer = true);
+	ReturnValue internalCollectManagedItems(const std::shared_ptr<Player> &player, const std::shared_ptr<Item> &item, ObjectCategory_t category, bool isLootContainer = true, bool bypassQuickLootFilter = false);
 
 	/**
 	 * @brief Collects items from the reward chest.
