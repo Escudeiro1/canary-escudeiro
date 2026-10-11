@@ -1,7 +1,6 @@
 return {
 	icons = { "Category_ExclusiveOffers.png" },
 	name = "Exclusive Offers",
-	parent = "Tournament",
 	rookgaard = true,
 	state = GameStore.States.STATE_NONE,
 	offers = {

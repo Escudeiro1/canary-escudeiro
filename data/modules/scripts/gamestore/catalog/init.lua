@@ -21,8 +21,6 @@ local modules = {
 	"extras",
 	"extras_extras_services",
 	"extras_usefull_things",
-	"tournament",
-	"tournament_tickets",
 	"tournament_exclusive_offers",
 }
 

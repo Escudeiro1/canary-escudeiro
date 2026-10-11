@@ -23,10 +23,4 @@ return {
 		rookgaard = true,
 		subclasses = { "Extra Services", "Useful Things" },
 	},
-	tournament = {
-		icons = { "Category_Tournament.png" },
-		name = "Tournament",
-		rookgaard = true,
-		subclasses = { "Tickets", "Exclusive Offers" },
-	},
 }
