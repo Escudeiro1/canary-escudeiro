@@ -478,6 +478,10 @@ bool ImbuementDecay::canDecayImbuement(const std::shared_ptr<Item> &item, const 
 
 	const auto &playerTile = player->getTile();
 	const bool isInProtectionZone = playerTile && playerTile->hasFlag(TILESTATE_PROTECTIONZONE);
+	if (isInProtectionZone && player->isRealPremium()) {
+		return false;
+	}
+
 	const bool isInFightMode = player->hasCondition(CONDITION_INFIGHT);
 	const bool nonAggressiveFightOnly = g_configManager().getBoolean(TOGGLE_IMBUEMENT_NON_AGGRESSIVE_FIGHT_ONLY);
 	const auto imbuement = imbuementInfo.imbuement;

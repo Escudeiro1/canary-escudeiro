@@ -3916,16 +3916,21 @@ bool PlayerWheel::getInstant(std::string_view name) const {
 
 // Wheel of destiny - Specific functions
 uint32_t PlayerWheel::getGiftOfLifeTotalCooldown() const {
+	uint32_t baseCooldown = 0;
 	if (getStage(WheelStage_t::GIFT_OF_LIFE) == 1) {
-		return 1 * 60 * 60 * 30;
+		baseCooldown = 1 * 60 * 60 * 30;
+	} else if (getStage(WheelStage_t::GIFT_OF_LIFE) == 2) {
+		baseCooldown = 1 * 60 * 60 * 20;
+	} else if (getStage(WheelStage_t::GIFT_OF_LIFE) == 3) {
+		baseCooldown = 1 * 60 * 60 * 10;
 	}
-	if (getStage(WheelStage_t::GIFT_OF_LIFE) == 2) {
-		return 1 * 60 * 60 * 20;
+
+	if (baseCooldown > 0 && m_player.isRealPremium()) {
+		const auto reductionPercent = g_configManager().getNumber(REALPREMIUM_AVATAR_COOLDOWN_REDUCTION);
+		baseCooldown = static_cast<uint32_t>(baseCooldown * (1.0 - reductionPercent / 100.0));
 	}
-	if (getStage(WheelStage_t::GIFT_OF_LIFE) == 3) {
-		return 1 * 60 * 60 * 10;
-	}
-	return 0;
+
+	return baseCooldown;
 }
 
 uint8_t PlayerWheel::getGiftOfLifeValue() const {

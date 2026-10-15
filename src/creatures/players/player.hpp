@@ -196,7 +196,7 @@ public:
 	void sendWeaponProficiency(uint16_t weaponId = 0);
 
 	std::array<SkillsEquipment, SKILL_LAST + 1> getSkillsEquipment() const;
-	const BaseCritical &getBaseCritical() const;
+	BaseCritical getBaseCritical() const;
 
 	/**
 	 * @brief Gets the current virtue of the player.
@@ -584,6 +584,7 @@ public:
 	bool isAccessPlayer() const;
 	bool isPlayerGroup() const;
 	bool isPremium() const;
+	bool isRealPremium() const;
 	uint32_t getPremiumDays() const;
 	time_t getPremiumLastDay() const;
 
@@ -1223,7 +1224,7 @@ public:
 	void forgetInstantSpell(const std::string &spellName);
 	bool hasLearnedInstantSpell(const std::string &spellName) const;
 
-	void updateRegeneration() const;
+	void updateRegeneration();
 
 	void setScheduledSaleUpdate(bool scheduled);
 

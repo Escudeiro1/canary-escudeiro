@@ -370,6 +370,13 @@ bool ConfigManager::load() {
 	loadIntConfig(L, TIBIADROME_CONCOCTION_COOLDOWN, "tibiadromeConcoctionCooldown", 24 * 60 * 60);
 	loadIntConfig(L, TIBIADROME_CONCOCTION_DURATION, "tibiadromeConcoctionDuration", 1 * 60 * 60);
 	loadIntConfig(L, TRANSCENDENCE_AVATAR_DURATION, "transcendenceAvatarDuration", 7000);
+	loadIntConfig(L, REALPREMIUM_AVATAR_COOLDOWN_REDUCTION, "realPremiumWheelCooldownReduction", 30);
+	loadIntConfig(L, REALPREMIUM_CRITICAL_BONUS, "realPremiumCriticalBonus", 3);
+	loadIntConfig(L, REALPREMIUM_EXERCISE_SPEED_BONUS, "realPremiumExerciseSpeedBonus", 10);
+	loadIntConfig(L, REALPREMIUM_EXP_BONUS, "realPremiumExpBonus", 10);
+	loadIntConfig(L, REALPREMIUM_HEALTH_REGEN_BONUS, "realPremiumHealthRegenBonus", 10);
+	loadIntConfig(L, REALPREMIUM_MANA_REGEN_BONUS, "realPremiumManaRegenBonus", 20);
+	loadIntConfig(L, REALPREMIUM_PROFICIENCY_BONUS, "realPremiumProficiencyBonus", 10);
 	loadIntConfig(L, VIP_BONUS_EXP, "vipBonusExp", 0);
 	loadIntConfig(L, VIP_BONUS_LOOT, "vipBonusLoot", 0);
 	loadIntConfig(L, VIP_BONUS_SKILL, "vipBonusSkill", 0);

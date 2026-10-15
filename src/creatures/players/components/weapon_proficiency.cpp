@@ -48,10 +48,14 @@ namespace {
 		return enumValue >= MIN_TRACKED_SKILL && enumValue <= MAX_TRACKED_SKILL;
 	}
 
-	uint32_t scaleWeaponProficiencyExperienceGain(uint32_t experience) {
+	uint32_t scaleWeaponProficiencyExperienceGain(uint32_t experience, bool realPremiumBonus) {
 		auto multiplier = g_configManager().getFloat(WEAPON_PROFICIENCY_GAIN_MULTIPLIER);
 		if (multiplier < 0.0f) {
 			multiplier = 0.0f;
+		}
+
+		if (realPremiumBonus) {
+			multiplier *= 1.0f + static_cast<float>(g_configManager().getNumber(REALPREMIUM_PROFICIENCY_BONUS)) / 100.0f;
 		}
 
 		const auto scaledExperience = static_cast<uint64_t>(std::llround(static_cast<double>(experience) * multiplier));
@@ -742,7 +746,7 @@ void WeaponProficiency::addExperience(uint32_t experience, uint16_t weaponId /* 
 		return;
 	}
 
-	experience = scaleWeaponProficiencyExperienceGain(experience);
+	experience = scaleWeaponProficiencyExperienceGain(experience, m_player.isRealPremium());
 	if (experience == 0) {
 		return;
 	}

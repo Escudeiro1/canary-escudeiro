@@ -23,6 +23,17 @@
 #include "lib/di/container.hpp"
 
 namespace {
+	bool isWheelAvatarSpell(const std::string &spellName) {
+		static const std::unordered_set<std::string> avatarSpellNames = {
+			"Avatar of Steel",
+			"Avatar of Light",
+			"Avatar of Storm",
+			"Avatar of Nature",
+			"Avatar of Balance",
+		};
+		return avatarSpellNames.contains(spellName);
+	}
+
 	void applySanctuaryEffect(const std::shared_ptr<Player> &player, uint8_t harmonies) {
 		uint32_t sanctuarySubId = magic_enum::enum_integer(AttrSubId_t::Sanctuary);
 		if (!player->wheel().getInstant(WheelInstant_t::SANCTUARY) || harmonies == 0 || player->hasCondition(CONDITION_ATTRIBUTES, sanctuarySubId)) {
@@ -825,6 +836,10 @@ void Spell::applyCooldownConditions(const std::shared_ptr<Player> &player) const
 		spellCooldown -= augmentCooldownReduction;
 		const int32_t halfBaseCooldown = cooldown / 2;
 		spellCooldown = halfBaseCooldown > spellCooldown ? halfBaseCooldown : spellCooldown; // The cooldown should never be reduced less than half (50%) of its base cooldown
+		if (player->isRealPremium() && isWheelAvatarSpell(name)) {
+			const auto reductionPercent = g_configManager().getNumber(REALPREMIUM_AVATAR_COOLDOWN_REDUCTION);
+			spellCooldown = static_cast<int32_t>(spellCooldown * (1.0 - reductionPercent / 100.0));
+		}
 		if (spellCooldown > 0) {
 			player->wheel().handleTwinBurstsCooldown(player, name, spellCooldown, rateCooldown);
 			const auto &condition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_SPELLCOOLDOWN, spellCooldown / rateCooldown, 0, false, m_spellId);

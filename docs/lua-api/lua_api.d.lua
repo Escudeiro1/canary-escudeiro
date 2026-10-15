@@ -3662,10 +3662,16 @@ function Player:isOrangeFightParticipant(creatureId) end
 function Player:isPlayer() end
 
 ---@return boolean|nil
+function Player:isPremium() end
+
+---@return boolean|nil
 function Player:isPromoted() end
 
 ---@return boolean|nil
 function Player:isPzLocked() end
+
+---@return boolean|nil
+function Player:isRealPremium() end
 
 ---@return boolean|number
 function Player:isTraining() end

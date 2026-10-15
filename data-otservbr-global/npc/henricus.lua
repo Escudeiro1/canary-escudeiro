@@ -71,7 +71,13 @@ local function creatureSayCallback(npc, creature, type, message)
 		end
 	elseif MsgContains(message, "blessing") or MsgContains(message, "bless") then
 		if player:getStorageValue(Storage.Quest.U8_2.TheInquisitionQuest.Questline) == 25 then --if quest is done
-			npcHandler:say("Do you want to receive the blessing of the inquisition - which means " .. (missing == 5 and "all five available" or missing) .. " blessings - for " .. totalBlessPrice .. " gold?", npc, creature)
+			local missingText = missing
+			if missing == 5 then
+				missingText = "all five available"
+			elseif missing == 7 then
+				missingText = "all seven available"
+			end
+			npcHandler:say("Do you want to receive the blessing of the inquisition - which means " .. missingText .. " blessings - for " .. totalBlessPrice .. " gold?", npc, creature)
 			npcHandler:setTopic(playerId, 7)
 		else
 			npcHandler:say("You cannot get this blessing unless you have completed The Inquisition Quest.", npc, creature)
@@ -264,7 +270,7 @@ local function creatureSayCallback(npc, creature, type, message)
 				npcHandler:say("You already have been blessed!", npc, creature)
 			elseif player:removeMoneyBank(totalBlessPrice) then
 				npcHandler:say("You have been blessed by all of five gods!, |PLAYERNAME|.", npc, creature)
-				player:addMissingBless(false)
+				player:addMissingBless(false, false, player:isRealPremium())
 				player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
 			else
 				npcHandler:say("Come back when you have enough money.", npc, creature)

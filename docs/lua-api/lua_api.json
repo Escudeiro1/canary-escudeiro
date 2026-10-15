@@ -6925,6 +6925,12 @@
         "source": "src/lua/functions/creatures/player/player_functions.cpp"
       },
       {
+        "name": "isPremium",
+        "params": [],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
         "name": "isPromoted",
         "params": [],
         "return": "boolean|nil",
@@ -6932,6 +6938,12 @@
       },
       {
         "name": "isPzLocked",
+        "params": [],
+        "return": "boolean|nil",
+        "source": "src/lua/functions/creatures/player/player_functions.cpp"
+      },
+      {
+        "name": "isRealPremium",
         "params": [],
         "return": "boolean|nil",
         "source": "src/lua/functions/creatures/player/player_functions.cpp"

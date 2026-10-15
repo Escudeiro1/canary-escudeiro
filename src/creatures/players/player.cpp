@@ -3148,7 +3148,7 @@ bool Player::hasLearnedInstantSpell(const std::string &spellName) const {
 	});
 }
 
-void Player::updateRegeneration() const {
+void Player::updateRegeneration() {
 	if (!vocation) {
 		return;
 	}
@@ -3159,6 +3159,23 @@ void Player::updateRegeneration() const {
 		condition->setParam(CONDITION_PARAM_HEALTHTICKS, vocation->getHealthGainTicks());
 		condition->setParam(CONDITION_PARAM_MANAGAIN, vocation->getManaGainAmount());
 		condition->setParam(CONDITION_PARAM_MANATICKS, vocation->getManaGainTicks());
+	}
+
+	// Extra, independent regeneration for real-premium accounts. Uses a distinct subId
+	// so it never merges with the vocation-driven condition above.
+	constexpr uint32_t realPremiumRegenSubId = 1;
+	auto realPremiumCondition = getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT, realPremiumRegenSubId);
+	if (isRealPremium()) {
+		if (!realPremiumCondition) {
+			realPremiumCondition = Condition::createCondition(CONDITIONID_DEFAULT, CONDITION_REGENERATION, -1, 0, false, realPremiumRegenSubId);
+			addCondition(realPremiumCondition);
+		}
+		realPremiumCondition->setParam(CONDITION_PARAM_HEALTHGAIN, g_configManager().getNumber(REALPREMIUM_HEALTH_REGEN_BONUS));
+		realPremiumCondition->setParam(CONDITION_PARAM_HEALTHTICKS, 3000);
+		realPremiumCondition->setParam(CONDITION_PARAM_MANAGAIN, g_configManager().getNumber(REALPREMIUM_MANA_REGEN_BONUS));
+		realPremiumCondition->setParam(CONDITION_PARAM_MANATICKS, 3000);
+	} else if (realPremiumCondition) {
+		removeCondition(realPremiumCondition);
 	}
 }
 
@@ -3658,6 +3675,11 @@ void Player::addExperience(const std::shared_ptr<Creature> &target, uint64_t exp
 		exp *= animusMasteryMultiplier;
 	}
 
+	const int32_t realPremiumExpPercent = isRealPremium() ? g_configManager().getNumber(REALPREMIUM_EXP_BONUS) : 0;
+	if (realPremiumExpPercent > 0) {
+		exp += (exp * realPremiumExpPercent) / 100;
+	}
+
 	experience += exp;
 
 	if (sendText) {
@@ -3667,6 +3689,9 @@ void Player::addExperience(const std::shared_ptr<Creature> &target, uint64_t exp
 			if (expPercent > 0) {
 				expString = expString + fmt::format(" (VIP bonus {}%)", expPercent > 100 ? 100 : expPercent);
 			}
+		}
+		if (realPremiumExpPercent > 0) {
+			expString = expString + fmt::format(" (RealPremium bonus {}%)", realPremiumExpPercent > 100 ? 100 : realPremiumExpPercent);
 		}
 
 		if (handleAnimusMastery) {
@@ -7759,6 +7784,16 @@ bool Player::isPremium() const {
 		return true;
 	}
 
+	return isRealPremium();
+}
+
+// Same as isPremium(), but ignores the server-wide freePremium override. Use this
+// for gates that must stay premium-only even when freePremium is enabled (e.g. houses).
+bool Player::isRealPremium() const {
+	if (hasFlag(PlayerFlags_t::IsAlwaysPremium)) {
+		return true;
+	}
+
 	if (!account) {
 		return false;
 	}
@@ -8076,7 +8111,7 @@ uint64_t Player::getSpentMana() const {
 }
 
 bool Player::hasFlag(PlayerFlags_t flag) const {
-	return group->flags[static_cast<std::size_t>(flag)];
+	return group && group->flags[static_cast<std::size_t>(flag)];
 }
 
 void Player::setFlag(PlayerFlags_t flag) const {
@@ -13260,7 +13295,7 @@ BidErrorMessage Player::canBidHouse(uint32_t houseId) {
 		return Rookgaard;
 	}
 
-	if (!isPremium()) {
+	if (!isRealPremium()) {
 		return Premium;
 	}
 
@@ -13309,7 +13344,7 @@ TransferErrorMessage Player::canTransferHouse(uint32_t houseId, uint32_t newOwne
 		return Rookgaard;
 	}
 
-	if (!newOwner->isPremium()) {
+	if (!newOwner->isRealPremium()) {
 		return Premium;
 	}
 
@@ -13331,7 +13366,7 @@ AcceptTransferErrorMessage Player::canAcceptTransferHouse(uint32_t houseId) {
 		return NotNewOwner;
 	}
 
-	if (!isPremium()) {
+	if (!isRealPremium()) {
 		return Premium;
 	}
 
@@ -13437,7 +13472,10 @@ std::array<SkillsEquipment, SKILL_LAST + 1> Player::getSkillsEquipment() const {
 	return skillsEquipment;
 }
 
-const BaseCritical &Player::getBaseCritical() const {
+BaseCritical Player::getBaseCritical() const {
+	if (isRealPremium()) {
+		return { baseCritical.chance + g_configManager().getNumber(REALPREMIUM_CRITICAL_BONUS) / 100.0, baseCritical.damage };
+	}
 	return baseCritical;
 }
 

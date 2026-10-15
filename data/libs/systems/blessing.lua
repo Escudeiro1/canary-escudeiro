@@ -231,17 +231,22 @@ end
 
 Blessings.getInquisitionPrice = function(player)
 	-- Find how many missing bless we have and give out the price
+	-- RealPremium accounts also get offered the 2 enhanced blessings (Heart/Blood of the Mountain)
+	local includeEnhanced = player:isRealPremium()
 	inquifilter = function(b)
-		return b.inquisition
+		return b.inquisition or (includeEnhanced and b.type == Blessings.Types.ENHANCED)
 	end
 
 	donthavefilter = function(p, b)
 		return not p:hasBlessing(b)
 	end
 
-	local missing = #player:getBlessings(inquifilter, donthavefilter)
-	local totalBlessPrice = Blessings.getBlessingCost(player:getLevel(), false) * missing * Blessings.Config.InquisitonBlessPriceMultiplier
-	return missing, totalBlessPrice
+	local missingBless = player:getBlessings(inquifilter, donthavefilter)
+	local totalBlessPrice = 0
+	for _, bless in ipairs(missingBless) do
+		totalBlessPrice = totalBlessPrice + Blessings.getBlessingCost(player:getLevel(), false, bless.id >= 7) * Blessings.Config.InquisitonBlessPriceMultiplier
+	end
+	return #missingBless, totalBlessPrice
 end
 
 Blessings.BuyAllBlesses = function(player)
@@ -317,7 +322,7 @@ function Player.getBlessings(self, filter, hasblessingFilter)
 	return blessings
 end
 
-function Player.addMissingBless(self, all, tof)
+function Player.addMissingBless(self, all, tof, enhanced)
 	if all == nil then
 		all = true
 	end
@@ -328,8 +333,12 @@ function Player.addMissingBless(self, all, tof)
 		tof = tof and Blessings.Config.HasToF
 	end
 
+	if enhanced == nil then
+		enhanced = false
+	end
+
 	for k, v in pairs(Blessings.All) do
-		if all or (v.type == Blessings.Types.REGULAR) or (tof and v.type == Blessings.Types.PvP) then
+		if all or (v.type == Blessings.Types.REGULAR) or (tof and v.type == Blessings.Types.PvP) or (enhanced and v.type == Blessings.Types.ENHANCED) then
 			if not self:hasBlessing(k) then
 				self:addBlessing(k, 1)
 			end

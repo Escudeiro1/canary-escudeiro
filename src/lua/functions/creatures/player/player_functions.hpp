@@ -231,6 +231,8 @@ class PlayerFunctions {
 	static int luaPlayerGetPremiumDays(lua_State* L);
 	static int luaPlayerAddPremiumDays(lua_State* L);
 	static int luaPlayerRemovePremiumDays(lua_State* L);
+	static int luaPlayerIsPremium(lua_State* L);
+	static int luaPlayerIsRealPremium(lua_State* L);
 
 	static int luaPlayerGetTibiaCoins(lua_State* L);
 	static int luaPlayerAddTibiaCoins(lua_State* L);
