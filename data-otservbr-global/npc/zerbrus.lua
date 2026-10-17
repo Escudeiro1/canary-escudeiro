@@ -185,6 +185,8 @@ keywordHandler:addKeyword({ "dallheim" }, StdModule.say, { npcHandler = npcHandl
 keywordHandler:addKeyword({ "zerbrus" }, StdModule.say, { npcHandler = npcHandler, text = "At your service." })
 keywordHandler:addKeyword({ "billy" }, StdModule.say, { npcHandler = npcHandler, text = "He's a farmer. A little more friendly than his cousin {Willie}, he also buys and sells {food}." })
 keywordHandler:addKeyword({ "willie" }, StdModule.say, { npcHandler = npcHandler, text = "He's quite rude. Also, he buys and sells {food}." })
+keywordHandler:addKeyword({ "spearman" }, StdModule.say, { npcHandler = npcHandler, text = "The orcs have a hideout under the troll cave, just descend deep. Still, be very careful!" })
+keywordHandler:addKeyword({ "rabbit" }, StdModule.say, { npcHandler = npcHandler, text = "They don't pose a threat. However, if you need food, they are good meat providers." })
 
 -- Healing
 keywordHandler:addKeyword({ "heal" }, StdModule.say, { npcHandler = npcHandler, text = "You are poisoned. I will help you." }, function(player)

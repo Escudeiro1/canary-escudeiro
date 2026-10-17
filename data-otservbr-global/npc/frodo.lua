@@ -103,6 +103,8 @@ keywordHandler:addKeyword({ "quentin" }, StdModule.say, { npcHandler = npcHandle
 keywordHandler:addKeyword({ "samuel" }, StdModule.say, { npcHandler = npcHandler, text = "A loud neighbour, I get a lot of complaints about him." })
 keywordHandler:addKeyword({ "todd" }, StdModule.say, { npcHandler = npcHandler, text = "That fellow is filthy rich. He rented a room upstairs for months in advance and always orders the best beer and wine i serve." })
 keywordHandler:addKeyword({ "xodet" }, StdModule.say, { npcHandler = npcHandler, text = "I don't know where he gets these fluids. If I could sell them here, the hut would be crowded." })
+keywordHandler:addKeyword({ "hengis wulfson" }, StdModule.say, { npcHandler = npcHandler, text = "He is a great bard. He often graced my hut with his presence, songs, and rhymes. I wonder what happened to him lately." })
+keywordHandler:addKeyword({ "strange rhyme" }, StdModule.say, { npcHandler = npcHandler, text = "He recitated it that often that I learned it by heart myself. I would recitate it, but I am not skilled in that kind of things." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to Frodo's Hut. You heard about the {news}?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Please come back from time to time.")

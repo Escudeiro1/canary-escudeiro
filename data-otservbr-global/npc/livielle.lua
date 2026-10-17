@@ -51,8 +51,10 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is 3:34 am now." })
-keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "(asked by female character) I'm Livielle Delacroix, madame." })
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Livielle Delacroix." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Alors, guess what my job might be, standing 'ere in the middle of all these juicy exotic fruits?" })
+keywordHandler:addKeyword({ "fruits" }, StdModule.say, { npcHandler = npcHandler, text = "I offer you bananas, melons, pumpkins, white mushrooms, oranges, strawberries, and blueberries." })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, for sure will my fruits 'elp you driving off all these nasty diseases and strengthen your immune system!" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

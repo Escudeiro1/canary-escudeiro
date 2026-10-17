@@ -100,6 +100,8 @@ end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Robson Stonespitter, Son of Earth of the Dragoneater fellowship." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I was once a trader but after some years stranded on this remote isle, I felt that I liked that kind of life better and just stayed here even after steamships found that isle." })
+keywordHandler:addKeyword({ "goblin" }, StdModule.say, { npcHandler = npcHandler, text = "You mean the little guy over there? I call him Lunch. He is my ... uhm friend ... I guess." })
+keywordHandler:addKeyword({ "lunch" }, StdModule.say, { npcHandler = npcHandler, text = "You won't believe it, but I found him in a giant fish that I captured. When I cut the beast in pieces, I saw a little goblin cowering inside. ... He did not seem to be a threat and I kind of adopted him. Since I captured the fish for lunch and it was lunchtime I named him Lunch. ... He learnt our language quite fast. Well at least the basics. He never bothered to improve his grammar but I'm no teacher anyway." })
 npcHandler:setMessage(MESSAGE_GREET, "Hrmpf, I'd say welcome if I felt like lying.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "See you next time!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "No patience at all!")

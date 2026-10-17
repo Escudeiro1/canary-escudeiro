@@ -85,6 +85,8 @@ keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is 7:10 am. You needing clock for your house?" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me is Iwar Woodpecker, son of Earth from the Savage Axes. Me run this store." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "You moving to new home? Me specialist for equipping it." })
+keywordHandler:addKeyword({ "furniture" }, StdModule.say, { npcHandler = npcHandler, text = "Me sell lots of furniture. Ask for a {trade} if you wanna see." })
+keywordHandler:addKeyword({ "poem" }, StdModule.say, { npcHandler = npcHandler, text = "Me terrible remember such things. Me no want to tell something wrong. Go ask someone else." })
 npcHandler:setMessage(MESSAGE_GREET, "Hiho Storm Killer! Welcome to Kazordoon furniture store.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Well, bye then.")
 

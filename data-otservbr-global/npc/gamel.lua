@@ -102,6 +102,8 @@ end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Names don't matter." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am selling some... things." })
+keywordHandler:addKeyword({ "rebellion" }, StdModule.say, { npcHandler = npcHandler, text = "Uhm... who sent you?" })
+keywordHandler:addKeyword({ "sell" }, StdModule.say, { npcHandler = npcHandler, text = "I sell maces, staffs, daggers and brass helmets. Ask me for a trade." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Bye. Tell others about... my little shop here.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Bye. Tell others about... my little shop here.")
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)

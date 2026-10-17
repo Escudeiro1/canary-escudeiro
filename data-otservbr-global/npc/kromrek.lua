@@ -50,6 +50,9 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "danger" }, StdModule.say, { npcHandler = npcHandler, text = "We are under constant attacks by strange metal creatures from the south. Some are familiar like the glooth golems and the dreaded walkers but others are {foreign} to us but just as murderous of course." })
+keywordHandler:addKeyword({ "foreign" }, StdModule.say, { npcHandler = npcHandler, text = "Some were identified as golems of yalaharian design. But others are of designs like nothing we have ever seen. ... There are control towers that boost the strength of the golems at a disturbing degree and there are batteries that recharge and so to say heal the attackers. ... This should be your first targets in any fights. But the worst thing in the enemies arsenal is the glooth {bomb} for sure." })
+keywordHandler:addKeyword({ "bomb" }, StdModule.say, { npcHandler = npcHandler, text = "It's kind of a doomsday device, that can cause serious damage to our plant. It's slowly moving towards the plant and heavily armoured. The only way to stop it, is it's timely destruction." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

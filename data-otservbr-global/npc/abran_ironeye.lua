@@ -58,6 +58,13 @@ keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais has outlived its usefulness since years. Its star is sinking." })
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "I would like to see a true warrior-king in {Thais}... like in the old days. But who knows, perhaps one day the tides of fate will bring such a man to power. Who knows..." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "You should know that on your own!" })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a busy man. I run the {Ironhouse}." })
+keywordHandler:addAliasKeyword({ "disturb" })
+keywordHandler:addKeyword({ "ironhouse" }, StdModule.say, { npcHandler = npcHandler, text = "What do you think? Here weapons and armor are {forged}, repaired, and sold." })
+keywordHandler:addKeyword({ "forged" }, StdModule.say, { npcHandler = npcHandler, text = "My Ironhouse is more than a warehouse." })
+keywordHandler:addAliasKeyword({ "warehouse" })
+keywordHandler:addKeyword({ "finesse" }, StdModule.say, { npcHandler = npcHandler, text = "I won't give away my tricks, learn your own." })
+keywordHandler:addKeyword({ "teddy" }, StdModule.say, { npcHandler = npcHandler, text = "I don't know anything about a teddy... and if you are smart you shouldn't either..." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

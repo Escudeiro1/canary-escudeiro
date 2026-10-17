@@ -226,6 +226,8 @@ keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, a watch would ruin my stylish outfit." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am known as Hugo Chief." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am tailor and designer extraordinaire. Well, rather a designer. I leave most of the actual tailoring to my assistants." })
+keywordHandler:addKeyword({ "warehouse" }, StdModule.say, { npcHandler = npcHandler, text = "I would call it a 'wearhouse'." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is kind of a fashion hell. If there was an award for the most ugly citizens, it would go to Thais." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

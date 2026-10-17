@@ -49,6 +49,8 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is 10:14 am now." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Borkas Flersson, but let's not waste precious tradin' time with small talk." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm into {sellin}' furniture. My grandfather was in that business, then my father, and so am I." })
+keywordHandler:addKeyword({ "allen" }, StdModule.say, { npcHandler = npcHandler, text = "Have a look. Most furniture comes in handy kits. Just use them in your house to assemble the furniture." })
+keywordHandler:addAliasKeyword({ "richardson" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

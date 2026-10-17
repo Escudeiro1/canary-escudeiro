@@ -156,9 +156,9 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
-keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "or general We supply the army with some sorcerer recruits now and then." })
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "We supply the army with some sorcerer recruits now and then." })
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Our guild is working on a new spell, but I won't give away any details yet." })
-keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or Tibianus The king is a patron of the arcane arts." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king is a patron of the arcane arts." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is unimportant." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "You may call me Muriel." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the second sorcerer. I am selling spellbooks and spells." })

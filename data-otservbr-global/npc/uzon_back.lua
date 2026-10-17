@@ -76,6 +76,11 @@ keywordHandler:addKeyword({ "fly" }, StdModule.say, { npcHandler = npcHandler, t
 keywordHandler:addKeyword({ "new" }, StdModule.say, { npcHandler = npcHandler, text = "I heard too many news to recall them all." })
 keywordHandler:addKeyword({ "rumors" }, StdModule.say, { npcHandler = npcHandler, text = "I heard too many news to recall them all." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 3:42 pm right now. The next flight is scheduled soon." })
+keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Some people claim it is hidden somewhere under the endless sands of the devourer desert in Darama." })
+keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I would never transport this one." })
+keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Just another Thais but with women to lead them." })
+keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I have seen almost every place on the continent." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is noisy and overcroweded. That's why I like Darashia more." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Daraman's blessings, traveller |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Daraman's blessings")

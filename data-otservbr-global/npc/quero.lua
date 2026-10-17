@@ -53,6 +53,11 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I don't know what time it is." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Quero." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I make instruments and sometimes I'm wandering through the lands of Tibia as a bard." })
+keywordHandler:addKeyword({ "instruments" }, StdModule.say, { npcHandler = npcHandler, text = "You can buy a lyre, lute, drum, and simple fanfare." })
+keywordHandler:addKeyword({ "benjamin" }, StdModule.say, { npcHandler = npcHandler, text = "He's nice." })
+keywordHandler:addKeyword({ "eclesius" }, StdModule.say, { npcHandler = npcHandler, text = "That name rings a bell, wait... I've last seen him several days ago when he went to buy some bread at the farm." })
+keywordHandler:addKeyword({ "music" }, StdModule.say, { npcHandler = npcHandler, text = "I love the music of the elves." })
+keywordHandler:addKeyword({ "bard" }, StdModule.say, { npcHandler = npcHandler, text = "Selling instruments isn't enough to live on and I love music. That's why I wander through the lands from time to time." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

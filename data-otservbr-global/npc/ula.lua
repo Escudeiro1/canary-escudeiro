@@ -51,6 +51,10 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me? <giggles> I am {Ula}, magic assistant to the grand sorcerer {Estrella} and humble spectator at our festival." })
+keywordHandler:addKeyword({ "estrella" }, StdModule.say, { npcHandler = npcHandler, text = "She's awesome. She is our {sorcerer} vocation trainer on the Island of Destiny. ... You should talk to her after the festival if you want to become a sorc, too." })
+keywordHandler:addKeyword({ "sorcerer" }, StdModule.say, { npcHandler = npcHandler, text = "That's us! Casting magic since - um, always, actually! We're the coolest cats in any town. ... I mean, cast fire and hurl death at your enemies? What's not to like about that? ... Anyway, go visit {Tylius} next door here if you wish to know more stuff - like, how to use a staff. It's really cool." })
+keywordHandler:addKeyword({ "tylius" }, StdModule.say, { npcHandler = npcHandler, text = "He's sooo cute. ... I mean, he's an apprentice sorcerer, like me. He's in this tent right here. He's really good in staff and rod combat, you should totally check it out!" })
+keywordHandler:addKeyword({ "magic" }, StdModule.say, { npcHandler = npcHandler, text = "Really handy to keep all kinds of jerks at a distance, let me tell you! And it's quite the thing to impress cute boys, too." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

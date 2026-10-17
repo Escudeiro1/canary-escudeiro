@@ -94,6 +94,7 @@ keywordHandler:addKeyword({ "knights" }, StdModule.say, { npcHandler = npcHandle
 keywordHandler:addKeyword({ "heroes" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Heroes are rare in this days, jawoll." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Was there once. Can't handle the crime over there." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Dunno." })
+keywordHandler:addKeyword({ "poem" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "'Chop some heads is what I do ... After that I drink some brew.' Not the poem you thought of, huh? Muahaha!" })
 
 npcHandler:setMessage(MESSAGE_GREET, "Hiho, fellow knight |PLAYERNAME|!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Goodbye.")

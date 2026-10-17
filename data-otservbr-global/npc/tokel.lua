@@ -57,6 +57,15 @@ keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, now that you mention it: I have much left to do, please excuse me. he stops the conversation" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tokel." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a farmer, and proud of it." })
+keywordHandler:addKeyword({ "how are you" }, StdModule.say, { npcHandler = npcHandler, text = "I am fine, thank you." })
+keywordHandler:addKeyword({ "greenshore" }, StdModule.say, { npcHandler = npcHandler, text = "The soil is a bit dry and there are a lot of stones. It's very hard to work this soil." })
+keywordHandler:addKeyword({ "dungeons" }, StdModule.say, { npcHandler = npcHandler, text = "Here are no dungeons as far as I know." })
+keywordHandler:addKeyword({ "weapon" }, StdModule.say, { npcHandler = npcHandler, text = "I know nothing but about such stuff." })
+keywordHandler:addAliasKeyword({ "spell" })
+keywordHandler:addAliasKeyword({ "magic" })
+keywordHandler:addKeyword({ "edron" }, StdModule.say, { npcHandler = npcHandler, text = "They say life is easy there, the soil is rich, the city save. One day I might move there." })
+keywordHandler:addKeyword({ "food" }, StdModule.say, { npcHandler = npcHandler, text = "I can offer you bread, cheese, ham, or meat. If you'd like to see my offers, ask me for a trade." })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I have no idea how to help you." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

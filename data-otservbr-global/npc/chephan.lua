@@ -57,6 +57,14 @@ keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thaian cooking utensils are of low quality. Make sure to buy our quality wares here as soon as possible." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Watches are sold in the south-eastern part of this warehouse." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Chephan, at your service." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I {sell} all the cooking utensils you can dream of." })
+keywordHandler:addAliasKeyword({ "looking" })
+keywordHandler:addKeyword({ "warehouse" }, StdModule.say, { npcHandler = npcHandler, text = "Here you can by many things you will need one day or another. Just have a look." })
+keywordHandler:addKeyword({ "sell" }, StdModule.say, { npcHandler = npcHandler, text = "I offer the best cooking utensils in town. If you like to see my offers, ask me for a {trade}." })
+keywordHandler:addAliasKeyword({ "cooking" })
+-- after "cooking", which contains "king"
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Even a king needs a fork now and then - to scratch his back or to poke servants for example." })
+keywordHandler:addAliasKeyword({ "tibianus" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

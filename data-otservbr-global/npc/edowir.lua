@@ -194,6 +194,8 @@ keywordHandler:addKeyword({ "blog" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "age" }, StdModule.say, { npcHandler = npcHandler, text = "Growing old is mandatory, growing up is optional." })
 keywordHandler:addKeyword({ "old" }, StdModule.say, { npcHandler = npcHandler, text = "Growing old is mandatory, growing up is optional." })
 keywordHandler:addKeyword({ "god" }, StdModule.say, { npcHandler = npcHandler, text = "Learn about the gods to learn from the gods." })
+keywordHandler:addKeyword({ "dwarven" }, StdModule.say, { npcHandler = npcHandler, text = "The small but strong dwarves are tireless workers and fierce warriors. They are familiar with several crafts and mastered most of them. In our days their smithing skills are rivaled only by those of the cyclopses." })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "I would like to help you. What is your problem?" })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

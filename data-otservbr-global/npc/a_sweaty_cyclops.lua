@@ -364,6 +364,8 @@ keywordHandler:addKeyword({ "minotaurs" }, StdModule.say, { npcHandler = npcHand
 keywordHandler:addKeyword({ "elves" }, StdModule.say, { npcHandler = npcHandler, text = "Me not fight them, they not fight me." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Me wish I could make weapon like it." })
 keywordHandler:addKeyword({ "cyclops" }, StdModule.say, { npcHandler = npcHandler, text = "Me people not live here much. Most are far away." })
+keywordHandler:addKeyword({ "uth'morc" }, StdModule.say, { npcHandler = npcHandler, text = "Li'l ones it thieves' steel call sometimes. It's dark and making not much noise." })
+keywordHandler:addKeyword({ "forge" }, StdModule.say, { npcHandler = npcHandler, text = "Me can forge equipment back to steel. Like {Za'Ralator}, {Uth'Kean}, {Uth'Lokr}, {Uth'Prta}." })
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 

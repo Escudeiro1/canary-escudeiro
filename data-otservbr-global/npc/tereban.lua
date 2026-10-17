@@ -63,6 +63,9 @@ end
 
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = { "My family owns some land here as well as two ships. I have overseers for that though. This allows me to spend my time reading and dabbling in poetry. ...", "But considering the circumstances right now, I'm just a troubled father with a mission too hard to accomplish for me." } })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tereban." })
+keywordHandler:addKeyword({ "poetry" }, StdModule.say, { npcHandler = npcHandler, text = "I'm not good enough to find a publisher but it is still fun to write {poems} for myself." })
+keywordHandler:addKeyword({ "father" }, StdModule.say, { npcHandler = npcHandler, text = "My sons are quite independent. Even though I had preferred that they stayed at home longer, they decided to leave to make their careers in the great guilds. ... It was probably only for their best to start their training at an early age, but I miss them badly. I am sure they will become something great in their vocations, but I have always been proud of them anyway." })
+keywordHandler:addKeyword({ "poems" }, StdModule.say, { npcHandler = npcHandler, text = "I like to keep my poems private." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings, friend. Good you are showing up.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)

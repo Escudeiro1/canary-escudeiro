@@ -261,6 +261,8 @@ keywordHandler:addKeyword({ "toth" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "sula" }, StdModule.say, { npcHandler = npcHandler, text = "Sula is just the mindless elemental power of water." })
 keywordHandler:addKeyword({ "fire" }, StdModule.say, { npcHandler = npcHandler, text = "Fire is just a mindless elemental force." })
 keywordHandler:addKeyword({ "air" }, StdModule.say, { npcHandler = npcHandler, text = "Air is just a mindless elemental force." })
+keywordHandler:addKeyword({ "quest" }, StdModule.say, { npcHandler = npcHandler, text = "Aren't we all on a quest for survival and supremacy?" })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "If you cant help yourself you are not worth of my assistance." })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

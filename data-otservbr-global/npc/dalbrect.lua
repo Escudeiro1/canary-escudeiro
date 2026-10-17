@@ -183,6 +183,7 @@ keywordHandler:addKeyword({ "ship" }, StdModule.say, {
 	text = "My ship is my only pride and joy.",
 })
 
+keywordHandler:addKeyword({ "family" }, StdModule.say, { npcHandler = npcHandler, text = "Once my family was noble and wealthy, but fate turned against us and threw us into poverty." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, traveller |PLAYERNAME|. Welcome to my {hut}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. You are welcome.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye.")

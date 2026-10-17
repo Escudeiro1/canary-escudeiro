@@ -54,6 +54,17 @@ keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Who cares?" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Donald McRonald." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I run a farm, what else?!" })
+keywordHandler:addKeyword({ "quentin" }, StdModule.say, { npcHandler = npcHandler, text = "A generous person." })
+keywordHandler:addKeyword({ "fields" }, StdModule.say, { npcHandler = npcHandler, text = "My fields are enchanted by the druids and the wheat grows very quickly." })
+keywordHandler:addKeyword({ "gregor" }, StdModule.say, { npcHandler = npcHandler, text = "Knights like you always feel superior to us farmers." })
+keywordHandler:addKeyword({ "muriel" }, StdModule.say, { npcHandler = npcHandler, text = "I dont trust sorcerers." })
+keywordHandler:addKeyword({ "oswald" }, StdModule.say, { npcHandler = npcHandler, text = "He ignores us and we ignore him." })
+keywordHandler:addKeyword({ "elane" }, StdModule.say, { npcHandler = npcHandler, text = "Too noble to care about us." })
+keywordHandler:addKeyword({ "frodo" }, StdModule.say, { npcHandler = npcHandler, text = "Frodo? He is a friend of mine." })
+keywordHandler:addKeyword({ "lynda" }, StdModule.say, { npcHandler = npcHandler, text = "She has a good soul." })
+keywordHandler:addKeyword({ "city" }, StdModule.say, { npcHandler = npcHandler, text = "The city is to the north." })
+keywordHandler:addKeyword({ "gorn" }, StdModule.say, { npcHandler = npcHandler, text = "Hardly know him." })
+keywordHandler:addKeyword({ "wife" }, StdModule.say, { npcHandler = npcHandler, text = "Sherry is my wife." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

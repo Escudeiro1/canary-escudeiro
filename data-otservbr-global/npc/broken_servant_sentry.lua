@@ -127,6 +127,12 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "We. Are. Sen-Sen-Sen-try! Stand. Sentry. We. Will-ill-ill-ill*chhhhrrrk*. I. Am. Sorry. It. Seems. I. Am-Am-AAAAA*chhhrk*Am. Broken." })
+keywordHandler:addKeyword({ "experimenter" }, StdModule.say, { npcHandler = npcHandler, text = "Dangerous. Slime. Fungus. In. Other. Tow-Tow-Tow-To-To-T*chrrrchk*ower. Need. Samples." })
+keywordHandler:addKeyword({ "dimensional" }, StdModule.say, { npcHandler = npcHandler, text = "In. The. Case. Of. A. Dead. Master. The-The-The-T-T-T*chrrrk*The. Portal. Cannot. Be. Maintained. It. Will-Will-Wi-Wi-Wi*chrrrchk*. Will. Collapse." })
+keywordHandler:addAliasKeyword({ "portal" })
+keywordHandler:addKeyword({ "collapse" }, StdModule.say, { npcHandler = npcHandler, text = "If. The. Portal. Collapses. It. Will. Not. Be. Possible. To. Traverse. The. Dimension. Behind. It. Safe-Safe-Safe-Sa*chhhrrrkchrk*Safely. ... The. Dimension. Will. Stay. Real. For. About. Sixty. Minutes. Before. Com-Com-Complete. *chrk* Dissolution." })
+keywordHandler:addKeyword({ "master" }, StdModule.say, { npcHandler = npcHandler, text = "Our. Master. Is. Keep-Keep-Kee*chrrrchhh*. Keeping. A. Dimensional. Portal. Intact. He. Left. Me. Here. For. Pro-Pro-Pro*chhhhhrchrk*tection. I. Stand. Sentry!" })
+keywordHandler:addKeyword({ "tower" }, StdModule.say, { npcHandler = npcHandler, text = "Strange. Other. Experimenter. Conducted. Experiments. In. Other. Tower. Great. Problems. ... Master. Avoids. Problems. An-An-An-AAAA*chhhrk*nd. Needs. Samples." })
 npcHandler:setMessage(MESSAGE_GREET, "The Master is-is-is-is de-ad. Plea*chrrrrchk*se. Be. In. Mourning.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

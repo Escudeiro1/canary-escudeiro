@@ -165,6 +165,13 @@ pickKeyword:addChildKeyword({ "" }, StdModule.say, { npcHandler = npcHandler, te
 keywordHandler:addAliasKeyword({ "small", "axe" })
 
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Bye, bye.")
+keywordHandler:addKeyword({ "rookgaard" }, StdModule.say, { npcHandler = npcHandler, text = "On the island of Rookgaard you can gather important experiences to prepare yourself for mainland." })
+keywordHandler:addKeyword({ "gold" }, StdModule.say, { npcHandler = npcHandler, text = "Well, no gold, no deal. Earn gold by fighting monsters and picking up the things they carry. Sell it to merchants to make profit!" })
+keywordHandler:addAliasKeyword({ "money" })
+keywordHandler:addKeyword({ "worms" }, StdModule.say, { npcHandler = npcHandler, text = "I have enough worms myself and don't want any more. Use them for fishing." })
+keywordHandler:addKeyword({ "vital" }, StdModule.say, { npcHandler = npcHandler, text = "Well, vital means - necessary for you to survive!" })
+keywordHandler:addKeyword({ "bone" }, StdModule.say, { npcHandler = npcHandler, text = "You better put that bone back there where you dug it out." })
+keywordHandler:addKeyword({ "rats" }, StdModule.say, { npcHandler = npcHandler, text = "Rats plague our sewers. You can sell fresh rat corpses to Seymour or Tom the tanner." })
 npcHandler:setMessage(MESSAGE_FAREWELL, "Bye, bye |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Take a look in the trade window to your left.")
 npcHandler:setMessage(MESSAGE_GREET, {

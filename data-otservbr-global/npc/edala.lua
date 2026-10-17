@@ -133,6 +133,8 @@ keywordHandler:addKeyword({ "phoenix" }, StdModule.say, { npcHandler = npcHandle
 keywordHandler:addAliasKeyword({ "spark" })
 keywordHandler:addKeyword({ "solitude" }, StdModule.say, { npcHandler = npcHandler, text = "Talk to the hermit Eremo on the isle of Cormaya about this blessing." })
 keywordHandler:addAliasKeyword({ "wisdom" })
+keywordHandler:addKeyword({ "diapason" }, StdModule.say, { npcHandler = npcHandler, text = "This item has magical abilities. We elves use it to tune our instruments so they create the most silvery, delicate song. It might have other uses, but I wouldn't know about that." })
+keywordHandler:addKeyword({ "mystic" }, StdModule.say, { npcHandler = npcHandler, text = "We mystics are philosophers and healers." })
 
 -- Greeting message
 keywordHandler:addGreetKeyword({ "ashari" }, { npcHandler = npcHandler, text = "Greetings, |PLAYERNAME|." })

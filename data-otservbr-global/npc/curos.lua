@@ -115,6 +115,14 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Curos of the minotaurs! Leader of the local orc tribes." })
+keywordHandler:addKeyword({ "leader" }, StdModule.say, { npcHandler = npcHandler, text = "We minotaurs are proud people. It took us a long time to get rid of the shackles of the gods and even longer to overcome our rage. We are not numerous anymore and the life of every single minotaur is precious. Still, there is infighting and quarrels. ... This led to our great experiment. If we can prove that even the simpleminded orcs can overcome their bestial heritage with our leadership, we might inspire the whole minotaur nation." })
+keywordHandler:addAliasKeyword({ "minotaurs" })
+keywordHandler:addKeyword({ "mooh'tah" }, StdModule.say, { npcHandler = npcHandler, text = "You humans lack the spiritual energy of emotion and therefore cannot utilise this power. The Mooh'Tah teaches the taming of the inner beast. ... To conquer strong emotions like rage and fear is one goal, but there are other destructive but more subtle urges that need to be overcome. ... Greed, envy and the like are often more dangerous as they do not hit you with full force but steadily poison your thoughts." })
+keywordHandler:addAliasKeyword({ "mooh tah" })
+keywordHandler:addKeyword({ "humans" }, StdModule.say, { npcHandler = npcHandler, text = "The humans of this land are pathetic and even worse than the orcs. Yet, we know of the heights that humans are capable of. This is a clear proof that our influence on the orcs can change them. ... When humans can fall that far, why shouldn't orcs be able to rise to unknown heights?" })
+keywordHandler:addKeyword({ "lizard" }, StdModule.say, { npcHandler = npcHandler, text = "This land used to be the land of the lizards. But they took the land by force, so whoever has the power to challenge them can take as much of the land as he is able to gain and to hold." })
+keywordHandler:addKeyword({ "land" }, StdModule.say, { npcHandler = npcHandler, text = "The lizard men call this land Zao. The orcs did not bother to give the land a name, so we adopted the lizard term." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted blank skin.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

@@ -259,6 +259,10 @@ keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "I'd like to visit the beach more often, but I guess it's too dangerous." })
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "The king that lives in this fascinating castle? I think he does look kind of cute in his luxurious robes, doesn't he?" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a little sad that you seem to have forgotten me, handsome. I'm Aruda." })
+keywordHandler:addKeyword({ "eclesius" }, StdModule.say, { npcHandler = npcHandler, text = "He often passes me on the way to Frodo's." })
+keywordHandler:addKeyword({ "rumors" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a little shy and so I don't hear many rumours" })
+keywordHandler:addAliasKeyword({ "rumours" })
+keywordHandler:addKeyword({ "frodo" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, a girl like me shouldn't go to this place." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "I hope to see you soon.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye, |PLAYERNAME|. I really hope we'll talk again soon.")
 

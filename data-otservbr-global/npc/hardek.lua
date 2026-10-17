@@ -59,6 +59,7 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is 2:38 am." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Hardek, the forestaller." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am buying some weapons and armors." })
+keywordHandler:addAliasKeyword({ "forestaller" })
 
 npcHandler:setMessage(MESSAGE_GREET, "Hello |PLAYERNAME|! Do you need my services?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. Visit me whenever you want to sell something.")

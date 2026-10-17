@@ -376,6 +376,8 @@ keywordHandler:addKeyword({ "gorn" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "city" }, StdModule.say, { npcHandler = npcHandler, text = "The city is open to almost everyone. That literally opens doors for all kinds of criminals and fiends." })
 keywordHandler:addKeyword({ "cgb" }, StdModule.say, { npcHandler = npcHandler, text = "An amateurish attempt of Carlin to establish a secret service. It's nothing than a 'make-believe' game for little girls ... They should rather play salesman and customer or mother and child instead of pretending to be secret agents." })
 keywordHandler:addKeyword({ "sam" }, StdModule.say, { npcHandler = npcHandler, text = "I say it was a mistake to rely on a single person for such vital services but having those Venoreans here is even worse." })
+keywordHandler:addKeyword({ "oswald" }, StdModule.say, { npcHandler = npcHandler, text = "He is constantly spying on people. He's especially obsessed with that priest Lynda." })
+keywordHandler:addKeyword({ "sell" }, StdModule.say, { npcHandler = npcHandler, text = "I'm no tradesman, sorry." })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

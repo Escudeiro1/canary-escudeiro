@@ -83,6 +83,8 @@ keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandl
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 10:47 am now." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Kroox Shieldbearer, son of Earth, from the Molten Rock." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I sell best armor in land. My armor save you life. Better buy much." })
+keywordHandler:addKeyword({ "dungeon" }, StdModule.say, { npcHandler = npcHandler, text = "Much fun you can have in dungeons. Much battle and much gold, jawoll!" })
+keywordHandler:addKeyword({ "weapon" }, StdModule.say, { npcHandler = npcHandler, text = "Ask in the shop next tunnel about that." })
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to Kroox Quality Armor, |PLAYERNAME|! Wanna take a look, ask me for a trade.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

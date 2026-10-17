@@ -94,6 +94,10 @@ npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "The illusion of peace that this city is offering often distracts the attention from the dangers lurking there." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "The word is that Thais is a dangerous place which you better do not visit unprepared." })
+keywordHandler:addKeyword({ "ab'dendriel" }, StdModule.say, { npcHandler = npcHandler, text = "I wouldn't trust a single elf, let alone a whole city of them." })
+keywordHandler:addKeyword({ "kazordoon" }, StdModule.say, { npcHandler = npcHandler, text = "Those dwarfs know how to fortify a city. Perhaps one day, when I've earned enough money and have grown too old for the trouble in Yalahar, I will retire there." })
+keywordHandler:addKeyword({ "yalahar" }, StdModule.say, { npcHandler = npcHandler, text = "Yalahar is an oyster. Its treasure is waiting to be excavated by someone with the necessary determination." })
+keywordHandler:addKeyword({ "venore" }, StdModule.say, { npcHandler = npcHandler, text = "The trade barons know how to run a city, that's for sure. Unfortunately, they are greedier than it is good for them. I'm prepared to deal with their intrusion into my territory." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

@@ -119,6 +119,9 @@ keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Perhaps one day I'll settle in Thais again. I love the city's potential." })
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Do I hear envy in your voice? Is this really what you want? To be ... king? Well, one never knows ... perhaps you find something royal in my warehouse." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "So it is a watch you need? Make sure to buy one downstairs." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the owner of the Useful Things {Warehouse}." })
+keywordHandler:addKeyword({ "warehouse" }, StdModule.say, { npcHandler = npcHandler, text = "I offer many things. Actually I am sure you'll find something here you have desired for a long {time}." })
+keywordHandler:addKeyword({ "taxes" }, StdModule.say, { npcHandler = npcHandler, text = "Taxes are a necessary evil, people say. I like that." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

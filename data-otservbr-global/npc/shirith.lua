@@ -85,6 +85,12 @@ keywordHandler:addFarewellKeyword({ "asgha thrazi" }, { npcHandler = npcHandler,
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the overseer of the mines." })
+keywordHandler:addKeyword({ "deraisim" }, StdModule.say, { npcHandler = npcHandler, text = "They could do more for us if they would try more hard." })
+keywordHandler:addKeyword({ "teshial" }, StdModule.say, { npcHandler = npcHandler, text = "Who needs dreamers in these days?" })
+keywordHandler:addKeyword({ "kuridai" }, StdModule.say, { npcHandler = npcHandler, text = "We keep this society running. Without our tools and work our case would be a lost one." })
+keywordHandler:addKeyword({ "cenath" }, StdModule.say, { npcHandler = npcHandler, text = "They think they are better then us." })
+keywordHandler:addKeyword({ "mines" }, StdModule.say, { npcHandler = npcHandler, text = "We hardly get the ore we need. The worthless trolls are lazy workers. I keep them locked up the whole time." })
+keywordHandler:addKeyword({ "troll" }, StdModule.say, { npcHandler = npcHandler, text = "We give these useless creatures a reason to live by serving us." })
 npcHandler:setMessage(MESSAGE_GREET, "Ashari |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")

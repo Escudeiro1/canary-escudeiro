@@ -49,7 +49,16 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
-keywordHandler:addKeyword({ "Chuqua" }, StdModule.say, { npcHandler = npcHandler, text = "Chuqua jamjam!! Tiyopa Sinatuki?" })
+keywordHandler:addKeyword({ "chuqua" }, StdModule.say, { npcHandler = npcHandler, text = "Chuqua jamjam!! Tiyopa Sinatuki?" })
+keywordHandler:addKeyword({ "kisavuta" }, StdModule.say, { npcHandler = npcHandler, text = "Nguraka!" })
+keywordHandler:addKeyword({ "chakoya" }, StdModule.say, { npcHandler = npcHandler, text = "Nupi, Sinatuki gura chakoya!" })
+keywordHandler:addKeyword({ "nguraka" }, StdModule.say, { npcHandler = npcHandler, text = "Kisavuta!" })
+keywordHandler:addKeyword({ "jusipa" }, StdModule.say, { npcHandler = npcHandler, text = "Nupi, nupi!! Tiyopa Sinatuki chuqua! Chuqua, chuqua!!!!" })
+keywordHandler:addKeyword({ "tiyopa" }, StdModule.say, { npcHandler = npcHandler, text = "Nupi, tiyopa chuqua pa Sinatuki!" })
+keywordHandler:addKeyword({ "jamjam" }, StdModule.say, { npcHandler = npcHandler, text = "Nupi, nupi! Sinatuki gura jusipa! Jinuma ji chuqua pa Sinatuki??" })
+keywordHandler:addKeyword({ "taluka" }, StdModule.say, { npcHandler = npcHandler, text = "Yuk taluka?? Chuqua? Ahhh!" })
+keywordHandler:addKeyword({ "sajoq" }, StdModule.say, { npcHandler = npcHandler, text = "Sajoq!" })
+keywordHandler:addKeyword({ "jinuma" }, StdModule.say, { npcHandler = npcHandler, text = "Su gura jinuma. Si gura chakoya." })
 
 local fishsID = { 7158, 7159 }
 

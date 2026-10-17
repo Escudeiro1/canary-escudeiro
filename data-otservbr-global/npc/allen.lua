@@ -55,6 +55,10 @@ keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is 11:44 am. Too bad we run out of cuckoo clocks." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Allen Richardson. I am the owner of this market." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I run this market and sell furniture." })
+keywordHandler:addKeyword({ "abran ironeye" }, StdModule.say, { npcHandler = npcHandler, text = "Well, that's what I call a real man. This man is a hero! A fighter! A general! If we had an army, he'd be the right man to lead it!" })
+keywordHandler:addKeyword({ "furniture" }, StdModule.say, { npcHandler = npcHandler, text = "Well, as you can see, we sell furniture. Ask me for a {trade} if you're interested." })
+keywordHandler:addKeyword({ "leaders" }, StdModule.say, { npcHandler = npcHandler, text = "Venore's wealth is based on wise decisions and transactions made by the traders union. They know what people actually want and need, unlike some magistrates or civil servants." })
+keywordHandler:addKeyword({ "leeland" }, StdModule.say, { npcHandler = npcHandler, text = "Mr. Slim sold me the legendary screwdriver of Kurik! All I had to do was play a small prank on grumpy Aldo. I told him his wife had actually cooked something for lunch ... He had tears in his eyes when he was running home. Hehe! Guess what? Some criminal stole the screwdriver shortly after and replaced it with an old toothbrush!" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

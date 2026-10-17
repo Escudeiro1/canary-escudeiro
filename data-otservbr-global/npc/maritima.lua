@@ -70,7 +70,10 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
-keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a mermaid. I sing songs and play with the fishes." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm a mermaid. I sing songs and play with the {fishes}." })
+keywordHandler:addAliasKeyword({ "visitor" })
+keywordHandler:addKeyword({ "yalahar" }, StdModule.say, { npcHandler = npcHandler, text = "I've only seen the city from afar." })
+keywordHandler:addKeyword({ "fishes" }, StdModule.say, { npcHandler = npcHandler, text = "Fishes are my friends. I really hate that the {quara} treat them so badly." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Maritima." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

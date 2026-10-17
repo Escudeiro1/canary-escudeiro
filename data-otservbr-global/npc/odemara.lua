@@ -53,6 +53,9 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 9:28 pm." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Odemara Taleris, it's a pleasure to meet you." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am responsible for buying and selling gems, pearls, and the like." })
+keywordHandler:addKeyword({ "pearls" }, StdModule.say, { npcHandler = npcHandler, text = "There are white and black pearls you can buy or sell, as well as giant green and brown pearls which you can sell." })
+keywordHandler:addKeyword({ "sell" }, StdModule.say, { npcHandler = npcHandler, text = "Well, I sell gems and goblets. If you'd like to see my offers, ask me for a {trade}." })
+keywordHandler:addKeyword({ "gems" }, StdModule.say, { npcHandler = npcHandler, text = "You can buy and sell small diamonds, sapphires, rubies, emeralds and amethysts or sell topazes." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

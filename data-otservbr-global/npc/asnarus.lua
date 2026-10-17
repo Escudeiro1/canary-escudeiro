@@ -52,6 +52,13 @@ end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am called Asnarus." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am bound by my {word} to serve here as a trader. I will provide this service faithful for 111 years, as I vowed." })
+keywordHandler:addKeyword({ "inquisition" }, StdModule.say, { npcHandler = npcHandler, text = "An overly ambitious and childish undertaking to try to purge the world of evil. But even the least of us must play their part in the war against evil, even you humans." })
+keywordHandler:addKeyword({ "efreet" }, StdModule.say, { npcHandler = npcHandler, text = "They are our bane and shame. Unless they see the light and begin to walk the right path, they are no better than the vile demons; yet they could be so much more. ... It's to be blamed on us Djinn that we still fail to save our brethren from their evil ways." })
+keywordHandler:addKeyword({ "years" }, StdModule.say, { npcHandler = npcHandler, text = "We Djinn are ageless and ancient. What is hundreds of years to me would be at most something about an hour for you, so I don't care much." })
+keywordHandler:addKeyword({ "djinn" }, StdModule.say, { npcHandler = npcHandler, text = "We are a powerful embodiment of magic. We are so different from you humans that it's often hard to understand each other. Not that we'd care much. ... Your puny, little ambitions are of little concern to us. Everything you strive to accomplish will be blown away like sand before the desert wind in a blink of a Djinn's eye. ... Therefore we are as patient as we are wise. You humans, though, are nothing but a curiosity, and nothing that will endure like us." })
+keywordHandler:addKeyword({ "human" }, StdModule.say, { npcHandler = npcHandler, text = "Humans are so weak and fragile, so disconnected from the true world, which is magic and its flow. The most powerful of you may wield strong spells of destruction, yet they are still not connected to magic as we are." })
+keywordHandler:addKeyword({ "demon" }, StdModule.say, { npcHandler = npcHandler, text = "Fierce beasts, no better than the {Efreet}. You humans do well to fight them. They are vile and despicable, and I don't mind to be of some assistance in that fight, offering my service." })
+keywordHandler:addKeyword({ "word" }, StdModule.say, { npcHandler = npcHandler, text = "I lost a game of chess to the chief inquisitor Henricus. By my word I am now bound to a service of 111 {years}." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

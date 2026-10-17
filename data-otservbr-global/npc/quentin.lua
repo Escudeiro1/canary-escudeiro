@@ -225,6 +225,9 @@ keywordHandler:addKeyword({ "god" }, StdModule.say, { npcHandler = npcHandler, t
 keywordHandler:addKeyword({ "sam" }, StdModule.say, { npcHandler = npcHandler, text = "He is our blacksmith. He sells weapons and armour." })
 keywordHandler:addKeyword({ "rat" }, StdModule.say, { npcHandler = npcHandler, text = "There are sewers underneath the city. They say these sewers are brimming with rats." })
 keywordHandler:addKeyword({ "eat" }, StdModule.say, { npcHandler = npcHandler, text = "If you would like to heal your wounds you should eat some food. Frodo sells excellent meals. But if you are very weak you can also come to me. I will heal you." })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "First you should try to get some gold to buy better equipment." })
+keywordHandler:addAliasKeyword({ "quest" })
+keywordHandler:addAliasKeyword({ "task" })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

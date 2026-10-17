@@ -77,6 +77,12 @@ keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHand
 keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "A city full of women? That calls for plunder. Sadly, a bit far away. Ho Ho Ho." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thais is a town full of wimps." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "They call me Vulturenose." })
+keywordHandler:addKeyword({ "raymond striker" }, StdModule.say, { npcHandler = npcHandler, text = "Sooner or later he will run out of luck and then we will get his head." })
+keywordHandler:addKeyword({ "king tibianus" }, StdModule.say, { npcHandler = npcHandler, text = "We are the undisputed kings of the seas." })
+keywordHandler:addKeyword({ "liberty bay" }, StdModule.say, { npcHandler = npcHandler, text = "For us Liberty Bay is an open treasure chest. Ho Ho Ho." })
+keywordHandler:addKeyword({ "pirate" }, StdModule.say, { npcHandler = npcHandler, text = "Yoho, a pirate's life for me!" })
+keywordHandler:addKeyword({ "venore" }, StdModule.say, { npcHandler = npcHandler, text = "The Venoreans don't care about the likes of you." })
+keywordHandler:addKeyword({ "sugar" }, StdModule.say, { npcHandler = npcHandler, text = "You can call me honey." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

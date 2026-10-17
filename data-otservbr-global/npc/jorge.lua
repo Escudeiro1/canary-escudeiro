@@ -138,6 +138,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "raids" }, StdModule.say, { npcHandler = npcHandler, text = "Yes, raids. From time to time, a special horde of monsters appears somewhere on this world. You will see it when it happens - just follow the people rushing there! Or ask your fellow adventurers when and where a certain raid is expected." })
 npcHandler:setCallback(CALLBACK_SET_INTERACTION, onAddFocus)
 npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)
 

@@ -178,6 +178,12 @@ keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "gods" }, StdModule.say, { npcHandler = npcHandler, text = "We know many gods. Pandor, god of war, Uzroth, god of spirits, Krunus, god of food and Fasuon, watcher with two burning eyes. You see, we know many gods, more than I can count." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me Lazaran." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Me chief of tribe." })
+keywordHandler:addKeyword({ "dragon people" }, StdModule.say, { npcHandler = npcHandler, text = "Like snakes on legs they are. Living in great cities in North. Once ruled all the land. Hunting all. Green men fought and stole plains from snakemen who are people of the dragons." })
+keywordHandler:addKeyword({ "horned ones" }, StdModule.say, { npcHandler = npcHandler, text = "Horned people only few but fearsome warriors. Master of green ones they become. Making all green ones obey." })
+keywordHandler:addKeyword({ "green ones" }, StdModule.say, { npcHandler = npcHandler, text = "Fierce warriors, led by horned ones. Great numbers. Stealing plains from dragon people." })
+keywordHandler:addKeyword({ "monster" }, StdModule.say, { npcHandler = npcHandler, text = "Green ones on wolves chase us in plains. Dragon people are worse. All that green is mean. Ungh! Ungh!" })
+keywordHandler:addKeyword({ "tribe" }, StdModule.say, { npcHandler = npcHandler, text = "Our tribe here live long time. Tribe once was great, one of many. Now we are all what left of tribe. Snakemen hunted our people. Snakemen make many kill. Our people go hiding. Only go out in night when snakemen sleep. ... All who survived gathered. Made new tribe. We trying to survive. We no seek war with others. We little hunt and much eat mushroom found in caves. Growing mushrooms we do to survive." })
+keywordHandler:addKeyword({ "dwarf" }, StdModule.say, { npcHandler = npcHandler, text = "You ill? You make strange noise." })
 npcHandler:setMessage(MESSAGE_GREET, "Me greet. You no enemy of tribe.")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

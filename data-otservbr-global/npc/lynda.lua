@@ -309,7 +309,7 @@ keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "King Tibianus is our benevolent sovereign." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now, it is 12:42 am." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Lynda. And the spirits tell me that you are Player." })
-keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or pilgrim I am a priest of the great pantheon." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a priest of the great pantheon." })
 keywordHandler:addKeyword({ "remove" }, confirmRemoveEngage, {})
 
 keywordHandler:addKeyword({ "divorce" }, confirmDivorce, {})
@@ -347,6 +347,15 @@ keywordHandler:addKeyword({ "toth" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "sula" }, StdModule.say, { npcHandler = npcHandler, text = "Sula is the essence of the elemental power of water." })
 keywordHandler:addKeyword({ "fire" }, StdModule.say, { npcHandler = npcHandler, text = "Fire is one of the primal elemental forces, sometimes worshipped by tribal shamans." })
 keywordHandler:addKeyword({ "air" }, StdModule.say, { npcHandler = npcHandler, text = "Air is one of the primal elemental forces, sometimes worshipped by tribal shamans." })
+keywordHandler:addKeyword({ "archdemons" }, StdModule.say, { npcHandler = npcHandler, text = "The demons are followers of Zathroth. The cruelest are known as the ruthless seven." })
+keywordHandler:addKeyword({ "ruthless seven" }, StdModule.say, { npcHandler = npcHandler, text = "I dont want to talk about that subject!" })
+keywordHandler:addKeyword({ "anything" }, StdModule.say, { npcHandler = npcHandler, text = "Meditate on that and pray for your soul." })
+keywordHandler:addKeyword({ "zathroth" }, StdModule.say, { npcHandler = npcHandler, text = "Zathroth is the destructive aspect of magic. He is the deceiver and the thief of souls." })
+keywordHandler:addKeyword({ "mission" }, StdModule.say, { npcHandler = npcHandler, text = "It is my mission to spread knowledge about the gods." })
+keywordHandler:addAliasKeyword({ "quest" })
+keywordHandler:addKeyword({ "fafnar" }, StdModule.say, { npcHandler = npcHandler, text = "Fafnar is the scorching sun. She observes the creation with hate and jealousy." })
+keywordHandler:addKeyword({ "urgith" }, StdModule.say, { npcHandler = npcHandler, text = "The bonemaster Urgith is the lord of the undead and keeper of the damned souls." })
+keywordHandler:addKeyword({ "brog" }, StdModule.say, { npcHandler = npcHandler, text = "Brog, the raging one, is the great destroyer. The berserk of darkness." })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

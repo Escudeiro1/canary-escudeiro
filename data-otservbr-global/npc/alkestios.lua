@@ -113,7 +113,11 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
-keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "/ Carlin / Venore / Darashia / Edron It's a place full of stone buildings and people. I heard it is called a town. But I'm still not sure which purpose it serves." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "It's a place full of stone buildings and people. I heard it is called a town. But I'm still not sure which purpose it serves." })
+keywordHandler:addAliasKeyword({ "carlin" })
+keywordHandler:addAliasKeyword({ "venore" })
+keywordHandler:addAliasKeyword({ "darashia" })
+keywordHandler:addAliasKeyword({ "edron" })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time is fluent, traveller." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Alkestios - which is also the name of a beautiful day lily if you wonder. That's because my true form is a bit more filigree than this cervine body." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I have no idea what you mean by this word." })
@@ -130,6 +134,19 @@ keywordHandler:addKeyword({ "fae" }, StdModule.say, {
 		"We tend to be secretive about our true nature, but I guess there was once an elven sage who visited our realm and put his experiences down on paper. There might be a book about the fae in the library of Ab'Dendriel.",
 	},
 })
+keywordHandler:addKeyword({ "ab'dendriel" }, StdModule.say, { npcHandler = npcHandler, text = "It's a place full of life, huge trees, lush plants and various animals. I visit it now and then because I feel very comfortable there." })
+keywordHandler:addKeyword({ "kazordoon" }, StdModule.say, { npcHandler = npcHandler, text = "You are talking about the nearby mountains, I assume. I have never been there but I know it is the home of the {dwarves}." })
+keywordHandler:addKeyword({ "roshamuul" }, StdModule.say, { npcHandler = npcHandler, text = "This is a dark and dangerous place. It is full of terrible monsters and made of nightmares - literally." })
+keywordHandler:addKeyword({ "oramond" }, StdModule.say, { npcHandler = npcHandler, text = "I have never heard of this place." })
+keywordHandler:addAliasKeyword({ "rathleton" })
+keywordHandler:addAliasKeyword({ "krailos" })
+keywordHandler:addKeyword({ "feyrist" }, StdModule.say, { npcHandler = npcHandler, text = "It is a secret, hidden place. Just few mortals get permission to enter it. A long time ago, we learned how to hide our realm from the outside world. Only if you gain our trust I will tell you how to reach it." })
+keywordHandler:addKeyword({ "dwarves" }, StdModule.say, { npcHandler = npcHandler, text = "We know them, yes. Their {dreams} are different from those of {elves} and {humans}. Somehow graver and more grounded." })
+keywordHandler:addKeyword({ "ikassis" }, StdModule.say, { npcHandler = npcHandler, text = "She's one of my sisters. I guess she took over the body of a snake." })
+keywordHandler:addKeyword({ "darama" }, StdModule.say, { npcHandler = npcHandler, text = "I guess it's a desert." })
+keywordHandler:addKeyword({ "dreams" }, StdModule.say, { npcHandler = npcHandler, text = "There is far more to dreams than mortal beings are aware of. They possess some kind of magical power, ancient and mysterious. I shouldn't tell you too much about it, but I can tell you that the {fae} are closely linked to this power." })
+keywordHandler:addKeyword({ "humans" }, StdModule.say, { npcHandler = npcHandler, text = "They inhabit these huge places filled with stone buildings. They call them towns, I guess. Some of them are cheerful and well-meaning, others are wicked and cruel. Their traits and attitudes vary greatly - and so do their {dreams}." })
+keywordHandler:addKeyword({ "elves" }, StdModule.say, { npcHandler = npcHandler, text = "They inhabit {Ab'Dendriel} and live in close touch with nature. Their {dreams} are mostly serene and suffused with light." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Nature's blessing, traveller! May you not be affected by any sinister force.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "May your path always be even.")

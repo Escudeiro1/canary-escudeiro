@@ -53,6 +53,8 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's precisely 12:38 pm now." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Etzel Fireworker, <cough> son of fire, of the Molten Rocks." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the dwarven master mage. I'm the keeper of magical secrets and teacher of spells." })
+keywordHandler:addKeyword({ "sorcerer" }, StdModule.say, { npcHandler = npcHandler, text = "Sorcery is not for the lazy or the impatient." })
+keywordHandler:addKeyword({ "poem" }, StdModule.say, { npcHandler = npcHandler, text = "Ask someone else, I don't have time to recite poems." })
 local node1 = keywordHandler:addKeyword({ "apprentice's strike" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Would you like to learn {apprentice's strike} magic spell for free?" })
 node1:addChildKeyword({ "yes" }, StdModule.learnSpell, { npcHandler = npcHandler, premium = false, spellName = "apprentice's strike", vocation = { 1, 2, 5, 6 }, price = 0, level = 8 })
 

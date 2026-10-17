@@ -101,6 +101,7 @@ keywordHandler:addKeyword({ "oracle" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "paulie" }, StdModule.say, { npcHandler = npcHandler, text = "Young and inexperienced he is." })
 keywordHandler:addKeyword({ "seymour" }, StdModule.say, { npcHandler = npcHandler, text = "Seymour is the headmaster of the local {academy}." })
 keywordHandler:addKeyword({ "tom" }, StdModule.say, { npcHandler = npcHandler, text = "I'm sure he has never seen monsters like those in this hole before." })
+keywordHandler:addKeyword({ "money" }, StdModule.say, { npcHandler = npcHandler, text = "I'm penniless and poor as becomes a humble monk like me." })
 keywordHandler:addKeyword({ "dallheim" }, StdModule.say, { npcHandler = npcHandler, text = "I tried to warn him about these monsters but he just laughed at me!! It's an outrage!" })
 keywordHandler:addAliasKeyword({ "zerbrus" })
 

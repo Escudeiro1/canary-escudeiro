@@ -52,7 +52,12 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I don't remember my name, neither my days as a mortal." })
-keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or mortal Once I was Vashresamun 's favourite handmaid. But I have fallen from {grace} and now I'm exiled from her tomb." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Once I was {Vashresamun}'s favourite handmaid. But I have fallen from {grace} and now I'm exiled from her {tomb}." })
+keywordHandler:addAliasKeyword({ "mortal" })
+keywordHandler:addKeyword({ "vashresamun" }, StdModule.say, { npcHandler = npcHandler, text = "I mourn the dark day I was exiled from her {tomb}." })
+keywordHandler:addKeyword({ "melody" }, StdModule.say, { npcHandler = npcHandler, text = "Vashresamun erased the memory of the tune from my mind, I only remember its name: The Secret of the Rose Garden." })
+keywordHandler:addKeyword({ "grace" }, StdModule.say, { npcHandler = npcHandler, text = "Don't ask about it, mortal. Memories bring too much grief." })
+keywordHandler:addKeyword({ "tomb" }, StdModule.say, { npcHandler = npcHandler, text = "Her tomb is sealed and can only be entered with a certain {melody}." })
 npcHandler:setMessage(MESSAGE_GREET, "Be greeted, |PLAYERNAME|... mortal.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

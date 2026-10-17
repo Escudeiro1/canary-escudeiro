@@ -52,10 +52,18 @@ end
 
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "There are rumours about some hidden stone tablets mentioning that weapon. Adventurers claim to have seen those tablets in the ancient lizard city." })
 keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "I hope this colony is too remote and meaningless to him to care for a visit." })
-keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "/ carlin All cities are covered by our mailing system." })
+keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "All cities are covered by our mailing system." })
+keywordHandler:addAliasKeyword({ "carlin" })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now it's 10:50 am." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ray." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am responsible for this post office. If you have questions about the mail system or the depots, just ask me." })
+keywordHandler:addKeyword({ "king tibianus" }, StdModule.say, { npcHandler = npcHandler, text = "The king lives far away in the lovely city of Thais, but even he can be reached by our mailing system." })
+keywordHandler:addKeyword({ "lizards" }, StdModule.say, { npcHandler = npcHandler, text = "The lizards give me shivers. They are so alien, even more than the minotaurs or orcs we know from the surroundings of Thais." })
+keywordHandler:addKeyword({ "dworcs" }, StdModule.say, { npcHandler = npcHandler, text = "Those bloodthirsty headhunters live in the south. I heard only horrible stories about them and I believe they are not exaggerated." })
+keywordHandler:addKeyword({ "jungle" }, StdModule.say, { npcHandler = npcHandler, text = "The jungle is a dangerous place. Many got lost there and never returned." })
+keywordHandler:addKeyword({ "apes" }, StdModule.say, { npcHandler = npcHandler, text = "They are a pest. A quite dangerous pest as far as I can tell." })
+keywordHandler:addKeyword({ "post" }, StdModule.say, { npcHandler = npcHandler, text = "With our mail system you can send letters and parcels to other Tibians. I can either explain how letters and parcels work or sell them to you if you ask me for a {trade}." })
+keywordHandler:addAliasKeyword({ "mail" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

@@ -46,6 +46,10 @@ npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "They call me Victor, for I am victorious. Yes, always." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "When I am not distracted because of questions, I'm maintaining this wonderful establishment here." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Time to fight!" })
+
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

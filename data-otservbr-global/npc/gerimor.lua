@@ -62,6 +62,8 @@ local function greetCallback(npc, creature)
 end
 
 -- Keywords
+-- above "me", which is inside "something"
+keywordHandler:addKeyword({ "something" }, StdModule.say, { npcHandler = npcHandler, text = "A sinister force is at work here. While some of those nodes of unnatural taint are spreading randomly, waning and waxing with no pattern, ... there are others, more persistent, more permanent and constantly {growing}." })
 keywordHandler:addKeyword({ "place" }, StdModule.say, {
 	npcHandler = npcHandler,
 	text = "This place is a sanctuary of Crunor and provides me with a opportunity of spiritual contemplation.",
@@ -458,6 +460,18 @@ npcHandler:setCallback(CALLBACK_SET_INTERACTION, onAddFocus)
 npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+
+keywordHandler:addKeyword({ "devastating" }, StdModule.say, { npcHandler = npcHandler, text = "As I said, the thing from beyond defies all tries of comprehension, but its presence and influence are something we would perceive as disruptive, destructive and nihilistic. ... Its very existence drains our world, disrupts the laws of nature and those of the gods. ... And whatever its intentions are, if it's even capable of intention, what it does ultimately means the end of {existence} as we know it." })
+keywordHandler:addKeyword({ "abominable" }, StdModule.say, { npcHandler = npcHandler, text = "It is like nothing I have sensed before or had been recorded. ... Not only has some kind of layer formed that slightly muffles all things natural, there are also culminations of this force forming all over the world. ... And as horrible as it feels, I can reach out and sense that {something} is nurturing these nodes, that are a defilement of all that is right and natural." })
+keywordHandler:addKeyword({ "existence" }, StdModule.say, { npcHandler = npcHandler, text = "Even with this dire perspective, there seem to be some sentient efforts on behalf of this force to further its goals. ... We can only guess what the motive for some twisted individuals might be to serve such a threat to everything, but my recent scrying has revealed a sentient {power} that is furthering those goals." })
+keywordHandler:addKeyword({ "intruder" }, StdModule.say, { npcHandler = npcHandler, text = "This ancient force from beyond is something absolutely foreign, defying all our concepts of existence, purpose and comprehension. ... What is clear though, is that this contact is {devastating} for our world and our existence." })
+keywordHandler:addKeyword({ "foothold" }, StdModule.say, { npcHandler = npcHandler, text = "It seems in recent times several cults have risen into prominence in these areas. ... Cults that seem not to revere to known gods or their aspects but to some more obscure powers." })
+keywordHandler:addKeyword({ "growing" }, StdModule.say, { npcHandler = npcHandler, text = "It is like something is stabilizing them on purpose. In the light of recent {events} this even makes some sort of sense." })
+keywordHandler:addKeyword({ "threat" }, StdModule.say, { npcHandler = npcHandler, text = "I can sense the spirits of nature are in disarray. This is not a mere imbalance of life and death, this is something more disruptive and {abominable}." })
+keywordHandler:addKeyword({ "events" }, StdModule.say, { npcHandler = npcHandler, text = "When the mortal magician Ferumbras tried to attain godhood, he fractured the fabric of reality. His actions opened our world to an ever hungry {intruder} that seemingly lusted for our world since aeons." })
+keywordHandler:addKeyword({ "matter" }, StdModule.say, { npcHandler = npcHandler, text = "We located the places where this abominable forces had taken a {foothold} and had them investigated." })
+keywordHandler:addKeyword({ "power" }, StdModule.say, { npcHandler = npcHandler, text = "Ancient stories speak vaguely of the fall of the Yalahari and how they probably succumbed to the mind twisting force from beyond. ... Maybe again some have fallen to that low and allied themselves to that horrible entity. Perhaps it's, as some say, the Yalahari themself that are returning in service of their master. ... Perhaps it is something unspeakable that Yalahari and other fallen have become after exposure to that {fiend} from beyond." })
+keywordHandler:addKeyword({ "fiend" }, StdModule.say, { npcHandler = npcHandler, text = "Regardless of the nature of the enemy, there is something evil abound. I and my colleagues have pooled our resources, contacts, informants and allies and looked into that {matter}." })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

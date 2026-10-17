@@ -167,6 +167,7 @@ keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am the guardian of the paradox tower." })
 keywordHandler:addKeyword({ "key" }, StdModule.say, { npcHandler = npcHandler, text = "The key of this tower! You will never find it! A malicious plant spirit is guarding it!." })
 keywordHandler:addAliasKeyword({ "door" })
+keywordHandler:addKeyword({ "guard" }, StdModule.say, { npcHandler = npcHandler, text = "I am guarding the treasures of the tower. Only those who pass the test of the three sigils may pass." })
 
 npcHandler:setMessage(MESSAGE_GREET, "|PLAYERNAME| HEHEHEHE! Another fool visits the {tower}! Excellent!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "HEHEHE! I knew you don't have the stomach.")

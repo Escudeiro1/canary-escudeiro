@@ -102,6 +102,7 @@ local node17 = keywordHandler:addKeyword({ "wound cleansing" }, StdModule.say, {
 node17:addChildKeyword({ "yes" }, StdModule.learnSpell, { npcHandler = npcHandler, premium = false, spellName = "wound cleansing", vocation = { 4, 8 }, price = 0, level = 8 })
 
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "I'm the overseer of the pits and a paladin trainer, but I also know some knight spells." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "It is 7:35 pm." })
 keywordHandler:addKeyword({ "gladiators" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "Those wannabe fighters are weak and most of them are unable to comprehend a higher concept like the Mooh'Tah." })
 keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "I teach worthy warriors the way of the knight." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "I'm known as Asrak the Ironhoof." })

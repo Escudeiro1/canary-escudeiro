@@ -52,6 +52,13 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 9:30 am." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Tezila Gemcutter, daughter of Fire, from the Savage Axes." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a jeweller. Maybe you want to have a look at my wonderful offers." })
+keywordHandler:addKeyword({ "deposit" }, StdModule.say, { npcHandler = npcHandler, text = "I don't run the bank anymore. Please talk to Lokur in the depot to access your account." })
+keywordHandler:addAliasKeyword({ "bank" })
+keywordHandler:addAliasKeyword({ "withdraw" })
+keywordHandler:addKeyword({ "jewels" }, StdModule.say, { npcHandler = npcHandler, text = "You can purchase our fine dwarfish wares like wedding rings, golden amulets, and ruby necklaces." })
+keywordHandler:addKeyword({ "pearls" }, StdModule.say, { npcHandler = npcHandler, text = "There are white and black pearls you can buy or sell, as well as giant green and brown pearls which you can sell." })
+keywordHandler:addKeyword({ "talons" }, StdModule.say, { npcHandler = npcHandler, text = "We don't trade with them." })
+keywordHandler:addKeyword({ "gems" }, StdModule.say, { npcHandler = npcHandler, text = "I offer small rubies, small sapphires, small amethysts, small emeralds and small diamonds. Druids can enchant them at the elemental shrines and you can use them to enchant selected weapons." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

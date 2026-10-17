@@ -58,6 +58,8 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is exactly time. Maybe you want to buy a watch?" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Zethra the wormbane." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am selling equipment of all kinds. Do you need anything?" })
+keywordHandler:addKeyword({ "equipment" }, StdModule.say, { npcHandler = npcHandler, text = "I sell equipment for your adventure! Just ask me for a {trade} to see my wares." })
+keywordHandler:addKeyword({ "magic" }, StdModule.say, { npcHandler = npcHandler, text = "This is not on sale here." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

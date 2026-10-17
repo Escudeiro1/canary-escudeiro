@@ -46,6 +46,9 @@ npcType.onThink = function(npc, interval)
 	npcHandler:onThink(npc, interval)
 end
 
+keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Brutus is my name. Got any problems with that? Thought so." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Maintaining this arena of course." })
+keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "In battle, time is precious." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

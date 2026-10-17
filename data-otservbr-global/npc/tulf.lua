@@ -48,6 +48,15 @@ end
 keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "I doubt anyone can make it through our lines of defence." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It's 1:28 pm right now." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Tulf Beardweaver, son of Earth from the Dragoneaters." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I'm the captain of the emperor's personal {bodyguards}." })
+keywordHandler:addKeyword({ "bodyguards" }, StdModule.say, { npcHandler = npcHandler, text = "We keep up law and order here." })
+keywordHandler:addKeyword({ "horned fox" }, StdModule.say, { npcHandler = npcHandler, text = "It's a renegade minotaur who has a hidden {lair} somewhere near our mines." })
+keywordHandler:addKeyword({ "dungeons" }, StdModule.say, { npcHandler = npcHandler, text = "I despise the habit to challenge the prisoners of Dwacatra or to provoke the boys in the mines." })
+keywordHandler:addKeyword({ "troubles" }, StdModule.say, { npcHandler = npcHandler, text = "The mines are raided again and again by the bandits of the Horned Fox." })
+keywordHandler:addKeyword({ "dwarfs" }, StdModule.say, { npcHandler = npcHandler, text = "If you go to a dwarven city, do as the dwarfs do." })
+keywordHandler:addKeyword({ "mines" }, StdModule.say, { npcHandler = npcHandler, text = "The mines aren't meant for foreigners. The miners there have enough trouble." })
+keywordHandler:addKeyword({ "poem" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I'm on duty!" })
+keywordHandler:addKeyword({ "lair" }, StdModule.say, { npcHandler = npcHandler, text = "The lair of the Horned Fox is surely well-guarded and even better hidden." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

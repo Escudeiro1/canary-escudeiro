@@ -112,6 +112,8 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "discovering" }, StdModule.say, { npcHandler = npcHandler, text = "We are currently working on a huge and very ambitious project: We try to chart the world of Tibia! I know what you might think: Are there so many undiscovered places on this world? And the answer is: Yes! ... There are many secret, hidden or hardly accessible places and sites. We want to create a detailed and accurate map of our world - and we are searching for assistance concerning this project. ... So, if you want to discover Tibia's secrets, go out and discover our world, step by step and {area} by area. If you contribute to this project to a certain extent, you can gain the right to wear our Discoverer outfit." })
+keywordHandler:addKeyword({ "area" }, StdModule.say, { npcHandler = npcHandler, text = "As an area we regard larger regions surrounding - for example - the big cities of Tibia. The Kazordoon mountains would be such an area as well as the Venorean swamps or the island of Oramond." })
 npcHandler:setCallback(CALLBACK_SET_INTERACTION, onAddFocus)
 npcHandler:setCallback(CALLBACK_REMOVE_INTERACTION, onReleaseFocus)
 npcHandler:setCallback(CALLBACK_GREET, greetCallback)

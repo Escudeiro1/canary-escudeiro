@@ -101,6 +101,8 @@ keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, t
 keywordHandler:addKeyword({ "captain" }, StdModule.say, { npcHandler = npcHandler, text = "I am the captain of this ship." })
 keywordHandler:addKeyword({ "venore" }, StdModule.say, { npcHandler = npcHandler, text = "This is Venore. Where do you want to go?" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Captain Pelagia from the Royal Tibia Line." })
+keywordHandler:addKeyword({ "krailos" }, StdModule.say, { npcHandler = npcHandler, text = "Krailos is this big peninsula north of Oramond. The two regions are separated by a high mountain range, so Krailos is only accessible by water. And that's not easy either, as many dangerous underwater shelves surround Krailos. ... The island is covered by a vast steppe and dangerous. That's because of the {ogres}, naturally. Beware of those beasts - they are maneaters. You should set foot on these shores only on careful deliberation." })
+keywordHandler:addKeyword({ "ogres" }, StdModule.say, { npcHandler = npcHandler, text = "They are big, brutal and dull creatures and it is said they love the taste of human flesh. Yet it is rumoured that lately, one single tribe tolerates the presence of humans. ... But I don't know if that's true or just idle gossip, so be careful. Oh, and you have to swim to the coast. Because of the reefs here I can't come closer to the shore, I'm sorry." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome on board, |PLAYERNAME|. Where can I {sail} you today?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. Recommend us if you were satisfied with our service.")

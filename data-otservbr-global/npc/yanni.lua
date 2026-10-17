@@ -54,6 +54,8 @@ keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I don't believe in the excalibug myth." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Yanni." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I work for Abran Ironeye in the armor department." })
+keywordHandler:addKeyword({ "abran ironeye" }, StdModule.say, { npcHandler = npcHandler, text = "A very hard boss, but if you ever talk to him, tell him I said he's a great man." })
+keywordHandler:addKeyword({ "warehouse" }, StdModule.say, { npcHandler = npcHandler, text = "If you'd like to see my offers in armor, ask me for a {trade}." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

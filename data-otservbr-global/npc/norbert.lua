@@ -54,13 +54,19 @@ keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "I heard the colour of the next season will be orange." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "I fear such a weapon will ruin a silk shirt with one blow." })
 keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Those evil mages dress so ugly." })
+-- above "tibia", which is inside "tibianus"
+keywordHandler:addKeyword({ "tibianus" }, StdModule.say, { npcHandler = npcHandler, text = "Even the king of Thais, blessed be his name, can't buy a better wardrobe then ours." })
 keywordHandler:addKeyword({ "tibia" }, StdModule.say, { npcHandler = npcHandler, text = "Our tailors are influenced by styles of the whole known world." })
 keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "Women could do better then to wear armor. Women in leather scare my in particular." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "Thaian wear is not that stylish anymore." })
-keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or Tibianus Even the king of Thais, blessed be his name, can't buy a better wardrobe then ours." })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "Even the king of Thais, blessed be his name, can't buy a better wardrobe then ours." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now it's 8:57 pm. Did you notice this is a xelor watch I am wearing?" })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Norbert." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a salesperson here, but one day I might become a tailor, or a supermodel perhaps!" })
+keywordHandler:addKeyword({ "xelor watch" }, StdModule.say, { npcHandler = npcHandler, text = "Xelor, the dwarf of the chromancers guild, makes the most stylish watches in all the land." })
+keywordHandler:addKeyword({ "shop" }, StdModule.say, { npcHandler = npcHandler, text = "I have wonderful jackets, coats, lovely doublets, even warlike leather armor, and impressive studded armor. And wedding outfits! Just ask me for a {trade}." })
+keywordHandler:addAliasKeyword({ "clothes" })
+keywordHandler:addKeyword({ "hugo" }, StdModule.say, { npcHandler = npcHandler, text = "He's our boss, a great tailor and designer." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

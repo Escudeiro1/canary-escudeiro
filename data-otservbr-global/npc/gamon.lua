@@ -111,6 +111,8 @@ keywordHandler:addKeyword({ "gorn" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "bozo" }, StdModule.say, { npcHandler = npcHandler, text = "Bozo! Damn that clown! He keeps making fake orders. It isn't funny to deliver a wardrobe to an address that doesn't even exist, you know!" })
 keywordHandler:addKeyword({ "sam" }, StdModule.say, { npcHandler = npcHandler, text = "I heard rumours he has some special offers for customers who know to ask for the correct things." })
 keywordHandler:addKeyword({ "rug" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, silly me! Rugs are out of stock at the moment! But we expect a new shipment anytime. Just watch out for the next update!... Of our inventory I mean." })
+keywordHandler:addKeyword({ "furniture" }, StdModule.say, { npcHandler = npcHandler, text = "I sell statues, tables, chairs, flowers, pillows, pottery, instruments, decoration, tapestries and containers." })
+keywordHandler:addKeyword({ "quest" }, StdModule.say, { npcHandler = npcHandler, text = "A quest?! Who needs quests when there is interior decorating!" })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

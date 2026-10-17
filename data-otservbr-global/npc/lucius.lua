@@ -52,6 +52,7 @@ end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Lucius." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I like to call myself a lightbearer." })
+keywordHandler:addKeyword({ "temple" }, StdModule.say, { npcHandler = npcHandler, text = "This temple is an important bastion against the forces of evil. I pray that we can hold it." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

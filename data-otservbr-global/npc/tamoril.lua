@@ -379,6 +379,10 @@ nodeLevels:addChildKeyword({ "10" }, StdModule.say, { npcHandler = npcHandler, o
 nodeLevels:addChildKeyword({ "9" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "For level 9 I have {Magic Rope} for 200 gold." })
 nodeLevels:addChildKeyword({ "8" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "For level 8 I have {Apprentice's Strike} for free, {Find Person} for 80 gold, {Light} for free and {Light Healing} for free." })
 nodeLevels:addChildKeyword({ "1" }, StdModule.say, { npcHandler = npcHandler, onlyFocus = true, text = "For level 1 I have {Buzz} for free, {Magic Patch} for free and {Scorch} for free." })
+keywordHandler:addKeyword({ "magician" }, StdModule.say, { npcHandler = npcHandler, text = "Another bunch of humans who dabbles in the arcane arts to become godlike beings." })
+keywordHandler:addKeyword({ "yalahar" }, StdModule.say, { npcHandler = npcHandler, text = "The city is dying. It is mortal just like you and for this reason, it is insignificant. I will still be around when this city is long forgotten." })
+keywordHandler:addKeyword({ "mortal" }, StdModule.say, { npcHandler = npcHandler, text = "You puny mortals are an annoyance. However, the little magic your simple minds are able to comprehend earns me enough money not to kill you." })
+keywordHandler:addKeyword({ "money" }, StdModule.say, { npcHandler = npcHandler, text = "I share some of my eternal knowledge of spells with you humans ... for a price of course. You should be grateful." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Another pesky mortal who believes his gold outweighs his nutrition value.")
 

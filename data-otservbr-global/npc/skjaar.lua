@@ -88,6 +88,11 @@ end
 
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "To those who have lived for a thousand years time holds no more terror." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Once I was the master of all mages, but now I only protect this crypt." })
+keywordHandler:addKeyword({ "volcano" }, StdModule.say, { npcHandler = npcHandler, text = "I can still feel the magical energy in the volcano." })
+keywordHandler:addKeyword({ "master" }, StdModule.say, { npcHandler = npcHandler, text = "If you are one of his followers, you need not ask about him, for you will know. And if you aren't, you are not worthy anyway!" })
+keywordHandler:addKeyword({ "castle" }, StdModule.say, { npcHandler = npcHandler, text = "The castle was destroyed when my master tried to summon a nameless creature. All that is left is this volcano." })
+keywordHandler:addKeyword({ "crypt" }, StdModule.say, { npcHandler = npcHandler, text = "Here lies my master. Only his closest followers may enter." })
+keywordHandler:addKeyword({ "door" }, StdModule.say, { npcHandler = npcHandler, text = "This door seals a crypt." })
 npcHandler:setMessage(MESSAGE_GREET, "Another creature who believes thinks physical strength is more important than wisdom! Why are you disturbing me?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Farewell, |PLAYERNAME|!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Run away, unworthy |PLAYERNAME|!")

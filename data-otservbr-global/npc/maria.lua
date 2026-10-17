@@ -59,7 +59,15 @@ keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "In Venore, everyone is a king ... until he runs out of luck or money." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Don't be that hasty." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am Maria." })
-keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "or tavern I am running this upper part of the Hard Rock Tavern." })
+keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am running this upper part of the Hard Rock Tavern." })
+keywordHandler:addAliasKeyword({ "tavern" })
+keywordHandler:addKeyword({ "david brassacres" }, StdModule.say, { npcHandler = npcHandler, text = "I am sorry but I don't know him personally. I heard he entertained people here long before I moved to Venore." })
+keywordHandler:addKeyword({ "upper part" }, StdModule.say, { npcHandler = npcHandler, text = "Yes, that's here. Below is the Pit Tavern for those fighters that use the pits." })
+keywordHandler:addKeyword({ "amazons" }, StdModule.say, { npcHandler = npcHandler, text = "I can only hope that those wild women don't scare away more customers." })
+keywordHandler:addKeyword({ "drinks" }, StdModule.say, { npcHandler = npcHandler, text = "Do you want beer, wine, lemonade, or water? Ask me for a {trade} to make your choice." })
+keywordHandler:addKeyword({ "pits" }, StdModule.say, { npcHandler = npcHandler, text = "Well, they do a lot of fighting down there." })
+keywordHandler:addKeyword({ "sell" }, StdModule.say, { npcHandler = npcHandler, text = "Food and drinks as much as you can pay for. If you'd like to see my offers, ask me for a {trade}." })
+keywordHandler:addKeyword({ "food" }, StdModule.say, { npcHandler = npcHandler, text = "We offer cookies, bread, cheese, ham, and meat, as well as eggs and tomatoes. If you'd like to see my offers, ask me for a {trade}." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

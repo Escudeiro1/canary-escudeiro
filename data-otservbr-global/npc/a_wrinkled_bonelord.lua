@@ -77,6 +77,7 @@ keywordHandler:addKeyword(
 	{ npcHandler = npcHandler, text = "Our language is beyond comprehension by your lesser beings. It heavily relies on mathemagic. Your brain is not suited for the mathemagical processing necessary to understand our language.To decipher even our most basic texts, it would need a genius that can calculate numbers within seconds in his brain. " }
 )
 
+keywordHandler:addKeyword({ "species" }, StdModule.say, { npcHandler = npcHandler, text = "The world is full of inferior species. Once, our race ruled the whole world, but then the gods destroyed our empire ... But our race is proficient in the return from death. One day we will rise again, that's for sure!" })
 npcHandler:setMessage(MESSAGE_GREET, "What is this? An optically challenged entity called |PLAYERNAME|. How fascinating!")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Wait right there. I will eat you after writing down what I found out.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Wait right there. I will eat you after writing down what I found out.")

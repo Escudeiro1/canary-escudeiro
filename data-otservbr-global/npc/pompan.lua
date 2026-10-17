@@ -121,6 +121,13 @@ npcType.onCloseChannel = function(npc, creature)
 	npcHandler:onCloseChannel(npc, creature)
 end
 
+keywordHandler:addKeyword({ "superiors" }, StdModule.say, { npcHandler = npcHandler, text = "My superiors are a board of tree traders from Venore who are looking for new opportunities." })
+keywordHandler:addKeyword({ "lizards" }, StdModule.say, { npcHandler = npcHandler, text = "They are an incredible threat. At the moment, they are occupied with the orcs. But once they are done with the orcs, who will be next? They might even plan to conquer human civilisation... ... I agree with my superiors that a preventative strike will be the best solution. The lizards' cities are rich and the land offers plentiful resources that would easily cover the costs of a war." })
+keywordHandler:addKeyword({ "ongulf" }, StdModule.say, { npcHandler = npcHandler, text = "He can be quite stubborn sometimes but I see why they chose him to head this venture. ... If you've ever talked to dwarfs, you'll recognise that he is an rather open-minded and flexible fellow." })
+keywordHandler:addKeyword({ "humans" }, StdModule.say, { npcHandler = npcHandler, text = "They are neglectable as they have nothing to offer. They live in horrible primitive conditions, but we are not here for charity work. As long as they don't have anything interesting to offer, we will simply ignore them." })
+keywordHandler:addKeyword({ "venore" }, StdModule.say, { npcHandler = npcHandler, text = "My lovely hometown was always at the forefront of science, exploration and daring ventures. I see some profitable opportunities in this project, and I'm in constant correspondence with my {superiors}." })
+keywordHandler:addKeyword({ "mines" }, StdModule.say, { npcHandler = npcHandler, text = "The mines do well. If only the miners would loosen their purse strings." })
+keywordHandler:addKeyword({ "orcs" }, StdModule.say, { npcHandler = npcHandler, text = "Of course they are dangerous. But we all know: Orcs can die, can't they? And speaking of that, they might have stolen some interesting stuff from these lizardmen that could be of some value for someone with an exotic taste." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "It was a pleasure to help you, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Keep in mind you won't find better offers here. Just browse through my wares.")

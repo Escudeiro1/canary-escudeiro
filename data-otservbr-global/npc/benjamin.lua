@@ -81,7 +81,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
-keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "or general or Ferumbras TO THE ARMS! MAN THE WALLS! FERUMBRAS IS NEAR!" })
+keywordHandler:addKeyword({ "army" }, StdModule.say, { npcHandler = npcHandler, text = "TO THE ARMS! MAN THE WALLS! FERUMBRAS IS NEAR!" })
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I don't read the letters we deliver. Benjamin Thaian NPCs" })
 keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler, text = "You can send letters and parcels to Carlin." })
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "This is the town you are currently in." })
@@ -126,6 +126,9 @@ keywordHandler:addKeyword({ "join" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "bozo" }, StdModule.say, { npcHandler = npcHandler, text = "He hangs around here quite often. He says that I inspire him." })
 keywordHandler:addKeyword({ "gorn" }, StdModule.say, { npcHandler = npcHandler, text = "He sells equipment." })
 keywordHandler:addKeyword({ "sam" }, StdModule.say, { npcHandler = npcHandler, text = "Ham? No thanks, I already ate fish." })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "With our mail system you can send {letters} and {parcels} to other Tibians. I can either explain how {letters} and {parcels} work or sell them to you if you ask me for a {trade}." })
+keywordHandler:addAliasKeyword({ "info" })
+keywordHandler:addAliasKeyword({ "mail" })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

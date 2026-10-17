@@ -106,6 +106,7 @@ keywordHandler:addKeyword({ "oswald" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "quentin" }, StdModule.say, { npcHandler = npcHandler, text = "He advices newcomers to buy at my store. I love that guy!" })
 keywordHandler:addKeyword({ "sam" }, StdModule.say, { npcHandler = npcHandler, text = "Strong as an ox, could armwrestle a minotaur, I bet." })
 keywordHandler:addKeyword({ "xodet" }, StdModule.say, { npcHandler = npcHandler, text = "He owns the magic shop here. But be aware: The prices are enormous." })
+keywordHandler:addKeyword({ "paladins" }, StdModule.say, { npcHandler = npcHandler, text = "She's the leader of the paladin guild." })
 npcHandler:setMessage(MESSAGE_GREET, "Oh, please come in, |PLAYERNAME|. What do you need?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye.")

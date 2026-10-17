@@ -85,6 +85,9 @@ local function creatureSayCallback(npc, creature, type, message)
 end
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "Me Zurak." })
+keywordHandler:addKeyword({ "lizards" }, StdModule.say, { npcHandler = npcHandler, text = "Me people rule zzhe whole land. If you hurt me, all my people will come for you!" })
+keywordHandler:addKeyword({ "dragon" }, StdModule.say, { npcHandler = npcHandler, text = "Zzhe mighty dragonzz are our rulerzz. One dragon can wipe out all our people! Zzo obey when dragon or emizzary are talking! You obey or dead!" })
+keywordHandler:addKeyword({ "ztiss" }, StdModule.say, { npcHandler = npcHandler, text = "Ztiss high mighty emizzary of dragon kingzz! When Ztiss zzpeak all obey!" })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

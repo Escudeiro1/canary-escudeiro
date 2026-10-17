@@ -251,6 +251,11 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "minotaurs" }, StdModule.say, { npcHandler = npcHandler, text = "I am still surprised by the role the minotaurs are playing in this land. I wouldn't consider them allies but in this strange new land, they are the closest thing to allies we have for now." })
+keywordHandler:addKeyword({ "humans" }, StdModule.say, { npcHandler = npcHandler, text = "Well, considering the sheer number of humans, it wouldn't surprise me if we encountered some humans in this new land. They are primitive but at least not hostile. ... Maybe we can settle some mutual agreement of help in some way." })
+keywordHandler:addKeyword({ "dwarf" }, StdModule.say, { npcHandler = npcHandler, text = "You humans often think of us dwarfs as a shorter version of yourself. As a matter of fact we are quite different. ... You'd have a hard time to understand our society and personality, and of course each dwarf is different just like there are no two rocks alike. Members of our race still have much in common, and we even have some things in common with humans. ... You have to find out yourself which things. Form your own opinion and have a mind of your own." })
+keywordHandler:addKeyword({ "guild" }, StdModule.say, { npcHandler = npcHandler, text = "The imperial mining guild oversees the allocation of resources among the various mining projects. The guild is one of the most important institutions of dwarfhood. ... Dozens of the finest miners are constantly planning and working for the best of their people in the name of the emperor who is of course the most prominent guild master." })
+keywordHandler:addKeyword({ "orcs" }, StdModule.say, { npcHandler = npcHandler, text = "The orcs out there make me nervous but at least for now they seem to be kept at bay by their minotaur masters." })
 npcHandler:setMessage(MESSAGE_GREET, "Hello, |PLAYERNAME|. You've come at a good time for our {project}.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

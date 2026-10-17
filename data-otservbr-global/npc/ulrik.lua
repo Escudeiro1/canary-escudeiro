@@ -54,10 +54,14 @@ keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandl
 keywordHandler:addKeyword({ "news" }, StdModule.say, { npcHandler = npcHandler, text = "We live too far away from Thais to hear anything that truly is 'new'." })
 keywordHandler:addKeyword({ "excalibug" }, StdModule.say, { npcHandler = npcHandler, text = "Every now and then an adventurer like you comes here looking for it." })
 keywordHandler:addKeyword({ "ferumbras" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, I only heard frightening tales about him." })
-keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "or Tibianus What can a simple man as me say about a king?" })
+keywordHandler:addKeyword({ "king" }, StdModule.say, { npcHandler = npcHandler, text = "What can a simple man as me say about a king?" })
+keywordHandler:addAliasKeyword({ "tibianus" })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is time." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ulrik." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am a smith. Do you need anything I make?" })
+keywordHandler:addKeyword({ "dungeons" }, StdModule.say, { npcHandler = npcHandler, text = "They say north of Thais is a deep dungeon." })
+keywordHandler:addKeyword({ "weapon" }, StdModule.say, { npcHandler = npcHandler, text = "I sell weapons and armor. If you want to see my offers, ask me for a trade." })
+keywordHandler:addKeyword({ "help" }, StdModule.say, { npcHandler = npcHandler, text = "Sorry, I have no clue how to help you." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

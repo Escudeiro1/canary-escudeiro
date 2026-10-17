@@ -79,6 +79,8 @@ keywordHandler:addKeyword({ "money" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "eclesius" }, StdModule.say, { npcHandler = npcHandler, text = "He often comes here. But his constant confusion gives me a worse headache than Frodo's beer. I rather avoid him." })
 keywordHandler:addKeyword({ "karl" }, StdModule.say, { npcHandler = npcHandler, text = "Uhm, never heard about him... and you can't prove otherwise." })
 keywordHandler:addKeyword({ "william" }, StdModule.say, { npcHandler = npcHandler, text = "Thats a common name, perhaps I met a William, not sure about that." })
+keywordHandler:addKeyword({ "how are you" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, this headache, one of the beers Frodo served me must have been foul." })
+keywordHandler:addKeyword({ "smuggler" }, StdModule.say, { npcHandler = npcHandler, text = "I am a honest person and don't like to be insulted!" })
 
 npcHandler:setMessage(MESSAGE_GREET, "Uhm oh hello |PLAYERNAME|... not so loud please... my {head}... What ... do you {want}?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Yes, goodbye |PLAYERNAME|, just leave me alone.")

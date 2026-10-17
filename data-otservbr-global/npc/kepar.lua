@@ -76,6 +76,8 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is exactly time." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm called Kepar. Kepar the keeper actually. But I'm not fond of nicknames. Bet you wouldn't like to be called Player the annoyance!" })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am foremost a guard for our treasures and trophies. But I also deal with the finances of the guild. I can change money for you and help you with your bank account." })
+keywordHandler:addKeyword({ "adventurer's guild" }, StdModule.say, { npcHandler = npcHandler, text = "We are here to provide young adventurers with some advice and assistance. All our more experienced members remember all to well how it was to be thrown into a hostile world with so many things to do and to know." })
+keywordHandler:addKeyword({ "bored" }, StdModule.say, { npcHandler = npcHandler, text = "Okay okay, no need to be rude! It seems you already know everything." })
 npcHandler:setMessage(MESSAGE_GREET, "Yes? What may I do for you, |PLAYERNAME|? Bank business, perhaps?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Have a nice day.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Have a nice day.")

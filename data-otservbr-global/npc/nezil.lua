@@ -52,6 +52,9 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "I think it's about 8:57 pm. If you bought a watch, you'd know for sure." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Nezil Whetstone, son of Fire of the Savage Axes. I and my sis' Bezil are selling stuff, ye' know?" })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "We sell equipment of all kinds. If there's anything you need, ask me for a trade." })
+keywordHandler:addKeyword({ "equipment" }, StdModule.say, { npcHandler = npcHandler, text = "As you can see, we offer quite a lot of stuff, such as torches, shovels and the like. Ask me for a {trade} to have a look." })
+keywordHandler:addKeyword({ "bezil" }, StdModule.say, { npcHandler = npcHandler, text = "She's my sis'." })
+keywordHandler:addKeyword({ "poem" }, StdModule.say, { npcHandler = npcHandler, text = "I was thinking about a poem as a slogan for my shop but it's not ready for a big audience, yet." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

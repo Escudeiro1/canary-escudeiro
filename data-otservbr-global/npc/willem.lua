@@ -51,6 +51,13 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I am {Willem}, prentice paladin to the honourable {Narai}." })
+keywordHandler:addKeyword({ "shanoya" }, StdModule.say, { npcHandler = npcHandler, text = "She is top of our class and our combat trainer. Formidable with the spear! You should see her. A true huntress." })
+keywordHandler:addKeyword({ "paladin" }, StdModule.say, { npcHandler = npcHandler, text = "The noblest of vocations. Roam the forests as a {ranger}! Hunt with the {hunters}! Slay {unholy} beasts!" })
+keywordHandler:addKeyword({ "ranger" }, StdModule.say, { npcHandler = npcHandler, text = "A paladin rank. Sneak gracefully through the forests of Tibia and shoot clumsy monsters with your bow from afar!" })
+keywordHandler:addAliasKeyword({ "hunter" })
+keywordHandler:addKeyword({ "unholy" }, StdModule.say, { npcHandler = npcHandler, text = "Undead creatures like mummies, ghouls or vampires. We paladins slay them with our unique gift of holy {magic}. But our primary weapon to hunt monsters is the bow or spear." })
+keywordHandler:addKeyword({ "narai" }, StdModule.say, { npcHandler = npcHandler, text = "She is the {paladin} vocation trainer on the Island of Destiny. ... Talk to her after the festival if you want to become a paladin, too!" })
+keywordHandler:addKeyword({ "magic" }, StdModule.say, { npcHandler = npcHandler, text = "We paladins exclusively use holy magic, to slay undead and unholy creatures. Sorcerers and druids use the other forms of magic." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 -- npcType registering the npcConfig table

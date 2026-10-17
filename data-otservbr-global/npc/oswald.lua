@@ -82,6 +82,10 @@ keywordHandler:addKeyword({ "lugri" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "partos" }, StdModule.say, { npcHandler = npcHandler, text = "What a shame. He claimed to be the king of thiefs and was caught stealing some fruit." })
 keywordHandler:addKeyword({ "durin" }, StdModule.say, { npcHandler = npcHandler, text = "Just between you and me, he can be quite a tyrant." })
 keywordHandler:addKeyword({ "monsters" }, StdModule.say, { npcHandler = npcHandler, text = "AHHHH!!! WHERE??? WHERE???" })
+keywordHandler:addKeyword({ "eclesius" }, StdModule.say, { npcHandler = npcHandler, text = "Eclesius... Eclesius... I think they say about him that he accidentally turned his assistant into a frog. So you better pay attention!" })
+keywordHandler:addKeyword({ "marvik" }, StdModule.say, { npcHandler = npcHandler, text = "Who knows what this old man is up to in his hideout when no one is watching?" })
+keywordHandler:addKeyword({ "aruda" }, StdModule.say, { npcHandler = npcHandler, text = "She's a little witch, trust me. She used to be the girlfriend of this evil Partos some time ago." })
+keywordHandler:addKeyword({ "lynda" }, StdModule.say, { npcHandler = npcHandler, text = "Sweet as honey, but cold as a fish. The only thing that can soften her heart is this awfully expensive Venorean ice cream." })
 
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)

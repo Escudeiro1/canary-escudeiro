@@ -139,6 +139,10 @@ keywordHandler:addKeyword({ "phoenix" }, StdModule.say, { npcHandler = npcHandle
 keywordHandler:addAliasKeyword({ "spark" })
 keywordHandler:addKeyword({ "solitude" }, StdModule.say, { npcHandler = npcHandler, text = "Talk to the hermit Eremo on the isle of Cormaya about this blessing." })
 keywordHandler:addAliasKeyword({ "wisdom" })
+keywordHandler:addKeyword({ "minotaur" }, StdModule.say, { npcHandler = npcHandler, text = "We'll see if they keep their word. We'll see if they hold the reigns of the orcish horde. And we'll see how long they will survive in this savage land at all." })
+keywordHandler:addKeyword({ "lizards" }, StdModule.say, { npcHandler = npcHandler, text = "It's obvious that a new path often leads to new enemies. Now that the path has been chosen, we'll have to cope with the problem." })
+keywordHandler:addKeyword({ "dragon" }, StdModule.say, { npcHandler = npcHandler, text = "Dragons that rule over an empire of minions are an alarming turn of events. I never heard that dragons did something like this before. ... Those changes confuse me but we will adapt in the course of time." })
+keywordHandler:addKeyword({ "ongulf" }, StdModule.say, { npcHandler = npcHandler, text = "For a rather young dwarf, he is quite competent. Give him a few more centuries and he'll become a great leader." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome, young |PLAYERNAME|! If you are heavily wounded or poisoned, I can {heal} you for free.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Remember: If you are heavily wounded or poisoned, I can heal you for free.")

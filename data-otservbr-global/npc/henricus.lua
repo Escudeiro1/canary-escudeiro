@@ -401,6 +401,10 @@ keywordHandler:addKeyword({ "inquisitor" }, StdModule.say, { npcHandler = npcHan
 keywordHandler:addKeyword({ "believer" }, StdModule.say, { npcHandler = npcHandler, text = "Belive on the gods and they will show you the path." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "By edict of the churches I'm the Lord Inquisitor." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Henricus, the Lord Inquisitor." })
+keywordHandler:addKeyword({ "ruthless seven" }, StdModule.say, { npcHandler = npcHandler, text = "They're one of the mightiest weapons that our enemies have at disposal. They're the leaders of some of the most powerful forces of demonkind." })
+keywordHandler:addKeyword({ "ghost" }, StdModule.say, { npcHandler = npcHandler, text = "Most ghosts are evil spirits that may not enter the afterlife due to their sins. ... A few ghosts, though, are pious souls who stick to the world of the living to fulfil an unfinished duty." })
+keywordHandler:addKeyword({ "witch" }, StdModule.say, { npcHandler = npcHandler, text = "The witches refused to join the druid or the sorcerer guild. They stuck to their own believes and rejected any supervision and guidance by the churches. Of course, such behaviour led to corruption by the forces of darkness." })
+keywordHandler:addKeyword({ "vile" }, StdModule.say, { npcHandler = npcHandler, text = "The dark powers are always present. If a human shows only the slightest weakness, they try to corrupt him and to lure him into their service. ... We must be constantly aware of evil that comes in many disguises." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Greetings, fellow {believer} |PLAYERNAME|!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Always be on guard, |PLAYERNAME|!")

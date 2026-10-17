@@ -132,8 +132,8 @@ keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler,
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Ivalisse." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "There is always time to make a change." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "Besides my various {duties} in the temple, I also take care of visitors. Well, I would but right now I can't get my mind of how my {father}'s doing. I am sorry." })
-keywordHandler:addKeyword({ "duties" }, StdModule.say, { npcHandler = npcHandler, text = " I help linking the portals of this temple to other ancient sites of the {Astral Shapers}." })
-keywordHandler:addKeyword({ "duties" }, StdModule.say, { npcHandler = npcHandler, text = " I help linking the portals of this temple to other ancient sites of the {Astral Shapers}." })
+keywordHandler:addKeyword({ "duties" }, StdModule.say, { npcHandler = npcHandler, text = "I help linking the portals of this temple to other ancient sites of the {Astral Shapers}." })
+keywordHandler:addKeyword({ "astral shapers" }, StdModule.say, { npcHandler = npcHandler, text = "As far as we know today, the Astral Shapers are an ancient, very advanced race of master artisans." })
 
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 

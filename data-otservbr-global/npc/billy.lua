@@ -130,6 +130,7 @@ keywordHandler:addKeyword({ "seymour" }, StdModule.say, { npcHandler = npcHandle
 keywordHandler:addKeyword({ "tom" }, StdModule.say, { npcHandler = npcHandler, text = "Tom the tanner buys what's too nasty or too old to eat, animal-wise. Dead wolves and such." })
 keywordHandler:addKeyword({ "dallheim" }, StdModule.say, { npcHandler = npcHandler, text = "He is one of the king's best men and here to protect us." })
 keywordHandler:addAliasKeyword({ "zerbrus" })
+keywordHandler:addKeyword({ "hole" }, StdModule.say, { npcHandler = npcHandler, text = "I definitely don't wanna go into that topic. Loui is already crazy enough about that hole." })
 
 -- Health Potion Quest
 local panKeyword = keywordHandler:addKeyword({ "pan" }, StdModule.say, { npcHandler = npcHandler, text = "Have you found a pan for me?" })

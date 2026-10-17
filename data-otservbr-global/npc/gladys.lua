@@ -49,6 +49,12 @@ end
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "It is time." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "My name is Gladys." })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "I am Grimvale's druid. I can offer you some useful tools and will also buy any were-creature body parts, if you bring some." })
+keywordHandler:addKeyword({ "werewolves" }, StdModule.say, { npcHandler = npcHandler, text = "Yes. They dwell here on {Grimvale}. The were-sickness or the curse, whatever you're believing in, transforms peaceful villagers into savage beasts." })
+keywordHandler:addKeyword({ "dangerous" }, StdModule.say, { npcHandler = npcHandler, text = "Yes. Grimvale is affected by were-sickness. We also call it the Curse of the Full Moon." })
+keywordHandler:addKeyword({ "grimvale" }, StdModule.say, { npcHandler = npcHandler, text = "Well, this small island you are standing on. It is our home, yet a little {dangerous}, lately." })
+keywordHandler:addKeyword({ "cornell" }, StdModule.say, { npcHandler = npcHandler, text = "He clings to this village, as we all do, in spite of the Curse. But he's as much home on water as on land. I guess that's why he runs a ferry service these days." })
+keywordHandler:addKeyword({ "maeryn" }, StdModule.say, { npcHandler = npcHandler, text = "She's taken upon her the burden of being the protector of this village. I've known her since she was a little girl - very sweet, and very determined she was. Now she has grown up to be a forceful woman, courageous and deadly with the bow." })
+keywordHandler:addKeyword({ "owin" }, StdModule.say, { npcHandler = npcHandler, text = "A seasoned hunter, though he turned to research lately and barely goes out anymore. Very knowledgeable about the woods, animals and {werewolves}." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

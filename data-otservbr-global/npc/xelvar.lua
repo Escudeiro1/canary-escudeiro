@@ -121,6 +121,7 @@ local function creatureSayCallback(npc, creature, type, message)
 	return true
 end
 
+keywordHandler:addKeyword({ "existence" }, StdModule.say, { npcHandler = npcHandler, text = "Gnomes ... ah. You will see for yourself. You will need some good nerves though, I'm warning you. But I have to admit those gnomes are a capable lot and valuable allies. Their incredible self-esteem sometimes is irritating though. ... I guess though you'd need such a mindset to survive in an environment as they are living in. Don't underestimate them ever. I have seen some of the things the gnomes have fought and they have fought them for centuries. ... I have to admit that even dwarfs would be hard pressed to best such foes and circumstances." })
 npcHandler:setMessage(MESSAGE_GREET, "Greetings. Are you interested in adventures?")
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)

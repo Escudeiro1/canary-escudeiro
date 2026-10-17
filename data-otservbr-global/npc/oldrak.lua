@@ -90,6 +90,8 @@ keywordHandler:addKeyword({ "sell" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "buy" }, StdModule.say, { npcHandler = npcHandler, text = "I can offer you the holy tible for a small fee." })
 keywordHandler:addKeyword({ "have" }, StdModule.say, { npcHandler = npcHandler, text = "I can offer you the holy tible for a small fee." })
 keywordHandler:addKeyword({ "time" }, StdModule.say, { npcHandler = npcHandler, text = "Now, it is |TIME|." })
+keywordHandler:addKeyword({ "plains of havoc" }, StdModule.say, { npcHandler = npcHandler, text = "Before these battles were fought here, they were called the Fair Plains." })
+keywordHandler:addAliasKeyword({ "fair plains" })
 
 local function creatureSayCallback(npc, creature, type, message)
 	local player = Player(creature)

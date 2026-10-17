@@ -241,6 +241,15 @@ keywordHandler:addKeyword({ "seymour" }, StdModule.say, { npcHandler = npcHandle
 keywordHandler:addKeyword({ "tom" }, StdModule.say, { npcHandler = npcHandler, text = "Tom the tanner buys fresh {corpses}, minotaur leather and paws. Always good to make some {money} if you can carry the corpses there fast enough." })
 keywordHandler:addKeyword({ "dallheim" }, StdModule.say, { npcHandler = npcHandler, text = "He's the guard on the north {bridge} and a great fighter. He can show you {monster} locations. Just ask him about monsters!" })
 keywordHandler:addKeyword({ "zerbrus" }, StdModule.say, { npcHandler = npcHandler, text = "He's the guard on the west {bridge} and a great fighter. He can show you {monster} locations. Just ask him about monsters!" })
+keywordHandler:addKeyword({ "life fluids" }, StdModule.say, { npcHandler = npcHandler, text = "A rare magic potion that restores health." })
+keywordHandler:addKeyword({ "vascalir" }, StdModule.say, { npcHandler = npcHandler, text = "He recently arrived from the mainland to help us with a few troubles we have here. If you want to know more, maybe just talk to him." })
+keywordHandler:addKeyword({ "training" }, StdModule.say, { npcHandler = npcHandler, text = "You can try some basic things down there, but don't challenge the monsters in our arena if you are inexperienced." })
+keywordHandler:addAliasKeyword({ "cellar" })
+keywordHandler:addKeyword({ "quentin" }, StdModule.say, { npcHandler = npcHandler, text = "He is responsible for the temple in Thais." })
+keywordHandler:addKeyword({ "advice" }, StdModule.say, { npcHandler = npcHandler, text = "Read the blackboard for some hints and visit the {training} center in the cellar." })
+keywordHandler:addKeyword({ "castle" }, StdModule.say, { npcHandler = npcHandler, text = "The castle of Thais is the greatest achievement in Tibian history." })
+keywordHandler:addKeyword({ "people" }, StdModule.say, { npcHandler = npcHandler, text = "Well, there's me, Cipfried, Willie, Obi, Amber, Dallheim, Al Dee, Norma, and Hyacinth." })
+keywordHandler:addKeyword({ "magic" }, StdModule.say, { npcHandler = npcHandler, text = "The only magic-user on this isle is old Hyacinth." })
 
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye! And remember: No running up and down in the academy!")
 

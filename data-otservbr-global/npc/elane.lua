@@ -328,6 +328,8 @@ keywordHandler:addKeyword({ "muriel" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "oswald" }, StdModule.say, { npcHandler = npcHandler, text = "If there wouldn't be higher powers to protect him..." })
 keywordHandler:addKeyword({ "quentin" }, StdModule.say, { npcHandler = npcHandler, text = "A humble monk and a wise man." })
 keywordHandler:addKeyword({ "sam" }, StdModule.say, { npcHandler = npcHandler, text = "Strong man. But a little shy." })
+keywordHandler:addKeyword({ "hooded cloak" }, StdModule.say, { npcHandler = npcHandler, text = "Those are traditionally awarded after having completed a difficult task for our guild." })
+keywordHandler:addKeyword({ "tiara" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, my winged tiara? Those are traditionally awarded after having completed a difficult task for our guild, only to female aspirants though. Male warriors will receive a hooded cloak." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to the paladins' guild, |PLAYERNAME|! How can I help you?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Bye, |PLAYERNAME|.")

@@ -53,6 +53,11 @@ keywordHandler:addKeyword({ "carlin" }, StdModule.say, { npcHandler = npcHandler
 keywordHandler:addKeyword({ "thais" }, StdModule.say, { npcHandler = npcHandler, text = "I wouldn't feel comfortable to live so exposed and in the open, but like an old dwarfish saying goes: Every beard grows different." })
 keywordHandler:addKeyword({ "name" }, StdModule.say, { npcHandler = npcHandler, text = "I'm Bezil Coinbiter. Me and my bro' Nezil are selling stuff, ye' know?" })
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "We sell equipment of all kind. Is there anything you need?" })
+keywordHandler:addKeyword({ "ab'dendriel" }, StdModule.say, { npcHandler = npcHandler, text = "I laughed so hard when I saw that so-called city. Imagine, they live in trees with all these squirrels around ... I couldn't stand it to be molested by this climbing and hopping pest that steals my lunch ... But I guess the squirrels are more patient with elves than I'd be." })
+keywordHandler:addKeyword({ "equipment" }, StdModule.say, { npcHandler = npcHandler, text = "As you can see, we offer quite a lot, such as torches, shovels and the like. Ask me for a {trade} to have a look." })
+keywordHandler:addKeyword({ "kazordoon" }, StdModule.say, { npcHandler = npcHandler, text = "Our city is well-fortified. In ancient days, the trail to Kazordoon was a well-kept secret and hardly any stranger found his way here ... Today, we welcome visitors, but we're still on guard and ready to defend our gates." })
+keywordHandler:addKeyword({ "dwarfs" }, StdModule.say, { npcHandler = npcHandler, text = "My people is as old and sturdy as the stone of the mountain we live in." })
+keywordHandler:addKeyword({ "nezil" }, StdModule.say, { npcHandler = npcHandler, text = "He's my bro'." })
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 
 npcConfig.shop = {

@@ -217,6 +217,7 @@ keywordHandler:addKeyword({ "tom" }, StdModule.say, { npcHandler = npcHandler, t
 keywordHandler:addKeyword({ "dallheim" }, StdModule.say, { npcHandler = npcHandler, text = "A man of the sword." })
 keywordHandler:addAliasKeyword({ "zerbrus" })
 
+keywordHandler:addKeyword({ "weapon" }, StdModule.say, { npcHandler = npcHandler, text = "I don't care much about weapons." })
 npcHandler:setMessage(MESSAGE_WALKAWAY, "May Crunor bless you.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "May Crunor bless you.")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Here. Don't forget, if you buy potions, there's a {deposit} of 5 gold on the empty flask.")

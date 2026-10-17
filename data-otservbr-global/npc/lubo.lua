@@ -153,6 +153,13 @@ keywordHandler:addKeyword({ "maps" }, StdModule.say, { npcHandler = npcHandler, 
 keywordHandler:addKeyword({ "hat" }, StdModule.say, { npcHandler = npcHandler, text = "My hat? Hanna made this one for me." })
 keywordHandler:addKeyword({ "finger" }, StdModule.say, { npcHandler = npcHandler, text = "Oh, you sure mean this old story about the mage Dago, who lost two fingers when he conjured a dragon." })
 keywordHandler:addKeyword({ "pet" }, StdModule.say, { npcHandler = npcHandler, text = "There are some strange stories about a magicians pet names. Ask Hoggle about it." })
+keywordHandler:addKeyword({ "equipment" }, StdModule.say, { npcHandler = npcHandler, text = "I sell torches, fishing rods, worms, ropes, water hoses, backpacks, apples, and maps." })
+keywordHandler:addAliasKeyword({ "wares" })
+keywordHandler:addAliasKeyword({ "sell" })
+keywordHandler:addKeyword({ "mountains" }, StdModule.say, { npcHandler = npcHandler, text = "It is said that once there lived a great magician on the top of this mountain." })
+keywordHandler:addKeyword({ "magician" }, StdModule.say, { npcHandler = npcHandler, text = "I don't remember his name, but it's said that his banner was the black eye." })
+keywordHandler:addKeyword({ "weapon" }, StdModule.say, { npcHandler = npcHandler, text = "If you want to buy weapons, you'll have to go to a town or city." })
+keywordHandler:addKeyword({ "magic" }, StdModule.say, { npcHandler = npcHandler, text = "There's a lot of magic flowing in the mountain to the north." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to my adventurer shop, |PLAYERNAME|! What do you need? Ask me for a {trade} to look at my wares.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye, |PLAYERNAME|.")
