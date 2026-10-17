@@ -13295,7 +13295,7 @@ BidErrorMessage Player::canBidHouse(uint32_t houseId) {
 		return Rookgaard;
 	}
 
-	if (!isRealPremium()) {
+	if (!isPremium()) {
 		return Premium;
 	}
 
@@ -13344,7 +13344,7 @@ TransferErrorMessage Player::canTransferHouse(uint32_t houseId, uint32_t newOwne
 		return Rookgaard;
 	}
 
-	if (!newOwner->isRealPremium()) {
+	if (!newOwner->isPremium()) {
 		return Premium;
 	}
 
@@ -13366,7 +13366,7 @@ AcceptTransferErrorMessage Player::canAcceptTransferHouse(uint32_t houseId) {
 		return NotNewOwner;
 	}
 
-	if (!isRealPremium()) {
+	if (!isPremium()) {
 		return Premium;
 	}
 
