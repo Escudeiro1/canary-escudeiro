@@ -4,14 +4,38 @@
 -- where the expected item is no longer found, so a map update cannot put text on the wrong thing.
 
 local signTexts = {
+	{ pos = Position(32579, 31927, 0), id = 17866, text = "To Kazordoon Shops" }, -- Kazordoon, sign
+	{ pos = Position(32577, 31930, 0), id = 17744, text = "To the magic carpet - south east of here." }, -- Kazordoon, sign
+	{ pos = Position(32587, 31939, 0), id = 17862, text = "Ore Wagon north-west of here. Already bought your ticket? If not ask Gewen." }, -- Kazordoon, sign
+	{ pos = Position(32590, 31939, 0), id = 17795, text = "Flying Carpet Passage Service" }, -- Kazordoon, sign
+	{ pos = Position(32637, 31880, 2), id = 2597, text = "Elevator:\nleft to right - up\nright to left - down" }, -- Kazordoon, blackboard
+	{ pos = Position(32597, 31895, 2), id = 2021, text = "The Farms" }, -- Kazordoon, street sign
+	{ pos = Position(32634, 31938, 2), id = 2597, text = "Elevator:\nleft to right - up\nright to left - down" }, -- Kazordoon, blackboard
+	{ pos = Position(32594, 31927, 3), id = 2017, text = "Restricted Guard Area\nKEEP OUT!!\nYes, this means you!" }, -- Kazordoon, sign
+	{ pos = Position(32594, 31928, 4), id = 2016, text = "Throne room" }, -- Kazordoon, sign
+	{ pos = Position(32596, 31928, 4), id = 2012, text = "Nobility Quarter" }, -- Kazordoon, sign
+	{ pos = Position(32604, 31928, 4), id = 2012, text = "Nobility Quarter" }, -- Kazordoon, sign
+	{ pos = Position(32587, 31947, 4), id = 2597, text = "Royal Hall" }, -- Kazordoon, blackboard
+	{ pos = Position(32620, 31926, 5), id = 2597, text = "Nobility Quarters\nRoyal Hall" }, -- Kazordoon, blackboard
+	{ pos = Position(32629, 31926, 5), id = 2597, text = "Halls of Sorcery" }, -- Kazordoon, blackboard
+	{ pos = Position(32606, 31928, 5), id = 2021, text = "Upper Barracks" }, -- Kazordoon, street sign
+	{ pos = Position(32609, 31928, 5), id = 2021, text = "Upper Barracks" }, -- Kazordoon, street sign
+	{ pos = Position(32622, 31928, 5), id = 2014, text = "Halls of Sorcery" }, -- Kazordoon, sign
 	{ pos = Position(32897, 32011, 5), id = 6121, text = "WEAR HELMET" }, -- Venore, note pinned on the wall
 	{ pos = Position(32680, 31691, 6), id = 5372, text = "Depot Tower" }, -- Ab'Dendriel, sign
+	{ pos = Position(32626, 31918, 6), id = 2597, text = "Depot\nForge\nKnight Guild" }, -- Kazordoon, blackboard
+	{ pos = Position(32608, 31924, 6), id = 2597, text = "Quarters\nSorcerer Guild" }, -- Kazordoon, blackboard
+	{ pos = Position(32605, 31927, 6), id = 2597, text = "Armory" }, -- Kazordoon, blackboard
+	{ pos = Position(32600, 31945, 6), id = 2597, text = "Barracks\nSorcerers Guild" }, -- Kazordoon, blackboard
+	{ pos = Position(32580, 31946, 6), id = 2602, text = "Fortress\nKEEP OUT!" }, -- Kazordoon, blackboard
+	{ pos = Position(32597, 31946, 6), id = 2016, text = "Fortress" }, -- Kazordoon, sign
 	{ pos = Position(32962, 32018, 6), id = 2597, text = "Ware storage - staff only" }, -- Venore, blackboard
 	{ pos = Position(32892, 32023, 6), id = 6122, text = "WORK SCHEDULE\n---------------------\n\nHawser duty - not assigned\nCleaning - not assigned\nCrates (checking) - not assigned\nCrates (sorting) - not assigned" }, -- Venore, note pinned on the wall
 	{ pos = Position(32949, 32025, 6), id = 2602, text = "Transfers to Darashia only at your own risk! Ghostships may attack this ship." }, -- Venore, blackboard
 	{ pos = Position(32925, 32036, 6), id = 6121, text = "Old Lighthouse - Beware of flying sparks!" }, -- Venore, note pinned on the wall
 	{ pos = Position(32978, 32094, 6), id = 2597, text = "Valorous Venore\nGuildhall" }, -- Venore, blackboard
 	{ pos = Position(32304, 32264, 6), id = 2597, text = "Please be silent in the library.\nAll books belong to the guild." }, -- Thais, blackboard
+	{ pos = Position(32815, 31775, 7), id = 2012, text = "Orrc Land, gow awaay!" }, -- Outside towns (nearest: Ab'Dendriel), sign
 	{ pos = Position(32326, 31811, 7), id = 2021, text = "Magician's Alley" }, -- Carlin, street sign
 	{ pos = Position(32895, 32030, 7), id = 6121, text = "Use delivery entrance!" }, -- Venore, note pinned on the wall
 	{ pos = Position(32933, 32030, 7), id = 6122, text = "RATS!" }, -- Venore, note pinned on the wall
@@ -21,13 +45,43 @@ local signTexts = {
 	{ pos = Position(32960, 32167, 7), id = 2016, text = "Southern City Gate - continue this way. Visitors to Venore, welcome." }, -- Venore, sign
 	{ pos = Position(32407, 32179, 7), id = 17762, text = "Venore branch office\nWarehouse\nPotions store" }, -- Thais, sign
 	{ pos = Position(32415, 32179, 7), id = 17753, text = "Distance weapons store\nVenore branch office\nWarehouse" }, -- Thais, sign
+	{ pos = Position(32661, 32191, 7), id = 6122, text = "BEWARE OF TRAPS!" }, -- Outside towns (nearest: Kazordoon), note pinned on the wall
 	{ pos = Position(32365, 32195, 7), id = 17736, text = "Frodo's Hut - Tavern" }, -- Thais, sign
 	{ pos = Position(32346, 32213, 7), id = 2021, text = "Main Street" }, -- Thais, street sign
 	{ pos = Position(32344, 32217, 7), id = 5371, text = "Royal Tibia Mail Post Office and\nKingdom's Main Depot House" }, -- Thais, sign
 	{ pos = Position(32357, 32217, 7), id = 5334, text = "Town Library" }, -- Thais, sign
 	{ pos = Position(32341, 32221, 7), id = 5371, text = "Royal Tibia Mail Post Office and\nKingdom's Main Depot House" }, -- Thais, sign
 	{ pos = Position(32333, 32247, 7), id = 2021, text = "Sorcerer's Avenue" }, -- Thais, street sign
+	{ pos = Position(32579, 31888, 8), id = 2597, text = "Kazordoon, Town of the Dwarfs" }, -- Kazordoon, blackboard
+	{ pos = Position(32614, 31916, 8), id = 2602, text = "Spezial offer: statue\nBest dwarfish stonemasonry!" }, -- Kazordoon, blackboard
+	{ pos = Position(32613, 31919, 8), id = 2597, text = "Shops\nTavern\nQuarters" }, -- Kazordoon, blackboard
+	{ pos = Position(32603, 31921, 8), id = 2597, text = "Barracks\nArmory" }, -- Kazordoon, blackboard
+	{ pos = Position(32607, 31921, 8), id = 2013, text = "Arena\nTo The Farms\nColossus" }, -- Kazordoon, sign
+	{ pos = Position(32617, 31921, 8), id = 2597, text = "Kazordoon Furniture Store" }, -- Kazordoon, blackboard
+	{ pos = Position(32623, 31929, 8), id = 2602, text = "Warriors Hall" }, -- Kazordoon, blackboard
+	{ pos = Position(32632, 31938, 8), id = 2597, text = "Elevator:\nleft to right - up\nright to left - down" }, -- Kazordoon, blackboard
+	{ pos = Position(32607, 31876, 9), id = 2597, text = "<==== Rotworm Tamer, Crypt ====>" }, -- Kazordoon, blackboard
+	{ pos = Position(32608, 31900, 9), id = 2602, text = "To the Rotworm Tamer and the crypt" }, -- Kazordoon, blackboard
+	{ pos = Position(32623, 31903, 9), id = 2017, text = "Lower Barracks" }, -- Kazordoon, sign
+	{ pos = Position(32605, 31918, 9), id = 2597, text = "Exit\nTemple District" }, -- Kazordoon, blackboard
+	{ pos = Position(32613, 31918, 9), id = 2597, text = "Depot\nKnights Guild\nForge\nFurniture Store" }, -- Kazordoon, blackboard
+	{ pos = Position(32646, 31936, 9), id = 2602, text = "To the shops" }, -- Kazordoon, blackboard
+	{ pos = Position(32574, 31981, 9), id = 2017, text = "Attention fellow Dwarves!\nWe managed to stabilise the tunnel again - apparently there are also some new treasures. Behave this time and don't damage the support beams!" }, -- Kazordoon, sign
+	{ pos = Position(32604, 31919, 10), id = 2597, text = "Quarters\nShops\nTavern" }, -- Kazordoon, blackboard
+	{ pos = Position(32613, 31922, 10), id = 2597, text = "Temple District" }, -- Kazordoon, blackboard
+	{ pos = Position(32643, 31947, 10), id = 2012, text = "DO NOT ENTER!\n\nDanger of collapse!!" }, -- Kazordoon, sign
 	{ pos = Position(32364, 31835, 11), id = 2017, text = "Belonx Corym!!!\nKiip aut!" }, -- Carlin, sign
+	{ pos = Position(32623, 31870, 11), id = 6122, text = "Gnome Deep Hub\n\nCOMMANDING STAFF ENTRANCE\nDwarven ordnance use the access shaft in area L.V. 4-20-6!" }, -- Kazordoon, note pinned on the wall
+	{ pos = Position(32610, 31887, 11), id = 2597, text = "Dragoneater Fellowship" }, -- Kazordoon, blackboard
+	{ pos = Position(32611, 31907, 11), id = 2022, text = "Tunnel Gardens" }, -- Kazordoon, street sign
+	{ pos = Position(32611, 31910, 11), id = 2022, text = "Tunnel Gardens" }, -- Kazordoon, street sign
+	{ pos = Position(32610, 31920, 11), id = 2602, text = "Pyromancers" }, -- Kazordoon, blackboard
+	{ pos = Position(32617, 31922, 11), id = 2597, text = "Clan Temple" }, -- Kazordoon, blackboard
+	{ pos = Position(32610, 31929, 11), id = 2602, text = "Geomancers" }, -- Kazordoon, blackboard
+	{ pos = Position(32609, 31990, 11), id = 2597, text = "Molten Rock Fellowship" }, -- Kazordoon, blackboard
+	{ pos = Position(32566, 31909, 12), id = 2597, text = "Technomancers" }, -- Kazordoon, blackboard
+	{ pos = Position(32666, 31934, 13), id = 2012, text = "BEWARE OF THE BASILISK!!!!!" }, -- Kazordoon, sign
+	{ pos = Position(32673, 31978, 14), id = 2014, text = "To the City" }, -- Kazordoon, sign
 }
 
 local signTextOverlay = GlobalEvent("SignTextOverlay")
