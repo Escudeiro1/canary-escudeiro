@@ -27,6 +27,8 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Passages to Edron, Thais, Venore, Darashia, Ankrahmun, Yalahar and Port Hope." },
+	{ text = "Oh, these unpredictable storms." },
+	{ text = "Oh, my poor ship." },
 }
 
 local keywordHandler = KeywordHandler:new()

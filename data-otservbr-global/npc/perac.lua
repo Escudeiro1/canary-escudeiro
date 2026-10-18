@@ -23,6 +23,12 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Everything a paladin needs! Come visit my shop!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

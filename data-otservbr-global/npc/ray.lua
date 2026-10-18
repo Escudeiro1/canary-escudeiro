@@ -23,6 +23,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "If you need help with letters or parcels, just ask me. I can explain everything." },
+	{ text = "Stay in touch with your friends. Send a letter, let them know you care and such!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -23,6 +23,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Where is Ben, the old walking bag of fleas? Oh well, he'll come back when he's hungry." },
+	{ text = "Hi there, do you want to join the 'Paw and Fur - Hunting Elite'?" },
+}
+
 npcConfig.shop = {
 	-- HuntsMan rank
 	-- Sell offers

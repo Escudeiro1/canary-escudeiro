@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Bring some light to the world in these dark days!" },
+	{ text = "It's the time of the year where we all need some light." },
+	{ text = "Argh... curse those silly dwarves!" },
+	{ text = "I think I've seen your face before." },
+	{ text = "Welcome, welcome! Come closer!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

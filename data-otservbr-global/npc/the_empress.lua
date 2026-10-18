@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Rulership is a duty as well as a burden." },
+	{ text = "I am worrying about the Fafnar cultists. I am sure they are up to something." },
+	{ text = "It has been a long time since I have spoken to Arishum. I should invite him or pay him a visit. I miss our conversations." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Zzzz... tea... I'll make a cup of tea...zzzz..." },
+	{ text = "Zzzz... tea... Oh... tea...chrrr...zzz..." },
+	{ text = "Zzzz.... chrzzz...." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

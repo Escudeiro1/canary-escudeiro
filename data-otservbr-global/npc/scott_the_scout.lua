@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Blast it! Where are those lazy boys when you need them. Always late!" },
+	{ text = "You there! Don't dilly-dally! Cut those weeds down and give me some room here!" },
+	{ text = "You! Yes, you! Come here! We need a machete to clear those swamp thickets!" },
+	{ text = "Darn it! Why did that stupid boy George lose the reserve grind stones in the swamp. We'll never make good way this way!" },
+	{ text = "You there, Mr-I-lost-my-knife-in-the-swamp! Make yourself useful, will you? Go see Norman and get a job!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

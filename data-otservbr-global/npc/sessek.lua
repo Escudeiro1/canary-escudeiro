@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Come in and order one of my deliciousss mealsss. How about moa steaksss spiced with red pepper and a cherry pudding as dessssert?" },
+	{ text = "Come in and order one of my deliciousss mealsss. How about pan-fried lobssster with roasssted coconut riccce and a glassss of mango juiccce?" },
+	{ text = "Come in and order one of my deliciousss mealsss. How about sssauteed ssstarleaf and ssscrambled turtle eggsss with coconut bread?" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

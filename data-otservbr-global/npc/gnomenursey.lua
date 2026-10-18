@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Go, doctor Gnomedix! Go!" },
+	{ text = "Oooohh doctor Gnomedix..." },
+	{ text = "You are our hero, doctor Gnomedix." },
+	{ text = "I wonder if we could spend some time together my daring doctor." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

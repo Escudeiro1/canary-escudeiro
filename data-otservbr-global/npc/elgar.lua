@@ -27,6 +27,8 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Don't forget to deposit your money here in the Global Bank before you head out for adventure.", yell = false },
+	{ text = "Need to send some items to a friend? Buy a parcel here! And don't forget to write farewell letters." },
+	{ text = "If you want your banking business to be taken care of before you leave, I'm your dwarf." },
 }
 npcConfig.shop = {
 	{ itemName = "label", clientId = 3507, buy = 1 },

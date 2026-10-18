@@ -23,6 +23,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Hiring courageous explorers for a mission!" },
+	{ text = "Need orichalcum pearls or an atlas? Get those here." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Mysterious inscription underneath Thais discovered! Member of Explorer Society still missing!" },
+	{ text = "Wanna dig for some treasures? Grab your shovel or buy one here!" },
+	{ text = "Come here, buy some tasty food and drinks!" },
+	{ text = "Enjoy the festivities here on Vigintia Island!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

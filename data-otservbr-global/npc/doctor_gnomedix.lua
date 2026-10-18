@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Hmmm." },
+	{ text = "All that dirt, incredible!" },
+	{ text = "Nothing is impossible for a gnomish doctor." },
+	{ text = "Oh my!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

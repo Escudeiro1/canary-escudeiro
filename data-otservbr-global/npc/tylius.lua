@@ -23,6 +23,17 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Weak chest? Why not dish out some magic!" },
+	{ text = "Wield a staff - the magician's weapon!" },
+	{ text = "Flay your foes with fireballs!" },
+	{ text = "Weak punch? Deal out some heavy damage with magic!" },
+	{ text = "Staffs, wands, rods - the true weapons of power!" },
+	{ text = "Shoot your enemy with energy spheres!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

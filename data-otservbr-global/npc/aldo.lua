@@ -23,6 +23,12 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Grmbl." },
+}
+
 npcConfig.shop = {
 	{ itemName = "brass helmet", clientId = 3354, buy = 120, sell = 30 },
 	{ itemName = "brass legs", clientId = 3372, buy = 195, sell = 49 },

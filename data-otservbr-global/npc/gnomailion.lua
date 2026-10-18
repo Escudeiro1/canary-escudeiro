@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Now this is probably a love letter." },
+	{ text = "Now I will put that parcel ... ooops!" },
+	{ text = "How shall a little gnome handle such big parcels." },
+	{ text = "Has this parcel just sneezed?" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

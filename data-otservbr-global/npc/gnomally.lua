@@ -23,6 +23,12 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "I have to order more supply packages soon." },
+}
+
 npcConfig.shop = {
 	{ itemName = "bell", clientId = 15832, buy = 50 },
 	{ itemName = "gnomish crystal package", clientId = 15802, buy = 1000 },

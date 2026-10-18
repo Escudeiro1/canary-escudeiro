@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Annoying nightmarish creatures!" },
+	{ text = "Our siblings are tainted. Bewail them!" },
+	{ text = "This is the homestead of every pleasant dream." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

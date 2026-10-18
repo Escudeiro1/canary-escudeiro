@@ -18,6 +18,17 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Prime Mission: protect Yalahari master." },
+	{ text = "N.O.O.B. termination initiated." },
+	{ text = "Monitoring interaction for hostilities." },
+	{ text = "Danger: Overheating." },
+	{ text = "Target locked." },
+	{ text = "Scanning human life form." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

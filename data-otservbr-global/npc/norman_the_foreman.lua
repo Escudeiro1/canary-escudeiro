@@ -22,6 +22,17 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "You two! Grab that saw and set to work on those logs! I need 50 planks by the end of shift!" },
+	{ text = "Oi! You lot over there! Careful, that's valuable timber you're handlin'!" },
+	{ text = "You lot! Get to work! Those roads planks don't lay 'emselves by magic you know!" },
+	{ text = "Oi you! Yes, you! Come on, come on, get movin'! Lose that coffee mug and check on the water wheels!" },
+	{ text = "You! Get your lazy butt up this minute! I don't pay you for starin' 'oles in the air!" },
+	{ text = "You there! D'ya call that work? I call that lazin' around! Now get to choppin' up that timber this instant!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -27,6 +27,13 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Don't forget to deposit your money here in the Global Bank before you head out for adventure.", yell = false },
+	{ text = "Get your shovels, ropes and torches here!" },
+	{ text = "Do you need health potions, young knight? All the potions you could wish for are here!" },
+	{ text = "Aaaaaall basic equipment for your adventure at Raffael's!" },
+	{ text = "If you don't want to spend your money, I can also deposit it on your bank account for you. Or even better, withdraw it so you can shop!" },
+	{ text = "Lost in the dark and out of mana to cast a light spell? Buy a torch now!" },
+	{ text = "Cheapest offers on the whole island! - Well, the only offers!" },
+	{ text = "Don't leave for mainland without stopping by!" },
 }
 
 local keywordHandler = KeywordHandler:new()

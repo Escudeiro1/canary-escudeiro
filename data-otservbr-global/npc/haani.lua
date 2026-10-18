@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Beds, chairs, decoration, flowers, instruments! Buy them here!" },
+	{ text = "Furniture on sale! Don't miss the opportunity." },
+	{ text = "Furniture! Best prices in town!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

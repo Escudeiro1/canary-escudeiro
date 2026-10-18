@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "No talk to Shkiiiiiiip! CAAAW!" },
+	{ text = "Meee! Here! Talk talk!" },
+	{ text = "ONE, TWO, SHREEEEEE!" },
+	{ text = "Shkip ish shtuuupid!!" },
+	{ text = "Talk to meeeee! CAAAW!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -36,6 +36,7 @@ npcConfig.voices = {
 	{ text = "Talk to me to choose your definite vocation! Become a knight, paladin, druid or sorcerer!" },
 	{ text = "World needs brave adventurers like you. Choose your vocation and sail to the mainland!" },
 	{ text = "Poisoned? Bleeding? Wounded? I can help!" },
+	{ text = "Undecided on your vocation? I can help you decide!" },
 }
 
 local keywordHandler = KeywordHandler:new()

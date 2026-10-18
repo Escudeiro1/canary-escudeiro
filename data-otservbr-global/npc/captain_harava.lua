@@ -27,6 +27,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Come on board! The winds are prosperous!" },
+	{ text = "Bastesh's blessings!" },
 }
 
 local keywordHandler = KeywordHandler:new()

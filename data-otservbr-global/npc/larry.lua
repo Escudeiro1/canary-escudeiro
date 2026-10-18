@@ -21,6 +21,9 @@ npcConfig.flags = {
 npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
+	{ text = "Krahhh!" },
+	{ text = "Keelhaul! Keelhaul!" },
+	{ text = "Gold! Gems!" },
 }
 
 npcConfig.shop = {}

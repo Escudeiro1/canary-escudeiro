@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Walk in the light of Shaper wisdom!" },
+	{ text = "Our ways are the ways of the Shapers." },
+	{ text = "Welcome, my child." },
+}
+
 npcConfig.shop = {
 	{ itemName = "heavy old tome", clientId = 23986, sell = 30 },
 }

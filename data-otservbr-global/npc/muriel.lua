@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Did you hear about the missing member of the Explorer Society?" },
+	{ text = "There are rumours about a mysterious inscription underneath Thais." },
+	{ text = "The wisdom of spellcasting is the source of power." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

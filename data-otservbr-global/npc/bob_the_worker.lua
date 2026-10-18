@@ -22,6 +22,18 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Darn this. This damp swamp is making everything go rusty." },
+	{ text = "Hup! To me! To you! Watch out, mate!" },
+	{ text = "I don't get paid enough for this..." },
+	{ text = "I could do with a break..." },
+	{ text = "Work, work, work..." },
+	{ text = "A slave driver, that's what he is." },
+	{ text = "I wish he'd stop hollerin'. I'm gettin' deaf." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

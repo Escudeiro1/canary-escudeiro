@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Sometimes it would be nice to have legs." },
+	{ text = "Oh, Taegen ... *sigh*" },
+	{ text = "I'd like to take a walk on the beach." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

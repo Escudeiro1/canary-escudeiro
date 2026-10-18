@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Nooooo liftenff to Polly!" },
+	{ text = "Polly iff fftuuupid!!" },
+	{ text = "FOUR, FIVE, FFIIIIIX!" },
+	{ text = "Talk to meeeee pleaffe! CAAAWWW!" },
+	{ text = "Come here! Come here!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

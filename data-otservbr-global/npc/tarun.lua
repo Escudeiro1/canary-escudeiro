@@ -24,6 +24,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "My poor brother!" },
+	{ text = "Why did he follow this woman? I told him she's evil!" },
+	{ text = "I fear he is already lost." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

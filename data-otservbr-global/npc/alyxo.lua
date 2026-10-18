@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Ah, nothing inspires an actress like the sight of the sparkling ocean." },
+	{ text = "Nothing against classical theatre. But fringe theatre has its own allure." },
+	{ text = "I hope the Fafnar cultists don't cause even more trouble than they already have." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

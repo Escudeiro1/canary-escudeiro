@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Will I ever get out of here?" },
+	{ text = "It's about time someone showed up! Maybe you are more chatty than my skinny friend here!" },
+	{ text = "Hey skeleton, my friend, what do you think?" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

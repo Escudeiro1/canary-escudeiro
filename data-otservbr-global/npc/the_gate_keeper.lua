@@ -18,6 +18,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Zgk'ch Cthlhg drch, sire." },
+	{ text = "Ah. I grieve. All those shadows, in despair..." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

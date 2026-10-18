@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Come in and order one of our delicious meals. How about curried snake with palm honey?" },
+	{ text = "Come in and order one of our delicious meals. How about flounder with blackberries, peppercorns and water nuts?" },
+	{ text = "Come in and order one of our delicious meals. How about dove on a bed of sauteed broccoli and lemons?" },
+	{ text = "Where is the mango I put here? Has this thieving sibang snitched it?" },
+	{ text = "I'm warning you, Moe. If you have taken this silver spoon ..." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

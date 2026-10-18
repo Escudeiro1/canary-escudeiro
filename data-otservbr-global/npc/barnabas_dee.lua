@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Interesting equinox there. Maybe that was what caused the floods?" },
+	{ text = "Teaching spells to the brave sorcerers wandering the lands." },
+	{ text = "Ah, the mysteries of the living and the dead." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

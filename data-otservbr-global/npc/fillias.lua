@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "What? What? Is there anyone there? Oh. Just the wind." },
+	{ text = "Shoo! Off with you, horrible pests!" },
+	{ text = "Hah. It will all end in tears, you mark my words." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

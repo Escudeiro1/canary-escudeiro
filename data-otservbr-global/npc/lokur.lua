@@ -26,6 +26,9 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Don't forget to deposit your money here in the Tibian Bank before you head out for adventure.", yell = false },
+	{ text = "Hey, send a letter to your friend now and then. Keep in touch, you know." },
+	{ text = "Welcome to the post and bank office!" },
+	{ text = "If you need help with letters or parcels, just ask me. I can explain everything." },
 }
 
 local keywordHandler = KeywordHandler:new()

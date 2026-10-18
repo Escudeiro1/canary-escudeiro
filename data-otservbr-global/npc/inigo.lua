@@ -102,6 +102,9 @@ npcConfig.voices = {
 	{ text = "You're going out? Make sure you have a rope with you!" },
 	{ text = "Buying all sorts of creature products!" },
 	{ text = "You're looking thoughtful. Maybe I can help you?" },
+	{ text = "Hello, there! New here? I can help!" },
+	{ text = "Feeling lost? Why not go out on a hunt or quest!" },
+	{ text = "Come to me if you need directions!" },
 }
 
 local keywordHandler = KeywordHandler:new()

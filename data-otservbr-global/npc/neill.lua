@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Come, one and all! Come and enjoy our grand festival!" },
+	{ text = "Enter our tents and choose your destiny!" },
+	{ text = "Close quarter combat, swords and shields! Have at it!" },
+	{ text = "Rookies! Initiates! Friends! Lend me your ears!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

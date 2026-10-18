@@ -27,6 +27,8 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Don't forget to deposit your money here in the Tibian Bank before you head out for adventure.", yell = false },
+	{ text = "Leave your money in the bank during your hunt - trust me, it's safer that way." },
+	{ text = "It's a wise idea to store your money in your bank account." },
 }
 
 local keywordHandler = KeywordHandler:new()

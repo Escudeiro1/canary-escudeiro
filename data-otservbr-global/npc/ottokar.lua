@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Where to get enough food for all?" },
+	{ text = "Oh my! Oh my!!" },
+	{ text = "This time things are getting troublesome" },
+	{ text = "All these troubles." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

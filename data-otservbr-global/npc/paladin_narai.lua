@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Come on, let's hunt together!" },
+	{ text = "Oh, come in here! You really should!" },
+	{ text = "I love the song of a bowstring... twang!" },
+	{ text = "Hey there, come play?" },
+	{ text = "I can tell you everything about paladins!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

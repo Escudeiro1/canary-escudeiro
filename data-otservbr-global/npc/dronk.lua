@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Bah! Sludge everywhere." },
+	{ text = "Groam... is that you?" },
+	{ text = "Ack... my clothes are all soaked." },
+	{ text = "Even the air down here is all damp..." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -23,6 +23,16 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Interesting creature product. It could boost the new formula I have in mind..." },
+	{ text = "Now where are those notes on the new potion?" },
+	{ text = "Judging by Baribas' remark on the quality of his latest sample, I wonder if he did not miscalculate the coefficient of the formula..." },
+	{ text = "So much to do, so little time..." },
+	{ text = "Now where's that new specimen I collected?" },
+}
+
 local itemsTable = {
 	["potions"] = {
 		{ itemName = "empty potion flask", clientId = 283, sell = 5 },

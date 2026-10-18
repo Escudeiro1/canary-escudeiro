@@ -27,6 +27,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "What a beautiful day for a little boat trip." },
+	{ text = "I don't feel safe here ... I hope we can return to Ankrahmun soon." },
 }
 
 local keywordHandler = KeywordHandler:new()

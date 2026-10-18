@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Sho bee doo, shoo bee doo, shoo bee doo wah!" },
+	{ text = "La la laaa" },
+	{ text = "Cookies, cakes and cocktails! Fresh juices, toasts and sandwiches!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

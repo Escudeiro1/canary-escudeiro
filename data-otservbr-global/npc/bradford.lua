@@ -23,6 +23,21 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Ahem. A stooory is told, adventures unfold..." },
+	{ text = "Ahem. Demons dance in the hall of bones!" },
+	{ text = "Ahem. It's brother against brother, steel against steel..." },
+	{ text = "Ahem. Laaaaand of the twin suns, how beautiful you are..." },
+	{ text = "Ahem. Love... and death... and romance... lalala... and so on." },
+	{ text = "Ahem. Ohhh blood is shed... and insanity reigns..." },
+	{ text = "Ahem. Ohhh Tibia, my one true love..." },
+	{ text = "Ahem. The stars are so pretty, so pretty tonight..." },
+	{ text = "Ahem. Yo ho ho and a bottle of rum!" },
+	{ text = "Okay, now I need some rum to keep my throat wet." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

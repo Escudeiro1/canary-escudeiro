@@ -30,6 +30,7 @@ npcConfig.voices = {
 	{ text = "Need some help finding your way through Liberty Bay? Let me assist you." },
 	{ text = "Free escort to the depot for newcomers!" },
 	{ text = "Hello, is this your first visit to Liberty Bay? I can show you around the town." },
+	{ text = "Talk to me if you need directions." },
 }
 
 local keywordHandler = KeywordHandler:new()

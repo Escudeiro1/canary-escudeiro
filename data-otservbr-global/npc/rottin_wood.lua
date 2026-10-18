@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Ah, the great outdoors..." },
+	{ text = "Mmmh, do you feel the thrill of the hunt, men?" },
+	{ text = "Alright, seven pairs of antlers, twenty pelts, two... hey, guys where's the rest of the rabbit feet?! I hope you all know that this lucky charm business is just superstitious nonsense..." },
+	{ text = "Be on your guard!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

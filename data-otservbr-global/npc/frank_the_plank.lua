@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Man, I'm starving. Where are those guys with the snacks Norman spoke of?" },
+	{ text = "You two! Having fun, are you? If you think being stuck here's funny, you can jolly well get back to Norman and get some planks out to us!" },
+	{ text = "Hey you! Yes, I mean you! Don't dawdle about and bring me that supply kit!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

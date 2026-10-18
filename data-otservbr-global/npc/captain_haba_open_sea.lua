@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Is this a mutiny or what? Move, move!!" },
+	{ text = "In the rigging ya lazy fools!" },
+	{ text = "I wanna see you movin' ya lazy fools!!" },
+	{ text = "Full sails!! There's a sea serpent to catch!!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

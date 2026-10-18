@@ -23,6 +23,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Soothe, mend, dance, defend; ah, horror and fear, too near, too near." },
+	{ text = "Whirring, whirling, meandering, lost, lost, lost..." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

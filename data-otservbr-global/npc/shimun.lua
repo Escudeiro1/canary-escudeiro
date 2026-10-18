@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "I must not disappoint Kallimae." },
+	{ text = "There were plenty of fish in my net." },
+	{ text = "What a nice catch of fish. Bastesh blessed me today." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

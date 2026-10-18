@@ -29,6 +29,7 @@ npcConfig.voices = {
 	{ text = "Waste not, want not!" },
 	{ text = "Don't burden yourself with too much cash - store it here!" },
 	{ text = "Don't take the money and run - deposit it and walk instead!" },
+	{ text = "Last chance to deposit your gold!" },
 }
 
 local keywordHandler = KeywordHandler:new()

@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "We are halfway out of the dark." },
+	{ text = "Annoying perchts ... stinky, lousy, noisy creatures!" },
+	{ text = "Perchts! An ill-mannered bunch of brutes." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 local talkState = {}

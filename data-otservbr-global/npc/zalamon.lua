@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "I mourn my lozzt brozzerzz and zzizzterzz. May zzeir zzoulzz find peazze." },
+	{ text = "Great mozzer, how long until you zztrike and show zzem?" },
+	{ text = "Uzzelezz. Uzzelezz!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

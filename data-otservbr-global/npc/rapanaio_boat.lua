@@ -26,6 +26,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Passage to {Evil Isle}." },
+	{ text = "Watch your back!" },
 }
 
 local keywordHandler = KeywordHandler:new()

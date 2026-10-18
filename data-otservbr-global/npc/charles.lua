@@ -27,6 +27,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Passages to Thais, Darashia, Edron, Venore, Ankrahmun, Liberty Bay and Yalahar." },
+	{ text = "Ahoy. Where can I sail you today?" },
 }
 
 local keywordHandler = KeywordHandler:new()

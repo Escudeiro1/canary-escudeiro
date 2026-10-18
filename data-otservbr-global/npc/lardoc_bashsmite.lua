@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "ATTENTION, RECRUITS!" },
+	{ text = "If I catch anyone lingering about and shirking responsibility it's latrine duty FOR A WEEK!" },
+	{ text = "WHY ARE YOU LEAVING YOUR POST?" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -37,6 +37,8 @@ npcConfig.voices = {
 	{ text = "So much to investigate, so little time..." },
 	{ text = "Buying all sorts of creature products!" },
 	{ text = "You're looking thoughtful. Maybe I can help you?" },
+	{ text = "So many unsolved mysteries, so many things lost..." },
+	{ text = "Hmm? I'm a very busy man. Look into your quest log to keep track of your progress in a quest, please." },
 }
 
 local keywordHandler = KeywordHandler:new()

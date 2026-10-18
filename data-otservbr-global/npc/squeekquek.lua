@@ -27,6 +27,9 @@ npcConfig.flags = {
 npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
+	{ text = "Squeak!" },
+	{ text = "Yip yip." },
+	{ text = "Hm? Who's there?" },
 }
 
 npcConfig.shop = {}

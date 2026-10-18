@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Are you injured? Come and get a free healing at my little hut." },
+	{ text = "Sometimes it's not the loudest voice which has the most valuable information to give." },
+	{ text = "If you like to choose a druid's way of life, talk to me." },
+	{ text = "Follow your instincts and let nature guide you." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

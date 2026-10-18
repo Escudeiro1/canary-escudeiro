@@ -27,6 +27,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Don't forget to deposit your money here in the Tibian Bank before you head out for adventure.", yell = false },
+	{ text = "Glooth papers rising! Capital!" },
 }
 
 local keywordHandler = KeywordHandler:new()

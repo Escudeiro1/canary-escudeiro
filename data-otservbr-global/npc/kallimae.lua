@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Praised be Bastesh, the Keeper of Wisdom." },
+	{ text = "Ah, the Hanging Gardens! Always a pleasure to amuse oneself here." },
+	{ text = "The steppe is dangerous these days - as well as the catacombs." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

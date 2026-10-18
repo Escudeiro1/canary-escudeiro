@@ -29,6 +29,9 @@ npcConfig.voices = {
 	{ text = "Waste not, want not!" },
 	{ text = "Don't burden yourself with too much cash - store it here!" },
 	{ text = "Don't take the money and run - deposit it and walk instead!" },
+	{ text = "Any questions about the functions of your bank account? Feel free to ask me for help!" },
+	{ text = "Deposit your money here in the safety of the Tibian Bank!" },
+	{ text = "Don't get yourself killed out there with pockets full of gold! Deposit your money here!" },
 }
 
 local keywordHandler = KeywordHandler:new()

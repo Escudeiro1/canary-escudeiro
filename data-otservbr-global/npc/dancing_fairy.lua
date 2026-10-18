@@ -18,6 +18,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Have you seen this beautiful butterfly? Sooo colourful!" },
+	{ text = "I just want to dance with my sisters." },
+	{ text = "Trallallalllala." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

@@ -27,6 +27,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Feel the wind in your hair during one of my carpet rides!" },
+	{ text = "A ride on a magical carpet. There's no better way to travel!" },
 }
 
 local keywordHandler = KeywordHandler:new()

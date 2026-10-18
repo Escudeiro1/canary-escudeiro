@@ -17,6 +17,12 @@ npcConfig.outfit = {
 npcConfig.flags = {
 	floorchange = false,
 }
+
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "This weather is killing me. If I only had enough money to retire." },
+}
 npcConfig.shop = {
 	{ itemName = "broken crossbow", clientId = 11451, sell = 30 },
 	{ itemName = "flask with beaver bait", clientId = 9843, sell = 100 },

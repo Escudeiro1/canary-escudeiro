@@ -27,6 +27,8 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Love is beautiful, we are loved." },
+	{ text = "Flowers, cakes, presents and valentine cards - only today." },
+	{ text = "Show how much you care before it's too late." },
 }
 
 npcConfig.shop = {

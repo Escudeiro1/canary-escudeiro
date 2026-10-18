@@ -26,8 +26,8 @@ npcConfig.flags = {
 npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
-	{ text = "Id like to take a walk with Aurita." },
-	{ text = "I miss Aurita golden hair.*sigh*" },
+	{ text = "I'd like to take a walk with Aurita." },
+	{ text = "I miss Aurita's golden hair. *sigh*" },
 	{ text = "Pas in boldly tyll thow com to an hall the feyrist undir sky ... *sings*" },
 }
 

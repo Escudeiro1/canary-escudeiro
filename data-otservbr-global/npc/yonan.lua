@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "If you are interested in gems and beautiful jewellery, I'm your man!" },
+	{ text = "Fine jewels, rings and amulets!" },
+	{ text = "Gems and jewellery! Best prices in town!" },
+}
+
 npcConfig.shop = {
 	{ itemName = "amber with a bug", clientId = 32624, sell = 41000 },
 	{ itemName = "amber with a dragonfly", clientId = 32625, sell = 56000 },

@@ -22,6 +22,9 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Passages to Tibia, Folda and Vega." },
+	{ text = "Heeey there." },
+	{ text = "Wanna talk?" },
+	{ text = "How are you?" },
 }
 
 local keywordHandler = KeywordHandler:new()

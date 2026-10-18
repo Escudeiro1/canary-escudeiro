@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Suon is the protector of Kilmaresh, then and now." },
+	{ text = "May Suon's light guide you." },
+	{ text = "Praised be Suon, the Benevolent King!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

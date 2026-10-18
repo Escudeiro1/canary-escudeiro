@@ -23,6 +23,12 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Psst! Over here!" },
+}
+
 npcConfig.shop = {
 	{ itemname = "almanac of magic", clientid = 10025, buy = 600 },
 	{ itemname = "animal fetish", clientid = 9236, buy = 10000 },

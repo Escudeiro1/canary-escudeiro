@@ -22,6 +22,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Are you even aware of the threat that poses Shadowthorn these days?!" },
+	{ text = "Shadowthorn? It will burn to the ground if we don't act!!" },
+	{ text = "Fire!! Ah... or not." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

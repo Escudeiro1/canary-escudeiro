@@ -22,6 +22,12 @@ npcConfig.outfit = {
 npcConfig.flags = {
 	floorchange = false,
 }
+
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Have a look at the largest sortiment of general goods in town." },
+}
 npcConfig.shop = { -- Sellable items
 	{ itemName = "basket", clientId = 2855, buy = 6 },
 	{ itemName = "bottle", clientId = 2875, buy = 3 },

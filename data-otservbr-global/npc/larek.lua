@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "What an interesting speck of land. I have to write down all this in my essay." },
+	{ text = "I should provide more cookies for the ogres. They're looking at me so hungrily." },
+	{ text = "Hm, guess I haven't found all new plants in this secluded part of the world yet." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

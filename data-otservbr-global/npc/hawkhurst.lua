@@ -27,6 +27,8 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "There's a storm brewing." },
+	{ text = "Shiver me timbers!" },
+	{ text = "Lousy patrols!" },
 }
 
 local keywordHandler = KeywordHandler:new()

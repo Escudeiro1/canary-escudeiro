@@ -26,6 +26,7 @@ npcConfig.voices = {
 	interval = 15000,
 	chance = 50,
 	{ text = "Don't forget to deposit your money here in the Global Bank before you head out for adventure.", yell = false },
+	{ text = "Don't run into the mines with too much money in your pockets. Better leave it here." },
 }
 
 local keywordHandler = KeywordHandler:new()

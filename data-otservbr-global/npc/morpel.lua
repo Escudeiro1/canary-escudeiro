@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "WEAPONS! ARMOR! HIGHEST QUALITY, JAWOLL!" },
+	{ text = "Buy an armor, your enemies might be close!" },
+	{ text = "Buy a weapon before your enemy does!" },
+	{ text = "Morpel clean the shop, Morpel wash your hand .. stupid cyclops, jawoll!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

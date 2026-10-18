@@ -13,6 +13,13 @@ npcConfig.outfit = {
 npcConfig.flags = {
 	floorchange = false,
 }
+
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "If you always hunt on your own, you won't need my spells." },
+	{ text = "If you care for your party, I can teach you." },
+}
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 npcType.onThink = function(npc, interval)

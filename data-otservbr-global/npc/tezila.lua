@@ -22,6 +22,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Gems and precious jewels! Also a nice investment for your money." },
+	{ text = "Interested in some gems? You can enchant them if you are a druid." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

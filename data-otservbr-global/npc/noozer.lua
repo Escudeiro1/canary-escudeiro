@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Another one sneaking around... what has a man in a cave to do to get some peace and quiet?!" },
+	{ text = "Hm... intruder? Hm? No, no - just my imagination." },
+	{ text = "What am I doing here..." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

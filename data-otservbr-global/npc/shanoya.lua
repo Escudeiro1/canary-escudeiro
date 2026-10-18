@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Want the best of all vocations? Become a paladin!" },
+	{ text = "Master the bow to shoot an arrow in the knee!" },
+	{ text = "Be a Jack of all trades, be a paladin!" },
+	{ text = "Noble hunter, versatile adventurer - that's the paladin!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

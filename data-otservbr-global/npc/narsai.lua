@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "I can't bring down a crocodile myself." },
+	{ text = "Alyxo has the most beautiful voice, that's for sure." },
+	{ text = "I don't want to disappoint Kallimae." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

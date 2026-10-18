@@ -18,6 +18,13 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "You wouldn't keep a pretty lady like me waiting, would you?" },
+	{ text = "Hello, come and entertain me for a while!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

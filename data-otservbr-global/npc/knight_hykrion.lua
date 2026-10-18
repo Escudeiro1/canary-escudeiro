@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Chaaarge! Ha!" },
+	{ text = "Strength and courage!" },
+	{ text = "Keep your armor shiny and your blade clean!" },
+	{ text = "All young aspiring adventurers interested in knighthood come here!" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

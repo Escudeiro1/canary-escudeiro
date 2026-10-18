@@ -23,6 +23,15 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "Hm hm." },
+	{ text = "I really wonder what takes them so long..." },
+	{ text = "Not long and all this uncharted territory will be us. Ah, a gnome can dream..." },
+	{ text = "Where are the reinforcements?" },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 

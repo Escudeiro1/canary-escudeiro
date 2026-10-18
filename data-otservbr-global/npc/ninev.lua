@@ -23,6 +23,14 @@ npcConfig.flags = {
 	floorchange = false,
 }
 
+npcConfig.voices = {
+	interval = 15000,
+	chance = 50,
+	{ text = "She Who Knows protects our dreams." },
+	{ text = "Praised be Bastesh, the Mistress of the Sea!" },
+	{ text = "May Bastesh grant you foresight and wisdom." },
+}
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 
