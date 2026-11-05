@@ -248,6 +248,14 @@ int32_t Monster::getDefense(bool) const {
 	if (mtypeDefense != 0) {
 		g_logger().trace("[{}] new defense {}", __FUNCTION__, mtypeDefense);
 	}
+
+	// High-armor monsters block with at least armor * factor (real Tibia reduces
+	// melee on these 2-3x more than their file defense alone would give).
+	const int32_t armor = m_monsterType->info.armor;
+	if (armor >= g_configManager().getNumber(MONSTER_ARMOR_DEFENSE_THRESHOLD)) {
+		const auto armorDefense = static_cast<int32_t>(armor * g_configManager().getFloat(MONSTER_ARMOR_DEFENSE_FACTOR));
+		mtypeDefense = std::max(mtypeDefense, armorDefense);
+	}
 	return mtypeDefense * getDefenseMultiplier();
 }
 

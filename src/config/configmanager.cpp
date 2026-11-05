@@ -313,6 +313,8 @@ bool ConfigManager::load() {
 	loadIntConfig(L, MAX_EXIVA_WHITELIST, "maxExivaWhitelist", 100);
 	loadIntConfig(L, MAX_INBOX_ITEMS, "maxInboxItems", 0);
 	loadIntConfig(L, MAX_DAMAGE_REFLECTION, "maxDamageReflection", 200);
+	loadIntConfig(L, MONSTER_ARMOR_DEFENSE_THRESHOLD, "monsterArmorDefenseThreshold", 15);
+	loadFloatConfig(L, MONSTER_ARMOR_DEFENSE_FACTOR, "monsterArmorDefenseFactor", 2.0);
 	loadIntConfig(L, MAX_ELEMENTAL_RESISTANCE, "maxElementalResistance", 200);
 	loadIntConfig(L, MAX_MARKET_OFFERS_AT_A_TIME_PER_PLAYER, "maxMarketOffersAtATimePerPlayer", 100);
 	loadIntConfig(L, MAX_MESSAGEBUFFER, "maxMessageBuffer", 4);
