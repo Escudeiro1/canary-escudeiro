@@ -74,7 +74,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 13,
 	armor = 7,
-	mitigation = 0.38,
+	mitigation = 0.60,
 	{ name = "combat", interval = 2000, chance = 25, type = COMBAT_HEALING, minDamage = 10, maxDamage = 25, effect = CONST_ME_MAGIC_GREEN, target = false },
 	{ name = "salamander trainer summon", interval = 2000, chance = 30, target = false },
 }

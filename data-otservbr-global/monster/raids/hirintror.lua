@@ -101,7 +101,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 26,
 	armor = 25,
-	mitigation = 1.18,
+	mitigation = 1.87,
 	{ name = "hirintror summon", interval = 2000, chance = 18, target = false },
 }
 

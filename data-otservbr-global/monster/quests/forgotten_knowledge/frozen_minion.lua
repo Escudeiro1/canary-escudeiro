@@ -71,7 +71,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 9,
 	armor = 7,
-	mitigation = 0.30,
+	mitigation = 0.48,
 	{ name = "frozen minion heal", interval = 2000, chance = 15, target = false },
 }
 

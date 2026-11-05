@@ -66,7 +66,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 50,
 	armor = 50,
-	mitigation = 0.51,
+	mitigation = 0.81,
 	{ name = "soulcatcher summon", interval = 2000, chance = 10, target = false },
 	{ name = "combat", interval = 2000, chance = 25, type = COMBAT_HEALING, minDamage = 100, maxDamage = 145, effect = CONST_ME_HITBYFIRE, target = false },
 }

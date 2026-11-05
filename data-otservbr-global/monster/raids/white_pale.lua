@@ -92,7 +92,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 11,
 	armor = 8,
-	mitigation = 0.87,
+	mitigation = 1.38,
 	{ name = "white pale summon", interval = 2000, chance = 12, target = false },
 }
 

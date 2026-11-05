@@ -69,7 +69,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 199,
 	armor = 199,
-	mitigation = 0.50,
+	mitigation = 0.79,
 	{ name = "icicle heal", interval = 2000, chance = 60, target = false },
 }
 

@@ -73,7 +73,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 199,
 	armor = 199,
-	mitigation = 0.55,
+	mitigation = 0.87,
 }
 
 monster.elements = {

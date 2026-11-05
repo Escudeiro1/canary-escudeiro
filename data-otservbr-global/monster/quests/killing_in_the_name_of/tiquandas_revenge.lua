@@ -81,7 +81,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 31,
 	armor = 30,
-	mitigation = 1.58,
+	mitigation = 2.51,
 	{ name = "ultimate healing", interval = 1200, chance = 35, minDamage = 600, maxDamage = 800, target = false },
 }
 
